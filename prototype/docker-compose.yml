@@ -5,8 +5,6 @@ networks:
     name: flask-backend
   frontend:
     name: vue-frontend
-  traefiknet:
-    external: true
 
 services:
   backend:
@@ -29,17 +27,8 @@ services:
     expose:
       - 8080
     networks:
-      - traefiknet
       - backend
       - frontend
-    labels:
-      - "traefik.port=8080"
-      - "traefik.frontend.entryPoints=http,https"
-      - "traefik.frontend.rule=Host:project.flask"
-      - "traefik.backend=project.flask"
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefiknet"
-
       
   frontend:
     build: ./frontend
