@@ -5,8 +5,8 @@ networks:
     name: flask-backend
   frontend:
     name: vue-frontend
-  # traefiknet:
-  #   external: true
+  traefiknet:
+    external: true
 
 services:
   backend:
@@ -29,18 +29,19 @@ services:
     container_name: nginx
     restart: always
     expose:
-      - "8080"
+      - 8080
     networks:
-      # - traefiknet
+      - traefiknet
       - backend
       - frontend
-    # labels:
-    #   - "traefik.port=8080"
-    #   - "traefik.frontend.entryPoints=http,https"
-    #   - "traefik.frontend.rule=Host:project.flask"
-    #   - "traefik.backend=project.flask"
-    #   - "traefik.enable=true"
-    #   - "traefik.docker.network=traefiknet"
+    labels:
+      - "traefik.port=8080"
+      - "traefik.frontend.entryPoints=http,https"
+      - "traefik.frontend.rule=Host:project.flask"
+      - "traefik.backend=project.flask"
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefiknet"
+
       
   frontend:
     build: ./frontend
@@ -48,10 +49,14 @@ services:
     restart: always
     volumes:
       - './frontend:/frontend'
+      - '/frontend/node_modules'
     networks:
       - frontend
     expose:
-      - "5000"
+      - 5000
+    environment:
+      - npm_config_unsafe_perm=true 
+   
   
   app:
     container_name: reverse-proxy

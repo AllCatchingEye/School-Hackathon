@@ -1,11 +1,14 @@
 FROM node:lts-alpine
 
-# install project dependencies
-RUN npm install -g @vue/cli
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
-# ADD . /frontend
+RUN npm install -g npm@8.7.0
 
 WORKDIR /frontend
-# vue ui --headless --port 8000 --host 0.0.0.0
+
+COPY package*.json ./
+RUN npm install -g @vue/cli@next
+RUN npm install @vue/cli-service-global
+RUN npm install -g --unsafe-perm=true 
+RUN vue upgrade --next
+COPY . .
+RUN chown -R node:985 node_modules
 ENTRYPOINT [ "vue", "serve", "--","--port", "5000"]
