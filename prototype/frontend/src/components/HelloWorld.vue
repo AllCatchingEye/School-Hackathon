@@ -1,5 +1,5 @@
 <template>
-hao {{ping}}
+haoll{{ping}}
 
 <button type="button" @click="getBooks()">test</button>
 </template>
