@@ -5,8 +5,8 @@ networks:
     name: flask-backend
   frontend:
     name: vue-frontend
-  traefiknet:
-    external: true
+  # traefiknet:
+  #   external: true
 
 services:
   backend:
@@ -21,8 +21,8 @@ services:
       - ./backend:/backend
     expose:
       - 5001
-    labels:
-      - "traefik.enable=false"
+    # labels:
+    #   - "traefik.enable=false"
 
   nginx:
     build: ./nginx
@@ -31,16 +31,16 @@ services:
     expose:
       - "8080"
     networks:
-      - traefiknet
+      # - traefiknet
       - backend
       - frontend
-    labels:
-      - "traefik.port=8080"
-      - "traefik.frontend.entryPoints=http,https"
-      - "traefik.frontend.rule=Host:project.flask"
-      - "traefik.backend=project.flask"
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefiknet"
+    # labels:
+    #   - "traefik.port=8080"
+    #   - "traefik.frontend.entryPoints=http,https"
+    #   - "traefik.frontend.rule=Host:project.flask"
+    #   - "traefik.backend=project.flask"
+    #   - "traefik.enable=true"
+    #   - "traefik.docker.network=traefiknet"
       
   frontend:
     build: ./frontend
@@ -52,4 +52,18 @@ services:
       - frontend
     expose:
       - "5000"
-    
+  
+  app:
+    container_name: reverse-proxy
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '83:80'
+      - '81:81'
+      # - '443:443'
+    networks:
+      - frontend
+    volumes:
+      - ./reverse-proxy/data:/data
+      - ./reverse-proxy/letsencrypt:/etc/letsencrypt
+
