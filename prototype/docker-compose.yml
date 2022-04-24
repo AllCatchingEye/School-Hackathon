@@ -1,0 +1,59 @@
+version: '3.7'
+
+networks:
+  backend:
+    name: flask-backend
+  frontend:
+    name: vue-frontend
+  traefiknet:
+    external: true
+
+services:
+  backend:
+    build: ./backend
+    container_name: flask
+    restart: always
+    environment: 
+      - APP_NAME=FlaskApp
+    networks:
+      - backend
+    volumes:
+      - ./backend:/backend
+    expose:
+      - 5001
+    labels:
+      - "traefik.enable=false"
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: always
+    expose:
+      - "8080"
+    volumes:
+      - ./frontend/frontend/src:/usr/share/nginx/html
+    networks:
+      - traefiknet
+      - backend
+      - frontend
+    labels:
+      - "traefik.port=8080"
+      - "traefik.frontend.entryPoints=http,https"
+      - "traefik.frontend.rule=Host:project.flask"
+      - "traefik.backend=project.flask"
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefiknet"
+      
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: always
+    volumes:
+      - './frontend:/frontend'
+        #  port allows the host machine to link to container
+        #  8000 for vue ui, 5000 for our vue app
+    networks:
+      - frontend
+    ports:
+      #- "8000:8000"
+      - "5000:5000"
