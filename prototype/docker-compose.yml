@@ -30,8 +30,6 @@ services:
     restart: always
     expose:
       - "8080"
-    volumes:
-      - ./frontend/frontend/src:/usr/share/nginx/html
     networks:
       - traefiknet
       - backend
@@ -50,10 +48,8 @@ services:
     restart: always
     volumes:
       - './frontend:/frontend'
-        #  port allows the host machine to link to container
-        #  8000 for vue ui, 5000 for our vue app
     networks:
       - frontend
-    ports:
-      #- "8000:8000"
-      - "5000:5000"
+    expose:
+      - "5000"
+    
