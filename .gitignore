@@ -1,6 +1,7 @@
 # Editors
 .vscode/
 .idea/
+prototype/reverse-proxy/data/database.sqlite
 
 # Vagrant
 .vagrant/
