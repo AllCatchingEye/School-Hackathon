@@ -10,7 +10,6 @@ services:
   backend:
     build: ./backend
     container_name: flask
-    restart: always
     environment: 
       - APP_NAME=FlaskApp
     networks:
@@ -23,7 +22,7 @@ services:
   nginx:
     build: ./nginx
     container_name: nginx
-    restart: always
+    restart: always    
     expose:
       - 8080
     networks:
@@ -33,7 +32,6 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
-    restart: always
     volumes:
       - './frontend:/frontend'
       - '/frontend/node_modules'

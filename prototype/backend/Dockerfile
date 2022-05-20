@@ -13,4 +13,4 @@ WORKDIR /backend
 COPY ./requirements.txt /backend/requirements.txt
 RUN pip install -r requirements.txt
 
-CMD ["uwsgi", "app.ini"]
+#CMD ["uwsgi", "app.ini"]

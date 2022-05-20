@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  backend:    
+    environment: 
+      - FLASK_ENV=development      
+    command: flask run --host=0.0.0.0 --port 5001 
+  nginx:   
+    volumes:
+      - ./nginx/nginx-dev.conf:/etc/nginx/conf.d/nginx.conf      
+  frontend:
+    restart: always    
+    command: vue serve -- --port 5000
+ 

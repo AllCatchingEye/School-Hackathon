@@ -13,4 +13,4 @@ RUN npm install -g @vue/cli@next
 
 COPY . ./
 RUN chown -R node:node /frontend  
-ENTRYPOINT [ "vue", "serve", "--","--port", "5000"]
+# ENTRYPOINT [ "vue", "serve", "--","--port", "5000"]
