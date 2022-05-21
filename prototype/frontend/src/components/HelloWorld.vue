@@ -1,5 +1,5 @@
 <template>
-hallo{{ping}}
+halo{{ping}}
 
 <button type="button" @click="getBooks()">hallo</button>
 </template>
