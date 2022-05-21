@@ -2,7 +2,11 @@ version: '3.7'
 
 services:
   backend:
-    command: uwsgi app.ini
+    command: > 
+      sh -c "flask db stamp &&
+      flask db upgrade &&
+      uwsgi app.ini"    
+    
 
   nginx:
     volumes:
