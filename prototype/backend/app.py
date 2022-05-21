@@ -10,13 +10,12 @@ app = Flask(__name__)
 app.config.from_object("config.Config")
 db = SQLAlchemy(app)
 
-db.init_app(app)
-migrate = Migrate(app, db)
-
 # Blueprints for better folder structure
 from blueprint_example.blueprint_example import blueprint_example
 from models.user import User
 
+db.create_all()
+migrate = Migrate(app, db)
 
 # enable CORS
 CORS(app, resources={r'*': {'origins': '*'}})
