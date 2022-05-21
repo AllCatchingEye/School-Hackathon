@@ -2,7 +2,7 @@
 .vscode/
 .idea/
 prototype/reverse-proxy/data/database.sqlite
-
+prototype/database/*
 # Vagrant
 .vagrant/
 

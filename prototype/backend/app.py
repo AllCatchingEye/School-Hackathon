@@ -4,18 +4,18 @@ from flask_cors import CORS
 
 # Initialize Database
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object("config.Config")
 db = SQLAlchemy(app)
 
+migrate = Migrate(app, db)
+
 # Blueprints for better folder structure
 from blueprint_example.blueprint_example import blueprint_example
 from models.user import User
 
-
-# Initialize database
-db.create_all()
 
 # enable CORS
 CORS(app, resources={r'*': {'origins': '*'}})
