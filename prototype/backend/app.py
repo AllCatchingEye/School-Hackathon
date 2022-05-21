@@ -1,20 +1,27 @@
 import imp
 from flask import Flask, jsonify, request, Blueprint
 from flask_cors import CORS
-from blueprint_example.blueprint_example import blueprint_example
+
+# Initialize Database
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config.from_object("config.Config")
+db = SQLAlchemy(app)
 
-app.register_blueprint(blueprint_example, url_prefix='/api/blueprint')
+# Blueprints for better folder structure
+from blueprint_example.blueprint_example import blueprint_example
+from models.user import User
+
+
+# Initialize database
+db.create_all()
 
 # enable CORS
 CORS(app, resources={r'*': {'origins': '*'}})
 
-
-@app.route('/api/ping', methods=['GET'])
-def ping_pong():
-    return jsonify({'ping_pong': 'sg test'})
-
+# Register needed Blueprints
+app.register_blueprint(blueprint_example, url_prefix='/api/blueprint')
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)

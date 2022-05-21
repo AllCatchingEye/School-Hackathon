@@ -12,12 +12,14 @@ services:
     container_name: flask
     environment: 
       - APP_NAME=FlaskApp
+      - DATABASE_URL=postgresql://schoolhackathon:schoolhackathonpassword@database:5432/schoolhackathon
     networks:
       - backend
     volumes:
       - ./backend:/backend
     expose:
       - 5001
+    
 
   nginx:
     build: ./nginx
@@ -53,3 +55,15 @@ services:
       - ./reverse-proxy/data:/data
       - ./reverse-proxy/letsencrypt:/etc/letsencrypt
 
+  database:
+    container_name: database
+    image: postgres:14.3-alpine
+    networks:
+      - backend
+    volumes:
+      - ./database/postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=schoolhackathon
+      - POSTGRES_PASSWORD=schoolhackathonpassword
+      - POSTGRES_DB=schoolhackathon
+      
