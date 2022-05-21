@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.config.from_object("config.Config")
 db = SQLAlchemy(app)
 
+db.init_app(app)
 migrate = Migrate(app, db)
 
 # Blueprints for better folder structure
