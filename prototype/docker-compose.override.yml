@@ -14,4 +14,9 @@ services:
   frontend:
     restart: always    
     command: vue serve -- --port 5000
+    stdin_open: true
+    tty: true
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
  

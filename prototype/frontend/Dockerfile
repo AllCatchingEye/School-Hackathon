@@ -10,6 +10,7 @@ COPY package-lock.json ./
 RUN npm install --silent
 
 RUN npm install -g @vue/cli@next
+ENV HOST=0.0.0.0
 
 COPY . ./
 RUN chown -R node:node /frontend  
