@@ -1,7 +1,7 @@
 <template>
-hallo{{ping}}
+hahahas{{ping}}rer
 
-<button type="button" @click="getBooks()">hallo</button>
+<button type="button" @click="getBooks()">hall</button>
 </template>
 
 <script>
