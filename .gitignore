@@ -3,6 +3,7 @@
 .idea/
 prototype/reverse-proxy/data/database.sqlite
 prototype/database/*
+prototype/reverse-proxy/data/logs
 # Vagrant
 .vagrant/
 

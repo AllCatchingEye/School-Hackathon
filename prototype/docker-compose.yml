@@ -19,7 +19,8 @@ services:
       - ./backend:/backend
     expose:
       - 5001
-    
+    depends_on:
+      - "database"
 
   nginx:
     build: ./nginx
@@ -30,6 +31,9 @@ services:
     networks:
       - backend
       - frontend
+    depends_on:
+      - "frontend"
+      - "backend"
       
   frontend:
     build: ./frontend
