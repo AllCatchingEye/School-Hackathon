@@ -1,13 +1,21 @@
 from flask import Blueprint, jsonify,request
-from models.user import User, userschema
+from models.user import User
 from app import db
 from sqlalchemy.exc import IntegrityError
 from flask_expects_json import expects_json
 
-register = Blueprint('register', __name__)
-
-@register.route('/', methods=['POST'])
-@expects_json(userschema) # Compares request schema with expected schema 
+Register = Blueprint('register', __name__)
+register_user_schema = {
+    # 'type': 'object',
+    # 'properties': {
+    #     'name': {'type': 'string'},
+    #     'email': {'type': 'string'},
+    #     'password': {'type': 'string'}
+    # },
+    # 'required': ['email', 'password']
+}
+@Register.route('/', methods=['POST'])
+@expects_json(register_user_schema) # Compares request schema with expected schema 
 def create_user():
     user_data = request.get_json()
     user = User(**user_data)
