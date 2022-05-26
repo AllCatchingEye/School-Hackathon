@@ -1,5 +1,7 @@
 from app import db
 
+userschema = {}
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -7,5 +9,6 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(128), unique=True, nullable=False)
 
-    def __init__(self, email):
+    def __init__(self, email, name):
         self.email = email
+        self.name = name
