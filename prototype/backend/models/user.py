@@ -18,5 +18,5 @@ class User(db.Model):
         self.email = email
         self.name = name
         self.firstname = firstname
-        self.password = password
+        self.password = generate_password_hash(password, method='sha256')
         self.role = role
