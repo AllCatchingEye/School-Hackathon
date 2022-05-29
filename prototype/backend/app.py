@@ -17,6 +17,13 @@ db = SQLAlchemy(app)
 from blueprint_example.blueprint_example import blueprint_example
 from register.register import Register
 from models.user import User
+from models.hackathon import Hackathon
+from models.organisation import Organisation
+from models.roles import Roles
+from models.submission import Submission
+from models.token import Token
+
+
 
 db.create_all()
 migrate = Migrate(app, db)
