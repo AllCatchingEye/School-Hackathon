@@ -70,7 +70,7 @@ def add_to_db():
     """
         Add to DB
     """
-    role = Organisation("MUCDAI")
+    role = Roles(420, "Superadmin", "Total Access")
     db.session.add(role)
     db.session.commit()
     return str(role)
