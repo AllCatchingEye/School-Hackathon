@@ -12,5 +12,4 @@ class Config(object):
     JWT_TOKEN_LOCATION = ["cookies"]
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
     JWT_COOKIE_CSRF_PROTECT=False
-    SUPERADMIN_ID = 420
-    ADMIN_ID = 29
+
