@@ -1,4 +1,3 @@
-from unicodedata import category
 from flask import Blueprint, jsonify
 from flask_jwt_extended import unset_jwt_cookies, get_jwt_identity
 from utils.user_roles import auth_required, Config
