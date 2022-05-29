@@ -5,19 +5,40 @@ from sqlalchemy.exc import IntegrityError
 from flask_expects_json import expects_json
 
 Register = Blueprint('register', __name__)
-register_user_schema = {
-    # 'type': 'object',
-    # 'properties': {
-    #     'name': {'type': 'string'},
-    #     'email': {'type': 'string'},
-    #     'password': {'type': 'string'}
-    # },
-    # 'required': ['email', 'password']
+register_teacher_schema = {
+    'type': 'object',
+    'properties': {
+        'email': {'type': 'string'},
+        'name': {'type': 'string'},
+        'firstname': {'type': 'string'},
+        'password': {'type': 'string'},
+        'role': {'type': 'integer'}
+    },
+    'required': ['email', 'name', 'firstname', 'password', 'role']
 }
-@Register.route('/', methods=['POST'])
-@expects_json(register_user_schema) # Compares request schema with expected schema 
-def create_user():
+
+register_super_admin_schema = {
+    'type': 'object',
+    'properties': {
+        'email': {'type': 'string'},
+        'name': {'type': 'string'},
+        'firstname': {'type': 'string'},
+        'password': {'type': 'string'},
+        'role': {'type': 'integer'},
+        'organisation': {'type': 'integer'}
+    },
+    'required': ['email', 'name', 'firstname', 'password', 'role', 'organisation']
+}
+
+
+@Register.route('/teacher/', methods=['POST'])
+#@expects_json(register_super_admin_schema) # Compares request schema with expected schema 
+def create_teacher():
+    """
+        Creates a teacher.
+    """
     user_data = request.get_json()
+    print(user_data)
     user = User(**user_data)
     db.session.add(user)
     try:
@@ -32,3 +53,22 @@ def create_user():
                 message=f"{e}"), 409
     
     return result
+
+
+@Register.route('/superadmin/', methods=['POST'])
+@expects_json(register_super_admin_schema) # Compares request schema with expected schema 
+def create_super_admin():
+    """
+        Creates a super admin.
+    """
+    pass
+
+
+@Register.route('/admin/', methods=['POST'])
+@expects_json(register_teacher_schema) # Compares request schema with expected schema 
+def create_admin():
+    """
+        Creates an admin.
+    """
+    pass
+
