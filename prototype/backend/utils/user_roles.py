@@ -27,7 +27,7 @@ def auth_required(accepted_roles):
             claims = get_jwt()
             print(claims)
             return fn(*args, **kwargs) if claims["role"] in accepted_roles else jsonify(
-                category= "Error"
+                category= "Error",
                 message=f'No {claims["role"]}!'), 403           
         return decorator
     return wrapper
