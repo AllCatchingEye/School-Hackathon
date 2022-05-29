@@ -51,9 +51,7 @@ def create_super_admin():
     """
         Creates a super admin.
     """
-    role = Roles('Super Admin', "Gott")
-    db.session.add(role)
-    db.session.commit()
+    pass
     
 
 
@@ -66,6 +64,7 @@ def create_admin():
     pass
 
 
+# Testing method to add something to database
 @Register.route('/add/', methods=['GET'])
 def add_to_db():
     """
