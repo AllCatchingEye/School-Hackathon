@@ -3,21 +3,11 @@ from models.user import User
 from app import db
 from sqlalchemy.exc import IntegrityError
 from flask_expects_json import expects_json
+from models.organisation import Organisation
+from models.roles import Roles
 
 Register = Blueprint('register', __name__)
-register_teacher_schema = {
-    'type': 'object',
-    'properties': {
-        'email': {'type': 'string'},
-        'name': {'type': 'string'},
-        'firstname': {'type': 'string'},
-        'password': {'type': 'string'},
-        'role': {'type': 'integer'}
-    },
-    'required': ['email', 'name', 'firstname', 'password', 'role']
-}
-
-register_super_admin_schema = {
+register_schema = {
     'type': 'object',
     'properties': {
         'email': {'type': 'string'},
@@ -32,7 +22,7 @@ register_super_admin_schema = {
 
 
 @Register.route('/teacher/', methods=['POST'])
-#@expects_json(register_super_admin_schema) # Compares request schema with expected schema 
+@expects_json(register_schema) # Compares request schema with expected schema 
 def create_teacher():
     """
         Creates a teacher.
@@ -56,19 +46,32 @@ def create_teacher():
 
 
 @Register.route('/superadmin/', methods=['POST'])
-@expects_json(register_super_admin_schema) # Compares request schema with expected schema 
+@expects_json(register_schema) # Compares request schema with expected schema 
 def create_super_admin():
     """
         Creates a super admin.
     """
-    pass
+    role = Roles('Super Admin', "Gott")
+    db.session.add(role)
+    db.session.commit()
+    
 
 
 @Register.route('/admin/', methods=['POST'])
-@expects_json(register_teacher_schema) # Compares request schema with expected schema 
+@expects_json(register_schema) # Compares request schema with expected schema 
 def create_admin():
     """
         Creates an admin.
     """
     pass
 
+
+@Register.route('/add/', methods=['GET'])
+def add_to_db():
+    """
+        Add to DB
+    """
+    role = Organisation("MUCDAI")
+    db.session.add(role)
+    db.session.commit()
+    return str(role)
