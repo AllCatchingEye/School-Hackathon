@@ -15,6 +15,7 @@ class User(db.Model):
     organisation = db.Column(db.Integer, db.ForeignKey('organisation.orgaid'),unique=False, nullable=False)
     organisations = db.relationship('Organisation')
 
+
     def __init__(self, email, name, firstname, password, role, organisation):
         self.email = email
         self.name = name
