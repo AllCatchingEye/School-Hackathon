@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 
 # Blueprints for better folder structure
 from blueprint_example.blueprint_example import blueprint_example
-from register.register import register
+from register.register import Register
 from models.user import User
 
 db.create_all()
@@ -26,7 +26,7 @@ CORS(app, resources={r'*': {'origins': '*'}})
 
 # Register needed Blueprints
 app.register_blueprint(blueprint_example, url_prefix='/api/blueprint')
-app.register_blueprint(register, url_prefix='/api/register')
+app.register_blueprint(Register, url_prefix='/api/register')
 
 
 # Global error handle for schema violations 
