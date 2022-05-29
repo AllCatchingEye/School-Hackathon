@@ -5,8 +5,6 @@ class Organisation(db.Model):
 
     orgaid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(6900000), unique=False, nullable=False)
-    permission = db.Column(db.String(4200000), unique=False, nullable=False)
 
-    def __init__(self, name, permission):
+    def __init__(self, name):
         self.name = name
-        self.permission = permission
