@@ -5,6 +5,7 @@
 # Teacher    -> Teacher of a specific school 
 # User       -> Pupil of a specific school
 
+from unicodedata import category
 from flask import  jsonify
 from functools import wraps
 from flask_jwt_extended import verify_jwt_in_request, get_jwt
@@ -25,6 +26,8 @@ def auth_required(accepted_roles):
             verify_jwt_in_request()
             claims = get_jwt()
             print(claims)
-            return fn(*args, **kwargs) if claims["role"] in accepted_roles else jsonify(msg=f'No {claims["role"]}!'), 403           
+            return fn(*args, **kwargs) if claims["role"] in accepted_roles else jsonify(
+                category= "Error"
+                message=f'No {claims["role"]}!'), 403           
         return decorator
     return wrapper
