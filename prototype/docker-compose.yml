@@ -32,8 +32,8 @@ services:
       - backend
       - frontend
     depends_on:
-      - "frontend"
-      - "backend"
+      - frontend
+      - backend
       
   frontend:
     build: ./frontend
