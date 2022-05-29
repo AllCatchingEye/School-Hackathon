@@ -24,9 +24,8 @@ from models.submission import Submission
 from models.token import Token
 
 
-
 db.create_all()
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, compare_type=True)
 
 # enable CORS
 CORS(app, resources={r'*': {'origins': '*'}})
