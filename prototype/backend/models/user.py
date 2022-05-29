@@ -1,4 +1,5 @@
 from app import db
+ from werkzeug.security import generate_password_hash
 from sqlalchemy.orm import declarative_base, relationship
 
 class User(db.Model):
