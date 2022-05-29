@@ -1,7 +1,6 @@
 <template>
 hahahas{{ping}}rer
-
-<button type="button" @click="getBooks()">hall</button>
+<button type="button" @click="getBooks()">click me</button>
 </template>
 
 <script>

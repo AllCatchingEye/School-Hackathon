@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify
-from models.admin import Admin
 from app import db
 
 blueprint_example = Blueprint('blueprint_example', __name__,
