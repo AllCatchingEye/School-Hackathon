@@ -10,9 +10,7 @@ from flask_migrate import Migrate
 
 # Json-Web-Token Package
 from flask_jwt_extended import JWTManager, get_jwt, create_access_token, get_jwt_identity, set_access_cookies
-from datetime import datetime
-from datetime import timedelta
-from datetime import timezone
+from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
 app.config.from_object("config.Config")
