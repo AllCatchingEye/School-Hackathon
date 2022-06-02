@@ -52,10 +52,7 @@ export default {
   methods: {
     verifyLogin(){
       const path = '/api/login';
-      let loginFormData = new FormData();
-      loginFormData.append('userName', email)
-      loginFormData.append('password', password)
-      
+
     }
   }
 }
