@@ -31,7 +31,7 @@
                 </label>
               </div>
               <div class="field">
-                <button class="button is-success" @click="">
+                <button class="button is-success" @click="verifyLogin()">
                   Login
                 </button>
               </div>
@@ -40,22 +40,38 @@
         </div>
       </div>
     </div>
+    <p>{{this.email}}</p>
+    <p>{{this.password}}</p>
   </section>
+  
 </template>
 
 <script>
+import axios from 'axios';
+
 /* eslint-disable */
 export default {
     name: 'UserLogin',
     data() {
+      return {
+        email: '',
+        password: ''
+      }
   },
   methods: {
     verifyLogin(){
       const path = '/api/login';
-      let loginFormData = new FormData();
-      loginFormData.append('userName', )
-      loginFormData.append('password', )
-    }
+
+      axios(path, {
+        email: this.email,
+        password: this.password
+        })
+        .then((res) =>
+          console.log(res)) 
+        .catch((error) => {
+          console.error(error);
+        })
+      }
   }
 }
 </script>
