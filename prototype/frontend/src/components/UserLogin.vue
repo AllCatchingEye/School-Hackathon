@@ -9,7 +9,7 @@
               <div class="field">
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
-                  <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+                  <input v-model="email" type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
                   <span class="icon is-small is-left">
                     <i class="fa fa-envelope"></i>
                   </span>
@@ -18,7 +18,7 @@
               <div class="field">
                 <label for="" class="label">Password</label>
                 <div class="control has-icons-left">
-                  <input type="password" placeholder="*******" class="input" required>
+                  <input v-model="password" type="password" placeholder="*******" class="input" required>
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
@@ -31,7 +31,7 @@
                 </label>
               </div>
               <div class="field">
-                <button class="button is-success">
+                <button class="button is-success" @click="verifyLogin()">
                   Login
                 </button>
               </div>
@@ -50,8 +50,15 @@ export default {
     data() {
   },
   methods: {
+    verifyLogin(){
+      const path = '/api/login';
+      let loginFormData = new FormData();
+      loginFormData.append('userName', email)
+      loginFormData.append('password', password)
+      
     }
-};
+  }
+}
 </script>
 
 <style>
