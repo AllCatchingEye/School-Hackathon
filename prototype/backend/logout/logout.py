@@ -10,7 +10,7 @@ Logout = Blueprint('logout', __name__)
 def logout():
     response = jsonify(
         category="Success",
-        message=f"Logged out {get_jwt_identity()} successful"), 200
+        message=f"Logged out {get_jwt_identity()} successful")
     unset_jwt_cookies(response)
     return response
  
