@@ -62,14 +62,14 @@ export default {
     verifyLogin(){
       const path = '/api/login';
 
-      axios(path, {
+      axios.post(path, {
         email: this.email,
         password: this.password
         })
         .then((res) =>
-          console.log(res)) 
+          console.log(res.data)) 
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         })
       }
   }
