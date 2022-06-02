@@ -31,7 +31,7 @@
                 </label>
               </div>
               <div class="field">
-                <button class="button is-success" @click="verifyLogin()">
+                <button class="button is-success" @click="">
                   Login
                 </button>
               </div>
@@ -52,7 +52,9 @@ export default {
   methods: {
     verifyLogin(){
       const path = '/api/login';
-
+      let loginFormData = new FormData();
+      loginFormData.append('userName', )
+      loginFormData.append('password', )
     }
   }
 }
