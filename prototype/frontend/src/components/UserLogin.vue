@@ -36,6 +36,7 @@
                 </button>
               </div>
             </form>
+            <pre id="jsonTest">hello</pre>
           </div>
         </div>
       </div>
@@ -55,22 +56,25 @@ export default {
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        test: ''
       }
   },
   methods: {
     verifyLogin(){
-      const path = '/api/login';
+      const path = 'http://localhost:80/api/login/';
+      this.test = JSON.stringify({email: this.email, password: this.password});
 
-      axios.post(path, {
-        email: this.email,
-        password: this.password
-        })
-        .then((res) =>
-          console.log(res.data)) 
-        .catch((error) => {
-          console.log(error);
-        })
+      axios.post(path, this.test, {
+        Headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err);
+      });;
       }
   }
 }
