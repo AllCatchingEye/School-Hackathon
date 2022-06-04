@@ -1,5 +1,4 @@
 <template>
-  <img alt="wir für schule logo" src="./assets/wirfuerschuleLogo.png">
   <UserLogin></UserLogin>
 </template>
 

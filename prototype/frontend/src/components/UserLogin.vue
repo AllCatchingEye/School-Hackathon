@@ -25,12 +25,6 @@
                 </div>
               </div>
               <div class="field">
-                <label for="" class="checkbox">
-                  <input type="checkbox">
-                Remember me
-                </label>
-              </div>
-              <div class="field">
                 <button class="button is-success" @click="verifyLogin()">
                   Login
                 </button>
@@ -41,8 +35,6 @@
         </div>
       </div>
     </div>
-    <p>{{this.email}}</p>
-    <p>{{this.password}}</p>
   </section>
   
 </template>
@@ -76,6 +68,7 @@ export default {
       })
       .then((result) => {        
         this.cookies.set("access_token_cookie", result.data.access_token);
+
       }).catch((err) => {
         console.log(err);
       });;
