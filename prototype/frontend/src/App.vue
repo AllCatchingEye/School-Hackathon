@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="HI to Your Vue.js App"/>
+  <div id="app">
+    <div class="fontHeadline">
+      <b><u>Benutzerübersicht</u></b>
+    </div>
+    <div class="box">
+      <UserList></UserList>
+    </div>
+  </div>
+  <label>© 2022 wirfuerschule.de</label><br>
+  <img alt="wir für schule logo" src="./assets/wirfuerschuleLogoSmall.png" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import UserList from './components/UserList.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    UserList
+  },
 }
 </script>
 
 <style lang="scss">
+.box {
+  box-shadow: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.fontHeadline {
+  font-size: xx-large;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
