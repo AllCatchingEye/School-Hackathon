@@ -5,7 +5,7 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <img src="../assets/wirfuerschuleLogo.png" alt="wirfuerschule logo"/>
-            <form action="" class="box">
+            <div class="box">
               <div class="field">
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
@@ -35,7 +35,7 @@
                   Login
                 </button>
               </div>
-            </form>
+            </div>
             <pre id="jsonTest">hello</pre>
           </div>
         </div>
@@ -49,29 +49,33 @@
 
 <script>
 import axios from 'axios';
+import {useCookies} from 'vue3-cookies';
 
 /* eslint-disable */
 export default {
+    setup() {
+      const { cookies } = useCookies();
+      return { cookies };
+    },
     name: 'UserLogin',
     data() {
       return {
         email: '',
-        password: '',
-        test: ''
+        password: ''
       }
   },
   methods: {
     verifyLogin(){
-      const path = 'http://localhost:80/api/login/';
+      const path = 'http://project.flask/api/login/';
       this.test = JSON.stringify({email: this.email, password: this.password});
-
+      const cookies = useCookies();
       axios.post(path, this.test, {
-        Headers: {
+        headers: {
           'Content-Type': 'application/json'
         }
       })
-      .then((result) => {
-        console.log(result);
+      .then((result) => {        
+        this.cookies.set("access_token_cookie", result.data.access_token);
       }).catch((err) => {
         console.log(err);
       });;
