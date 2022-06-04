@@ -30,7 +30,6 @@
                 </button>
               </div>
             </div>
-            <pre id="jsonTest">hello</pre>
           </div>
         </div>
       </div>
