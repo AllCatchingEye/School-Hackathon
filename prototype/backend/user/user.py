@@ -12,7 +12,7 @@ User = Blueprint('user', __name__)
 @auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID])
 def get_users():
     users = None
-    if get_jwt()["organisation"] == Config.ADMIN_ID:
+    if get_jwt()["role"] == Config.ADMIN_ID:
         # Only query admins and teacher of the same organization
         organisation = get_jwt()["organisation"]
         users = Usermodel.query.filter_by(organisation=organisation).join(Roles).all() 
