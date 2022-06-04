@@ -21,6 +21,7 @@ from blueprint_example.blueprint_example import blueprint_example
 from register.register import Register
 from login.login import Login
 from logout.logout import Logout
+from user.user import User as UserBlueprint
 
 from models.user import User
 from models.hackathon import Hackathon
@@ -45,6 +46,7 @@ app.register_blueprint(blueprint_example, url_prefix='/api/blueprint')
 app.register_blueprint(Register, url_prefix='/api/register')
 app.register_blueprint(Login, url_prefix='/api/login')
 app.register_blueprint(Logout, url_prefix='/api/logout')
+app.register_blueprint(UserBlueprint, url_prefix='/api/user')
 
 # Global error handle for schema violations 
 @app.errorhandler(400)
@@ -69,7 +71,6 @@ def refresh_expiring_jwts(response):
             access_token = create_access_token(identity=get_jwt_identity(), additional_claims={
             "role": get_jwt()["role"], 
             "organisation": get_jwt()["organisation"]})
-
             set_access_cookies(response, access_token)
         return response
     except (RuntimeError, KeyError):

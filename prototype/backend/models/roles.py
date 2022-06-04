@@ -1,6 +1,7 @@
 from app import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Roles(db.Model):
+class Roles(db.Model, SerializerMixin):
     __tablename__ = "roles"
 
     roleid = db.Column(db.Integer, primary_key=True, autoincrement=False)
