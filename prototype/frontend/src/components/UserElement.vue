@@ -21,10 +21,10 @@
                     </td>
                 </span>
                 <div class="buttonA">
-                <AppButton @click="editing" buttonText="Edit" />
+                <AppButton class="buttonUser" @click="editing" buttonText="Edit" />
                 <span v-if="edit == true">
-                <AppButton @click="update" buttonText="Update" />
-                <AppButton @click="cancel" buttonText="Cancel" />
+                <AppButton class="buttonUser" @click="update" buttonText="Update" />
+                <AppButton class="buttonUser" @click="cancel" buttonText="Cancel" />
                 </span>
                 </div>
             </span>
@@ -80,15 +80,31 @@ export default {
 
 
 <style scoped>
+
+.buttonUser{
+  background-color: rgba(130,0,205,0.83);
+  color: white;
+  margin-right: 1rem;
+}
+.buttonUser:hover{
+  background-color: rgba(130,0,205,0.83);
+  color: white;
+}
+
+.buttonUser:active{
+  color: white;
+}
 .box {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 1px color black;
-    width: 500px;
+    width: 59vw;
+    padding: 2rem;
     margin-top: 1%;
+    margin-bottom: 1%;
     vertical-align: middle;
     cursor: pointer;
+
 }
 
 .buttonA {
