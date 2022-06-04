@@ -35,9 +35,9 @@ def get_user(user_id):
     if get_jwt()["organisation"] == Config.ADMIN_ID:
         # Only query admins and teacher of the same organization
         organisation = get_jwt()["organisation"]
-        user = Usermodel.query.filter_by(organisation=organisation,userid=user_id).join(Roles).first() 
+        user = Usermodel.query.filter_by(organisation=organisation, userid=user_id).first() 
     else:
-        user = Usermodel.query.filter_by(userid=user_id).join(Roles).first()
+        user = Usermodel.query.filter_by(userid=user_id).first()
 
     return jsonify( category="Error", 
                     message=f"No User with id: {user_id}") if user is None else jsonify(
