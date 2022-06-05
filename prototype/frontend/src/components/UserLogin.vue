@@ -4,7 +4,7 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <img src="../assets/wirfuerschuleLogo.png" alt="wirfuerschule logo" />
+            <img src="../assets/wirfuerschuleLogo.png" alt="wirfuerschule logo"/>
             <div class="box">
               <div class="field">
                 <label for="" class="label">Email</label>
@@ -22,10 +22,12 @@
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
-                  <button class="button is-success" @click="verifyLogin()">
-                    Login
-                  </button>
                 </div>
+              </div>
+              <div class="field">
+                <button class="button is-success" @click="verifyLogin()">
+                  Login
+                </button>
               </div>
             </div>
           </div>
@@ -33,43 +35,43 @@
       </div>
     </div>
   </section>
-
+  
 </template>
 
 <script>
 import axios from 'axios';
-import { useCookies } from 'vue3-cookies';
+import {useCookies} from 'vue3-cookies';
 
 /* eslint-disable */
 export default {
-  setup() {
-    const { cookies } = useCookies();
-    return { cookies };
-  },
-  name: 'UserLogin',
-  data() {
-    return {
-      email: '',
-      password: ''
-    }
+    setup() {
+      const { cookies } = useCookies();
+      return { cookies };
+    },
+    name: 'UserLogin',
+    data() {
+      return {
+        email: '',
+        password: ''
+      }
   },
   methods: {
-    verifyLogin() {
-      const path = 'http://project.flask/api/login/';
-      this.test = JSON.stringify({ email: this.email, password: this.password });
+    verifyLogin(){
+      const path = '/api/login/';
+      this.test = JSON.stringify({email: this.email, password: this.password});
       const cookies = useCookies();
       axios.post(path, this.test, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
-        .then((result) => {
-          this.cookies.set("access_token_cookie", result.data.access_token);
+      .then((result) => {        
+        this.cookies.set("access_token_cookie", result.data.access_token);
 
-        }).catch((err) => {
-          console.log(err);
-        });;
-    }
+      }).catch((err) => {
+        console.log(err);
+      });;
+      }
   }
 }
 </script>

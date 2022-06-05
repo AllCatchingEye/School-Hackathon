@@ -1,42 +1,126 @@
 <template>
-  <div id="app">
-    <div class="fontHeadline">
-      <b><u>Benutzerübersicht</u></b>
+
+  <div class="data">
+    <div class="sidebar">
+      <div class="fontHeadline">
+        <img class="wirfuerschuleimg" alt="wir für schule logo" src="./assets/wirfuerschuleLogoweiß.png" />
+        <p class="headline" >Benutzerübersicht</p>
+      </div>
+        <p class="label">© 2022 wirfuerschule.de</p><br>
     </div>
-    <div class="box">
-      <UserList></UserList>
+    <div class="outerBoxOverview">
+      <div class="headlineUsers">
+        <p>Benutzer</p>
+      </div>
+      <div class="userDataHeader">
+        <div class="lineItem">
+          <p>Name</p>
+        </div>
+        <div class="lineItem">
+          <p>Schule</p>
+        </div>
+        <div class="lineItem">
+          <p>Rolle</p>
+        </div>
+        </div>
+      <div class="scrollableUsers">
+        <UserList></UserList>
+        <UserLogin></UserLogin>
+      </div>
     </div>
   </div>
-  <label>© 2022 wirfuerschule.de</label><br>
-  <img alt="wir für schule logo" src="./assets/wirfuerschuleLogoSmall.png" />
 </template>
 
 <script>
 import UserList from './components/UserList.vue'
+import UserLogin from './components/UserLogin.vue'
 export default {
   name: 'App',
   components: {
-    UserList
-  },
+    UserList,
+    UserLogin
+},
 }
 </script>
 
 <style lang="scss">
-.box {
-  box-shadow: 0px;
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+.data{
+  display: grid;
+  grid-template-columns: 30% 70%;
+  height: 100vh;
+  width:100%;
+  overflow: hidden;
+}
+.headlineUsers{
+  width: 59vw;
+  text-align: left;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: rgba(109,105,114,0.46) 1px solid;
+}
+.scrollableUsers{
+  overflow: scroll;
+  height: 80%;
+}
+.sidebar{
+  height:100%;
+  width:100%;
+  background-color: #000a38;
+}
+.wirfuerschuleimg{
+  align-items: center;
+  width:60%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.headline{
+  margin: 1rem;
+  padding-bottom: 1rem;
+  width: 80%;
+  text-align: left;
+  border-bottom: #d9d9d9 1px solid;
+}
+.outerBoxOverview {
+  vertical-align: top;
+  flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 100px;
-  margin-right: 100px;
+  background-color: rgba(81,139,183,0.15);
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.1em;
+  position: relative;
+  overflow: hidden;
 }
-
+.userDataHeader{
+  vertical-align: top;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 55vw;
+  flex-wrap: nowrap;
+  margin-bottom: 1rem;
+}
 .fontHeadline {
-  font-size: xx-large;
-}
-
-#app {
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  font-family: 'Roboto', sans-serif;
+  align-content: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
   text-align: center;
-  margin-top: 60px;
+  color: #d9d9d9;
+  align-items: center;
+}
+.label{
+  position: absolute;
+  bottom: 2rem;
+  width: 30%;
+  text-align: center;
+  color: #d9d9d9;
 }
 </style>

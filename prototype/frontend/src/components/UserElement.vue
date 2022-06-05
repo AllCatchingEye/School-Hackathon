@@ -1,11 +1,21 @@
 <template>
     <div class="box" @click="showFullUser">
         <h1>
-            <b>
+            <div class="userData">
+              <div class="lineItem">
                 {{ userName }}
-                {{ userLastName }} </b><br>
-            <span v-if="showDetails == true">
-                <span v-if="edit == true">
+                {{ userLastName }}
+              </div>
+              <div class="lineItem">
+                {{ userDetails[2] }}
+              </div>
+              <div class="lineItem">
+                {{ userDetails[3] }}
+              </div>
+            </div><br>
+            <span v-if="showDetails === true">
+                <!--              <span v-if="role == admin || role == superadmin"></span>    -->
+                <span v-if="edit === true">
                     <b>Vorname: </b><input type="text" :placeholder="userDetails[0]" class="input" required />
                     <b>Nachname: </b><input type="text" :placeholder="userDetails[1]" class="input" required />
                     <b>E-Mail: <input type="text" :placeholder="userDetails[2]" class="input" required /> </b>
@@ -20,10 +30,10 @@
                     </td>
                 </span>
                 <div class="buttonA">
-                <AppButton @click="editing" buttonText="Edit" />
-                <span v-if="edit == true">
-                <AppButton @click="update" buttonText="Update" />
-                <AppButton @click="cancel" buttonText="Cancel" />
+                  <AppButton class="buttonUser" @click="editing" buttonText="Edit" />
+                <span v-if="edit === true">
+                <AppButton class="buttonUser" @click="update" buttonText="Update" />
+                <AppButton class="buttonUser" @click="cancel" buttonText="Cancel" />
                 </span>
                 </div>
             </span>
@@ -60,7 +70,7 @@ export default {
     },
     methods: {
         showFullUser() {
-            if (this.edit == false) {
+            if (this.edit === false) {
                 this.showDetails = !this.showDetails
             }
         },
@@ -79,15 +89,44 @@ export default {
 
 
 <style scoped>
+
+.buttonUser{
+  background-color: rgba(130,0,205,0.83);
+  color: white;
+  margin-right: 1rem;
+}
+.buttonUser:hover{
+  background-color: rgba(130,0,205,0.83);
+  color: white;
+}
+
+.buttonUser:active{
+  color: white;
+}
+.userData{
+  vertical-align: top;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 55vw;
+  flex-wrap: nowrap;
+}
+
+.lineItem{
+}
+
 .box {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 1px color black;
-    width: 500px;
+    width: 59vw;
+    padding: 2rem;
     margin-top: 1%;
+    margin-bottom: 1%;
     vertical-align: middle;
     cursor: pointer;
+
 }
 .buttonA {
     display: flex;

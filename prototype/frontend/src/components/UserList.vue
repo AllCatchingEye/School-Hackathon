@@ -1,5 +1,5 @@
 <template>
-    <div class="Box">
+    <div class="OuterBox">
         <h3 v-for="name in fullNames" :key="name.last">
             <User :userName="name.first" :userLastName="name.last"
                 :userDetails="[name.email, name.password, name.organization, name.role]" />
@@ -70,6 +70,10 @@ export default {
 
 
 <style scoped>
+.OuterBox{
+  overflow: scroll;
+}
+
 #Box {
     display: flex;
     align-items: center;
