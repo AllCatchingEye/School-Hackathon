@@ -4,9 +4,9 @@
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="./assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline" >Benutzerübersicht</p>
+        <p class="headline">Benutzerübersicht</p>
       </div>
-        <p class="label">© 2022 wirfuerschule.de</p><br>
+      <p class="label">© 2022 wirfuerschule.de</p><br>
     </div>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
@@ -14,7 +14,10 @@
       </div>
       <div class="userDataHeader">
         <div class="lineItem">
-          <p>Name</p>
+          <p>Vorname</p>
+        </div>
+        <div class="lineItem">
+          <p>Nachname</p>
         </div>
         <div class="lineItem">
           <p>Schule</p>
@@ -22,7 +25,10 @@
         <div class="lineItem">
           <p>Rolle</p>
         </div>
+        <div class="lineItem">
+          <p>Edit</p> <!-- Space for the EditButton -->
         </div>
+      </div>
       <div class="scrollableUsers">
         <UserList></UserList>
         <UserLogin></UserLogin>
@@ -39,62 +45,70 @@ export default {
   components: {
     UserList,
     UserLogin
-},
+  },
 }
 </script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-.data{
+
+.data {
   display: grid;
   grid-template-columns: 30% 70%;
   height: 100vh;
-  width:100%;
+  width: 100%;
   overflow: hidden;
 }
-.headlineUsers{
+
+.headlineUsers {
   width: 59vw;
   text-align: left;
   align-items: flex-start;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: rgba(109,105,114,0.46) 1px solid;
+  border-bottom: rgba(109, 105, 114, 0.46) 1px solid;
 }
-.scrollableUsers{
+
+.scrollableUsers {
   overflow: scroll;
   height: 80%;
 }
-.sidebar{
-  height:100%;
-  width:100%;
+
+.sidebar {
+  height: 100%;
+  width: 100%;
   background-color: #000a38;
 }
-.wirfuerschuleimg{
+
+.wirfuerschuleimg {
   align-items: center;
-  width:60%;
+  width: 60%;
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-.headline{
+
+.headline {
   margin: 1rem;
   padding-bottom: 1rem;
   width: 80%;
   text-align: left;
   border-bottom: #d9d9d9 1px solid;
 }
+
 .outerBoxOverview {
   vertical-align: top;
   flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(81,139,183,0.15);
+  background-color: rgba(81, 139, 183, 0.15);
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.1em;
   position: relative;
   overflow: hidden;
 }
-.userDataHeader{
+
+.userDataHeader {
   vertical-align: top;
   flex-direction: row;
   display: flex;
@@ -104,6 +118,7 @@ export default {
   flex-wrap: nowrap;
   margin-bottom: 1rem;
 }
+
 .fontHeadline {
   font-size: 20px;
   letter-spacing: 0.05em;
@@ -116,7 +131,8 @@ export default {
   color: #d9d9d9;
   align-items: center;
 }
-.label{
+
+.label {
   position: absolute;
   bottom: 2rem;
   width: 30%;

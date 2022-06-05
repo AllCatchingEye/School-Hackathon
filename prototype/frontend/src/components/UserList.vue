@@ -1,9 +1,11 @@
 <template>
     <div class="OuterBox">
-        <h3 v-for="name in fullNames" :key="name.last">
-            <User :userName="name.first" :userLastName="name.last"
-                :userDetails="[name.email, name.password, name.organization, name.role]" />
-        </h3> <br>
+        <span v-if="isLoaded == true">
+            <h3 v-for="user in response" :key="user.email">
+                <User :userName="user.firstname" :userLastName="user.name"
+                    :userDetails="[user.email, user.organisations.name, user.roles.description]"/>
+            </h3> <br>
+        </span>
     </div>
 </template>
 
@@ -19,28 +21,21 @@ export default {
     components: {
         User,
     },
-    props: {
-        buttonText: {
-            type: String,
-            default: () => "Label",
-        },
-    },
     data() {
         return {
-            fullNames: [
-                { first: 'Anton', last: 'Aloah', email: 'anton@aloah.de', password: 'xyz', organization: 'Schule ABC', role: 'admin' },
-                { first: 'Bernd', last: 'Birne', email: 'bernd@birne.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-                { first: 'Caesar', last: 'Couch', email: 'caesar@couch.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-                { first: 'Dirk', last: 'Dentist', email: 'dirk@dentist.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-                { first: 'Egon', last: 'Epsilon', email: 'egon@e.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-                { first: 'Ferdinand', last: 'Fahrradreifen', email: 'ferdi@freifen.de', password: 'xyz', organization: 'Schule ABC', role: 'admin' },
-                { first: 'Gerhald', last: 'Gehörsturz', email: 'gerhald@gsturz.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-                { first: 'Heinrich', last: 'Halligalli', email: 'heini@galli.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-                { first: 'Imbissbude', last: 'Am Eck', email: 'imbissbude-am-eck@essen.to', password: 'xyz', organization: 'Schule ABC', role: 'superadmin' },
-            ],
+            // fullNames: [
+            //     { first: 'Anton', last: 'Aloah', email: 'anton@aloah.de', password: 'xyz', organization: 'Schule ABC', role: 'admin' },
+            //     { first: 'Bernd', last: 'Birne', email: 'bernd@birne.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
+            //     { first: 'Caesar', last: 'Couch', email: 'caesar@couch.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
+            //     { first: 'Dirk', last: 'Dentist', email: 'dirk@dentist.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
+            //     { first: 'Egon', last: 'Epsilon', email: 'egon@e.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
+            //     { first: 'Ferdinand', last: 'Fahrradreifen', email: 'ferdi@freifen.de', password: 'xyz', organization: 'Schule ABC', role: 'admin' },
+            //     { first: 'Gerhald', last: 'Gehörsturz', email: 'gerhald@gsturz.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
+            //     { first: 'Heinrich', last: 'Halligalli', email: 'heini@galli.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
+            //     { first: 'Imbissbude', last: 'Am Eck', email: 'imbissbude-am-eck@essen.to', password: 'xyz', organization: 'Schule ABC', role: 'superadmin' },
+            // ],
             isLoaded: false,
             response: {},
-            showAll: false,
         }
     },
     mounted() {
@@ -50,14 +45,11 @@ export default {
         getUserInfo() {
             const path = '/api/user/'
             axios.get(path, {
-                headers: {
-                    Cookie: this.cookies
-                }
+                withCredentials: true
             })
                 .then((response) => {
-                    this.isLoaded = true;
-                    console.log(response);
                     this.response = response.data;
+                    this.isLoaded = true;
                 })
                 .catch((err) => {
                     console.log(err);
@@ -70,8 +62,8 @@ export default {
 
 
 <style scoped>
-.OuterBox{
-  overflow: scroll;
+.OuterBox {
+    overflow: scroll;
 }
 
 #Box {
