@@ -12,6 +12,17 @@
       <div class="headlineUsers">
         <p>Benutzer</p>
       </div>
+      <div class="userDataHeader">
+        <div class="lineItem">
+          <p>Name</p>
+        </div>
+        <div class="lineItem">
+          <p>Schule</p>
+        </div>
+        <div class="lineItem">
+          <p>Rolle</p>
+        </div>
+        </div>
       <div class="scrollableUsers">
         <UserList></UserList>
       </div>
@@ -87,6 +98,17 @@ export default {
   position: relative;
   overflow: hidden;
 }
+.userDataHeader{
+  vertical-align: top;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 55vw;
+  flex-wrap: nowrap;
+  margin-bottom: 1rem;
+}
+
 
 .fontHeadline {
   font-size: 20px;

@@ -1,12 +1,21 @@
 <template>
     <div class="box" @click="showFullUser">
         <h1>
-            <b>
+            <div class="userData">
+              <div class="lineItem">
                 {{ userName }}
-                {{ userLastName }} </b><br>
-            <span v-if="showDetails == true">
+                {{ userLastName }}
+              </div>
+              <div class="lineItem">
+                {{ userDetails[2] }}
+              </div>
+              <div class="lineItem">
+                {{ userDetails[3] }}
+              </div>
+            </div><br>
+            <span v-if="showDetails === true">
                 <!--              <span v-if="role == admin || role == superadmin"></span>    -->
-                <span v-if="edit == true">
+                <span v-if="edit === true">
                     <b>Vorname: </b><input type="text" :placeholder="userDetails[0]" class="input" required />
                     <b>Nachname: </b><input type="text" :placeholder="userDetails[1]" class="input" required />
                     <b>E-Mail: <input type="text" :placeholder="userDetails[2]" class="input" required /> </b>
@@ -21,8 +30,8 @@
                     </td>
                 </span>
                 <div class="buttonA">
-                <AppButton class="buttonUser" @click="editing" buttonText="Edit" />
-                <span v-if="edit == true">
+                  <AppButton class="buttonUser" @click="editing" buttonText="Edit" />
+                <span v-if="edit === true">
                 <AppButton class="buttonUser" @click="update" buttonText="Update" />
                 <AppButton class="buttonUser" @click="cancel" buttonText="Cancel" />
                 </span>
@@ -34,6 +43,7 @@
 
 <script>
 import AppButton from "./ButtonThing.vue"
+
 export default {
     components: {
         AppButton,
@@ -61,7 +71,7 @@ export default {
     },
     methods: {
         showFullUser() {
-            if (this.edit == false) {
+            if (this.edit === false) {
                 this.showDetails = !this.showDetails
             }
         },
@@ -94,6 +104,19 @@ export default {
 .buttonUser:active{
   color: white;
 }
+.userData{
+  vertical-align: top;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 55vw;
+  flex-wrap: nowrap;
+}
+
+.lineItem{
+}
+
 .box {
     display: flex;
     align-items: center;
