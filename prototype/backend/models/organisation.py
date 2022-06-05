@@ -1,6 +1,7 @@
 from app import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Organisation(db.Model):
+class Organisation(db.Model, SerializerMixin):
     __tablename__ = "organisation"
 
     orgaid = db.Column(db.Integer, primary_key=True)

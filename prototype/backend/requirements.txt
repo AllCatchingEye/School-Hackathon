@@ -5,3 +5,5 @@ Flask-SQLAlchemy==2.5.1
 psycopg2-binary==2.9.3
 Flask-Migrate
 flask-expects-json
+Flask-JWT-Extended
+SQLAlchemy-serializer

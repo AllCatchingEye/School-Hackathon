@@ -1,5 +1,7 @@
 <template>
-    <button v-bind="$attrs" class="button is-warning"> {{ buttonText }} </button>
+    <dev class="frame">
+    <button v-bind="$attrs" class="button is-warning" size="small"> {{ buttonText }} </button>
+    </dev>
 </template>
 
 <script>
@@ -15,4 +17,7 @@ export default {
 
 
 <style scoped>
+    .frame {
+        margin-left: 5px;
+    }
 </style>

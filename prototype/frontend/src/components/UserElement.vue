@@ -5,7 +5,6 @@
                 {{ userName }}
                 {{ userLastName }} </b><br>
             <span v-if="showDetails == true">
-                <!--              <span v-if="role == admin || role == superadmin"></span>    -->
                 <span v-if="edit == true">
                     <b>Vorname: </b><input type="text" :placeholder="userDetails[0]" class="input" required />
                     <b>Nachname: </b><input type="text" :placeholder="userDetails[1]" class="input" required />
@@ -90,7 +89,6 @@ export default {
     vertical-align: middle;
     cursor: pointer;
 }
-
 .buttonA {
     display: flex;
     align-items: center;

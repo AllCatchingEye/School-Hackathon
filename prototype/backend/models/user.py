@@ -1,8 +1,9 @@
 from app import db
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy_serializer import SerializerMixin
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     userid = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -23,3 +24,14 @@ class User(db.Model):
         self.password = generate_password_hash(password, method='sha256')
         self.role = role
         self.organisation = organisation
+
+    @classmethod
+    def authenticate(cls, **kwargs):
+        email = kwargs.get('email')
+        password = kwargs.get('password')
+        user = cls.query.filter_by(email=email).first()
+        result = None
+        if user and check_password_hash(user.password, password):
+            result = user
+        return result
+    
