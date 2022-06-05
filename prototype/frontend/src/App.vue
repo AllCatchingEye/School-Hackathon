@@ -13,20 +13,18 @@
         <p>Benutzer</p>
       </div>
       <div class="userDataHeader">
-        <div class="lineItem">
-          <p>Vorname</p>
-        </div>
-        <div class="lineItem">
+        <div class="lineItem firstItem">
+          <p>Vorname </p>
           <p>Nachname</p>
         </div>
         <div class="lineItem">
-          <p>Schule</p>
+          <p>Email</p>
         </div>
         <div class="lineItem">
           <p>Rolle</p>
         </div>
         <div class="lineItem">
-          <p>Edit</p> <!-- Space for the EditButton -->
+          <p>Edit</p>
         </div>
       </div>
       <div class="scrollableUsers">
@@ -58,6 +56,21 @@ export default {
   height: 100vh;
   width: 100%;
   overflow: hidden;
+}
+
+.firstItem{
+  margin-left: 1rem;
+}
+
+.lineItem{
+  padding-left: 1rem;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-around;
+}
+
+.lineItem p{
+  margin-right: 2rem;
 }
 
 .headlineUsers {
@@ -111,9 +124,10 @@ export default {
 .userDataHeader {
   vertical-align: top;
   flex-direction: row;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: space-evenly;
+  grid-template-columns: 20% 10% 10% 10%;
+  justify-content: space-around;
   width: 55vw;
   flex-wrap: nowrap;
   margin-bottom: 1rem;

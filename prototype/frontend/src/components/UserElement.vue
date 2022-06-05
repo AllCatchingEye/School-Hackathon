@@ -1,20 +1,18 @@
 <template>
     <div class="box">
-        <h1>
+        <div>
             <div class="userData">
                 <div class="lineItem">
-                    <span v-if="edit === false">
+                    <span class="userNameList" v-if="edit === false">
+                      <div class="UserNameListTag">
                         {{ userName }}
-                    </span>
-                    <span v-else>
-                        <input type="text" :placeholder="userName" class="input" />
-                    </span>
-                </div>
-                <div class="lineItem">
-                    <span v-if="edit === false">
+                      </div>
+                      <div class="UserNameListTag">
                         {{ userLastName }}
+                      </div>
                     </span>
-                    <span v-else>
+                    <span class="userNameList" v-else>
+                      <input type="text" :placeholder="userName" class="input" />
                         <input type="text" :placeholder="userLastName" class="input" />
                     </span>
                 </div>
@@ -22,7 +20,7 @@
                     <span v-if="edit === false">
                         {{ userDetails[0] }}
                     </span>
-                    <span v-else>
+                    <span class="UserNameList" v-else>
                         <input type="text" :placeholder="userDetails[0]" class="input" />
                     </span>
                 </div>
@@ -30,12 +28,12 @@
                     <span v-if="edit === false">
                         {{ userDetails[1] }}
                     </span>
-                    <span v-else>
+                    <span class="UserNameList" v-else>
                         <input type="text" :placeholder="userDetails[1]" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
-                    <span v-if="edit === true">
+                    <span class="UserNameList" v-if="edit === true">
                         <button class="button is-success is-rounded" @click="update">Update</button>
                         <button class="button is-danger is-rounded" @click="cancel" buttonText="Cancel">Cancel</button>
                     </span>
@@ -44,7 +42,7 @@
                     </span>
                 </div>
             </div><br>
-        </h1>
+        </div>
     </div>
 </template>
 
@@ -104,24 +102,52 @@ export default {
     color: white;
 }
 
-.userData {
-    vertical-align: top;
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 55vw;
-    flex-wrap: nowrap;
+.UserNameListTag{
+  margin-right: 2rem;
+  margin-left: 2rem;
 }
 
-.lineItem {}
+.userData {
+  vertical-align: top;
+  flex-direction: row;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 25% 10% 10% 10%;
+  justify-content: space-around;
+  width: 55vw;
+  flex-wrap: nowrap;
+  margin-top: 1rem;
+}
 
+.userNameList{
+  width: 100%;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lineItem {
+  margin-right: 1rem;
+}
+
+.button{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.userName .input{
+  margin-right: 1rem;
+}
+
+.input{
+  width: 10vw;
+  margin-left: 1rem;
+}
 .box {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 59vw;
-    padding: 2rem;
     margin-top: 1%;
     margin-bottom: 1%;
     vertical-align: middle;

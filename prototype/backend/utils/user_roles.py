@@ -26,8 +26,8 @@ def auth_required(accepted_roles):
             verify_jwt_in_request()
             claims = get_jwt()
             print(claims)
-            return fn(*args, **kwargs) if claims["role"] in accepted_roles else jsonify(
+            return fn(*args, **kwargs) if claims["role"] in accepted_roles else (jsonify(
                 category= "Error",
-                message=f'No {claims["role"]}!'), 403           
+                message=f'No {claims["role"]}!'), 403)
         return decorator
     return wrapper

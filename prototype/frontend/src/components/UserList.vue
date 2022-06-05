@@ -1,6 +1,6 @@
 <template>
     <div class="OuterBox">
-        <span v-if="isLoaded == true">
+        <span class="innerBox" v-if="isLoaded === true">
             <h3 v-for="user in response" :key="user.email">
                 <User :userName="user.firstname" :userLastName="user.name"
                     :userDetails="[user.email, user.organisations.name, user.roles.description]"/>
@@ -66,9 +66,10 @@ export default {
     overflow: scroll;
 }
 
-#Box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.innerBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 </style>
