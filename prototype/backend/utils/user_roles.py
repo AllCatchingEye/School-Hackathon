@@ -13,7 +13,7 @@ from flask_jwt_extended import verify_jwt_in_request, get_jwt
 class Config(object):
     SUPERADMIN_ID = 420
     ADMIN_ID = 29
-    TEACHER = 12
+    TEACHER_ID = 12
     USER = 1
 
 # Here is a custom decorator that verifies the JWT is present in the request,

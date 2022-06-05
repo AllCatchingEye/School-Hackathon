@@ -6,7 +6,7 @@ from flask_expects_json import expects_json
 from models.organisation import Organisation
 from models.roles import Roles
 from utils.user_roles import auth_required, Config
-from flask_jwt_extended import create_access_token, get_jwt
+from flask_jwt_extended import get_jwt
 
 Register = Blueprint('register', __name__)
 register_schema = {
@@ -34,15 +34,15 @@ def create():
     result = jsonify(category = "Error", message="You are not allowed to send this request")
 
     data_request = request.get_json()
+    requested_role = data_request["role"]
     if get_jwt()["role"] == Config.ADMIN_ID:
-        if data_request["role"] in [Config.ADMIN_ID, Config.TEACHER]:
+        if requested_role in [Config.ADMIN_ID, Config.TEACHER_ID]:
             valid = True
     elif get_jwt()["role"] == Config.SUPERADMIN_ID:
-        if data_request["role"] in [Config.ADMIN_ID, Config.SUPERADMIN_ID]:
+        if requested_role in [Config.ADMIN_ID, Config.SUPERADMIN_ID]:
             valid = True
     if valid:
         user_data = request.get_json()
-        print(user_data)
         user = User(**user_data)
         db.session.add(user)
         try:
@@ -54,7 +54,7 @@ def create():
             db.session.rollback()
             result = jsonify(
                     category="Error",
-                    message=f"{e}")#, 409
+                    message=f"error while adding user{e}")#, 409
 
     return result
 
