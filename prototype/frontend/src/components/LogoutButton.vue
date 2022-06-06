@@ -40,9 +40,6 @@ export default {
 
         postrequestslut.onload = function(res){
             document.getElementById("succesfull-logout-msg").innerHTML = JSON.parse(res.explicitOriginalTarget.response).msg;
-            console.log(postrequestslut.status);
-            console.log(
-                JSON.parse(res.explicitOriginalTarget.response).msg
             );
         };
     }
