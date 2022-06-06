@@ -23,7 +23,7 @@ export default {
     props: {
         buttonText: {
             type: String,
-            default: () => "Abmelden",
+            default: () => "Abmelden"
         }
     },
     methods: {
@@ -39,8 +39,7 @@ export default {
         postrequestslut.send();
 
         postrequestslut.onload = function(res){
-            document.getElementById("succesfull-logout-msg").innerHTML = JSON.parse(res.explicitOriginalTarget.response).msg;
-            );
+            document.getElementById("succesfull-logout-msg").innerHTML = JSON.parse(res.explicitOriginalTarget.response).msg
         };
     }
   }
