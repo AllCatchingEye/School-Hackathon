@@ -30,7 +30,13 @@ export default {
     postLogout: function () {
         // source: https://reqbin.com/code/javascript/wzp2hxwh/javascript-post-request-example
         let postrequestslut = new XMLHttpRequest();
-        postrequestslut.open("POST", "/api/logout/");
+        postrequestslut.open("POST", "/api/logout/", true);
+
+        // source: https://stackoverflow.com/questions/692196/post-request-javascript
+        //Send the proper header information along with the request
+        postrequestslut.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        postrequestslut.send();
     }
   }
 };
