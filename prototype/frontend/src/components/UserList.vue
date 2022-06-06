@@ -62,9 +62,6 @@ export default {
 
 
 <style scoped>
-.OuterBox {
-    overflow: scroll;
-}
 
 .innerBox{
   display: flex;

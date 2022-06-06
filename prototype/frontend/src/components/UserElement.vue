@@ -47,11 +47,7 @@
 </template>
 
 <script>
-import AppButton from "./ButtonThing.vue"
 export default {
-    components: {
-        AppButton,
-    },
     props: {
         userName: {
             type: String,
