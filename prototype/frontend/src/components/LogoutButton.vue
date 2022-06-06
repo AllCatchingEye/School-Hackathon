@@ -1,4 +1,6 @@
 <template>
+    <label id="succesfull-logout-msg">
+    </label>
     <!-- designed by someone on the internet -->
     <div class="wrapper">
         <a class="cta"  @click="postLogout()">
