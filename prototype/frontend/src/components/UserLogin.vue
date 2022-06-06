@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     verifyLogin(){
-      const path = 'http://project.flask/api/login/';
+      const path = '/api/login/';
       this.test = JSON.stringify({email: this.email, password: this.password});
       const cookies = useCookies();
       axios.post(path, this.test, {
