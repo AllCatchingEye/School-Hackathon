@@ -7,6 +7,8 @@
             <img src="../assets/wirfuerschuleLogo.png" alt="wirfuerschule logo"/>
             <div class="box">
               <div class="field">
+                <label id="succesfull-logout-msg">
+                </label>
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
                   <input v-model="email" type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
