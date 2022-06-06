@@ -30,7 +30,7 @@ export default {
     postLogout: function () {
         // source: https://reqbin.com/code/javascript/wzp2hxwh/javascript-post-request-example
         let postrequestslut = new XMLHttpRequest();
-        postrequestslut.open("POST", "/logout/");
+        postrequestslut.open("POST", "/api/logout/");
     }
   }
 };
