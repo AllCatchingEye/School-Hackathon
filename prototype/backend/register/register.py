@@ -64,7 +64,10 @@ def add_to_db():
     """
         Add to DB
     """
-    """    role = Roles(420, "Superadmin", "Total Access")
+    """
+    role = Roles(420, "Superadmin", "Total Access")
+    db.session.add(role)
+    db.session.commit()
     role = Roles(29, "Admin", "Normal Access")
     db.session.add(role)
     db.session.commit()
@@ -77,7 +80,8 @@ def add_to_db():
 
     organisation = Organisation("MUCDAI")
     db.session.add(organisation)
-    db.session.commit()"""
+    db.session.commit()
+    """
 
     organisation = User("muc@dealer.com", "Mucdai","Mucdai", "muc", 420, 1)
     db.session.add(organisation)

@@ -6,6 +6,9 @@
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="./assets/wirfuerschuleLogoweiß.png" />
         <p class="headline">Benutzerübersicht</p>
       </div>
+      <div>
+        <LogoutButton></LogoutButton>
+      </div>
       <p class="label">© 2022 wirfuerschule.de</p><br>
     </div>
     <div class="outerBoxOverview">
@@ -38,11 +41,13 @@
 <script>
 import UserList from './components/UserList.vue'
 import UserLogin from './components/UserLogin.vue'
+import LogoutButton from './components/LogoutButton.vue'
 export default {
   name: 'App',
   components: {
     UserList,
-    UserLogin
+    UserLogin,
+    LogoutButton
   },
 }
 </script>
