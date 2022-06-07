@@ -34,6 +34,8 @@
         </div>
       </div>
     </div>
+    <div>
+    </div>
   </section>
   
 </template>
@@ -67,8 +69,10 @@ export default {
       })
       .then((result) => {        
         this.cookies.set("access_token_cookie", result.data.access_token);
-
       }).catch((err) => {
+        this.email = '';
+        this.password = '';
+        this.$router.push("/Login");
         console.log(err);
       });;
       }

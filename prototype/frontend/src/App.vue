@@ -36,13 +36,14 @@
 </template>
 
 <script>
-import UserList from './components/UserList.vue'
 import UserLogin from './components/UserLogin.vue'
+import UserList from './components/UserLogin.vue'
+
 export default {
   name: 'App',
   components: {
-    UserList,
-    UserLogin
+    UserLogin,
+    UserList
   },
 }
 </script>
@@ -109,22 +110,6 @@ export default {
 }
 
 .outerBoxOverview {
-  vertical-align: top;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(81, 139, 183, 0.15);
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.1em;
-  position: relative;
-  overflow: hidden;
-}
-
-.userDataHeader {
-  vertical-align: top;
-  flex-direction: row;
-  display: grid;
   align-items: center;
   grid-template-columns: 20% 10% 10% 10%;
   justify-content: space-around;
