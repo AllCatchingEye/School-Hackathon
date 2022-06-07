@@ -50,7 +50,8 @@ export default {
             if (postrequestslut.responseText.includes("successful"))
             document.getElementById("succesfull-logout-msg").innerHTML = "Abmeldung erfolgreich";
             this.loggedOut = true;
-            disableButton()
+            disableButton();
+            window.open("/", "_self");
           }
         };
 

@@ -141,10 +141,13 @@ export default {
   margin-left: 1rem;
 }
 .box {
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 59vw;
+    width: 56vw;
+    margin-right: 1%;
+    margin-left: 1%;
     margin-top: 1%;
     margin-bottom: 1%;
     vertical-align: middle;

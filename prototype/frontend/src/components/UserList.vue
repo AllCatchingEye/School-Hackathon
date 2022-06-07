@@ -63,6 +63,10 @@ export default {
 
 <style scoped>
 
+.OuterBox{
+  height:75vh;
+}
+
 .innerBox{
   display: flex;
   align-items: center;

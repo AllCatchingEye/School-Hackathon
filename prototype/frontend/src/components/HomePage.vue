@@ -59,10 +59,6 @@ import LogoutButton from './LogoutButton.vue';
   overflow: hidden;
 }
 
-.firstItem{
-  margin-left: 1rem;
-}
-
 .lineItem{
   padding-left: 1rem;
   flex-direction: row;
@@ -79,13 +75,17 @@ import LogoutButton from './LogoutButton.vue';
   text-align: left;
   align-items: flex-start;
   margin-bottom: 2rem;
+  margin-top: 2rem;
   padding-bottom: 1rem;
   border-bottom: rgba(109, 105, 114, 0.46) 1px solid;
 }
 
 .scrollableUsers {
   overflow: scroll;
-  height: 80%;
+  height: 75%;
+  width: 60vw;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .sidebar {
@@ -113,9 +113,10 @@ import LogoutButton from './LogoutButton.vue';
   align-items: center;
   grid-template-columns: 20% 10% 10% 10%;
   justify-content: space-around;
-  width: 55vw;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .fontHeadline {
@@ -137,6 +138,13 @@ import LogoutButton from './LogoutButton.vue';
   width: 30%;
   text-align: center;
   color: #d9d9d9;
+}
+
+.userDataHeader{
+  display: flex;
+  justify-content: space-evenly;
+  width: 60vw;
+
 }
 
 .label{
