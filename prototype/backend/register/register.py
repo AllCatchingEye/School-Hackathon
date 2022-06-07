@@ -64,22 +64,23 @@ def add_to_db():
     """
         Add to DB
     """
-    """    role = Roles(420, "Superadmin", "Total Access")
-    role = Roles(29, "Admin", "Normal Access")
-    db.session.add(role)
-    db.session.commit()
-    role = Roles(12, "Teacher", "Teacher Access")
-    db.session.add(role)
-    db.session.commit()
-    role = Roles(1, "User", "User Access")
-    db.session.add(role)
-    db.session.commit()
 
-    organisation = Organisation("MUCDAI")
-    db.session.add(organisation)
-    db.session.commit()"""
+    # role = Roles(420, "Superadmin", "Total Access")
+    # role = Roles(29, "Admin", "Normal Access")
+    # db.session.add(role)
+    # db.session.commit()
+    # role = Roles(12, "Teacher", "Teacher Access")
+    # db.session.add(role)
+    # db.session.commit()
+    # role = Roles(1, "User", "User Access")
+    # db.session.add(role)
+    # db.session.commit()
 
-    organisation = User("muc@dealer.com", "Mucdai","Mucdai", "muc", 420, 1)
+    # organisation = Organisation("MUCDAI")
+    # db.session.add(organisation)
+    # db.session.commit()
+
+    organisation = User("muc@dealer.com", "Mucdai","Mucdai", "muc", 29, 1)
     db.session.add(organisation)
     db.session.commit()
 

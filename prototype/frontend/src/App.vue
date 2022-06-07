@@ -1,7 +1,7 @@
 <template>
 
 <div id="app">
-<!-- <div class="data">
+<div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="./assets/wirfuerschuleLogoweiß.png" />
@@ -29,28 +29,20 @@
         </div>
       </div>
       <div class="scrollableUsers">
-        <UserList></UserList>
-        <UserLogin></UserLogin>
+        <router-view>
+        </router-view>
       </div>
     </div>
-  </div> -->
-  <router-link to="/login">Login</router-link>
-  <router-link to="/list">List</router-link>
-  <router-link to="/hello">Hello</router-link>
-  <router-view></router-view>
+  </div>
+  
 </div>
   
 </template>
 
 <script>
-// import UserLogin from './components/UserList.vue'
-// import UserList from './components/UserLogin.vue'
-
 export default {
   name: 'App',
   components: {
-    // UserLogin,
-    // UserList,
 },
 }
 </script>
