@@ -5,17 +5,17 @@ import UserList from "../components/UserList.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/login",
     name: "Login",
     component: UserLogin,
   },
   {
-    path: "/Hello",
+    path: "/hello",
     name: "Hello",
     component: HelloWorld,
   },
   {
-    path: "/List",
+    path: "/list",
     name: "List",
     component: UserList,
   }
@@ -23,7 +23,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: routes
 });
 
 export default router;

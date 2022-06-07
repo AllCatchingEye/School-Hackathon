@@ -1,6 +1,7 @@
 <template>
 
-  <div class="data">
+<div id="app">
+<!-- <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="./assets/wirfuerschuleLogoweiß.png" />
@@ -32,19 +33,25 @@
         <UserLogin></UserLogin>
       </div>
     </div>
-  </div>
+  </div> -->
+  <router-link to="/login">Login</router-link>
+  <router-link to="/list">List</router-link>
+  <router-link to="/hello">Hello</router-link>
+  <router-view></router-view>
+</div>
+  
 </template>
 
 <script>
-import UserLogin from './components/UserLogin.vue'
-import UserList from './components/UserLogin.vue'
+// import UserLogin from './components/UserList.vue'
+// import UserList from './components/UserLogin.vue'
 
 export default {
   name: 'App',
   components: {
-    UserLogin,
-    UserList
-  },
+    // UserLogin,
+    // UserList,
+},
 }
 </script>
 
