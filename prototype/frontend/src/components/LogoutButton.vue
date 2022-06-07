@@ -1,8 +1,8 @@
 <template>
-    <label id="succesfull-logout-msg">
-    </label>
+    <p id="succesfull-logout-msg">
+    </p>
     <!-- designed by someone on the internet -->
-    <div class="wrapper">
+    <div class="wrapper"  v-show="loggedOut === false" id="logOutButton">
         <a class="cta"  @click="postLogout()">
             <span>
                     {{ buttonText }}
@@ -28,6 +28,11 @@ export default {
             default: () => "Abmelden"
         }
     },
+  data() {
+    return {
+      loggedOut: false
+    }
+  },
     methods: {
     postLogout: function () {
         // source: https://reqbin.com/code/javascript/wzp2hxwh/javascript-post-request-example
@@ -40,9 +45,20 @@ export default {
 
         postrequestslut.send();
 
-        postrequestslut.onload = function(res){
-            document.getElementById("succesfull-logout-msg").innerHTML = JSON.parse(res.explicitOriginalTarget.response).msg
+        postrequestslut.onload = function(){
+          if (postrequestslut.readyState === 4) {
+            if (postrequestslut.responseText.includes("successful"))
+            document.getElementById("succesfull-logout-msg").innerHTML = "Abmeldung erfolgreich";
+            this.loggedOut = true;
+            disableButton()
+          }
         };
+
+      function disableButton() {
+        var x = document.getElementById("logOutButton");
+        console.log(x);
+          x.style.display = "none";
+      }
     }
   }
 };
@@ -53,6 +69,9 @@ export default {
 
 * {
   box-sizing: border-box;
+}
+#succesfull-logout-msg{
+  margin-bottom: 2vh;
 }
 
 .wrapper {
