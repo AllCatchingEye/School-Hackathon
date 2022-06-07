@@ -45,13 +45,6 @@
 </template>
 
 <script>
- login-routing
-export default {
-  name: 'App',
-  components: {
-},
-
-
 import LogoutButton from './components/LogoutButton.vue'
 export default {
   name: 'App',
