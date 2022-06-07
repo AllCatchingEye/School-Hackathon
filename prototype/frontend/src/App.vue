@@ -7,8 +7,13 @@
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="./assets/wirfuerschuleLogoweiß.png" />
         <p class="headline">Benutzerübersicht</p>
       </div>
-      <p class="label">© 2022 wirfuerschule.de</p><br>
-    </div>
+      <div class="sidebarBottom">
+        <div>
+          <LogoutButton></LogoutButton>
+        </div>
+        <p class="label">© 2022 wirfuerschule.de</p><br>
+        </div>
+      </div>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
         <p>Benutzer</p>
@@ -40,10 +45,20 @@
 </template>
 
 <script>
+ login-routing
 export default {
   name: 'App',
   components: {
 },
+
+
+import LogoutButton from './components/LogoutButton.vue'
+export default {
+  name: 'App',
+  components: {
+    LogoutButton
+  },
+ main
 }
 </script>
 
@@ -130,11 +145,16 @@ export default {
   align-items: center;
 }
 
-.label {
+.sidebarBottom{
   position: absolute;
   bottom: 2rem;
   width: 30%;
   text-align: center;
   color: #d9d9d9;
+}
+
+.label{
+  color: white;
+  margin-top: 2vh;
 }
 </style>
