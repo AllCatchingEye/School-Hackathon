@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import UserLogin from "../components/UserLogin.vue";
 import HelloWorld from "../components/HelloWorld.vue";
-import UserList from "../components/UserList.vue";
+import HomePage from "../components/HomePage.vue";
 
 const routes = [
   {
@@ -15,10 +15,10 @@ const routes = [
     component: HelloWorld,
   },
   {
-    path: "/list",
-    name: "List",
-    component: UserList,
-  }
+    path: "/home",
+    name: "Home",
+    component: HomePage,
+  },
 ];
 
 const router = createRouter({
