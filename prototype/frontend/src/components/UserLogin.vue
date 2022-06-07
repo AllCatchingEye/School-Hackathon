@@ -34,6 +34,8 @@
         </div>
       </div>
     </div>
+    <div>
+    </div>
   </section>
   
 </template>
@@ -56,21 +58,23 @@ export default {
       }
   },
   methods: {
-    verifyLogin(){
+    async verifyLogin(){
       const path = '/api/login/';
       this.test = JSON.stringify({email: this.email, password: this.password});
       const cookies = useCookies();
-      axios.post(path, this.test, {
+      await axios.post(path, this.test, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
       .then((result) => {        
         this.cookies.set("access_token_cookie", result.data.access_token);
-
+        this.$router.push('/home');
       }).catch((err) => {
+        this.email = '';
+        this.password = '';
         console.log(err);
-      });;
+      });
       }
   }
 }
