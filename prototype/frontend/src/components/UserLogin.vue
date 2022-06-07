@@ -6,6 +6,15 @@
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <img src="../assets/wirfuerschuleLogo.png" alt="wirfuerschule logo"/>
             <div class="box">
+              <article class="message is-danger" v-if="error">
+                <div class="message-header">
+                  <p>Error</p>
+                </div>
+                <div class="message-body">
+                  {{message}}
+                </div>
+              </article>
+              
               <div class="field">
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
@@ -54,7 +63,9 @@ export default {
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        error: false,
+        message: ""
       }
   },
   methods: {
@@ -73,7 +84,9 @@ export default {
       }).catch((err) => {
         this.email = '';
         this.password = '';
-        console.log(err);
+        this.error = true;
+        this.message = err.response.data.message;
+
       });
       }
   }
@@ -83,5 +96,8 @@ export default {
 <style>
 #login-form {
   background-color: whitesmoke;
+}
+label{
+  color:black;
 }
 </style>
