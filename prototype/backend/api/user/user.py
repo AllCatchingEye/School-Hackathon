@@ -48,3 +48,18 @@ def get_user(user_id):
                                 'roles', 
                                 'firstname', 
                                 'name')))
+
+@User.route('/<user_id>/', methods=["DELETE"])
+@auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID])
+def delete_user(user_id):        
+    user = None                        
+    if get_jwt()["organisation"] == Config.ADMIN_ID:
+        organisation = get_jwt()["organisation"]
+        user = Usermodel.query.filter_by(organisation=organisation, userid=user_id).delete()
+    else:
+        user = Usermodel.query.filter_by(userid=user_id).delete()
+    
+    db.session.commit()
+    return jsonify( category="Success", 
+                    message=f"User deleted {user_id}") if user else jsonify(category="Error", 
+                          message=f"No User with id: {user_id}")
