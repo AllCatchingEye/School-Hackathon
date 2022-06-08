@@ -1,9 +1,10 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from app import db
 from models.user import User as Usermodel
 from models.roles import Roles 
 from flask_jwt_extended import get_jwt
 from utils.user_roles import auth_required, Config
+from sqlalchemy.exc import InvalidRequestError,IntegrityError
 
 User = Blueprint('user', __name__)
 
@@ -53,8 +54,9 @@ def get_user(user_id):
 @auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID])
 def delete_user(user_id):        
     user = None                        
-    if get_jwt()["organisation"] == Config.ADMIN_ID:
-        organisation = get_jwt()["organisation"]
+    organisation = get_jwt()["organisation"]    
+    role = get_jwt()["role"]    
+    if role == Config.ADMIN_ID:
         user = Usermodel.query.filter_by(organisation=organisation, userid=user_id).delete()
     else:
         user = Usermodel.query.filter_by(userid=user_id).delete()
@@ -63,3 +65,31 @@ def delete_user(user_id):
     return jsonify( category="Success", 
                     message=f"User deleted {user_id}") if user else jsonify(category="Error", 
                           message=f"No User with id: {user_id}")
+
+
+
+@User.route('/<user_id>/', methods=["PATCH"])
+@auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID])
+def edit_user(user_id):        
+    user = None                
+    data_request = request.get_json()
+    organisation = get_jwt()["organisation"]    
+    role = get_jwt()["role"]    
+    
+    try:
+        if role == Config.ADMIN_ID:
+            user = Usermodel.query.filter_by(organisation=organisation, userid=user_id).update(data_request)
+        else:
+            user = Usermodel.query.filter_by(userid=user_id).update(data_request)
+        
+        db.session.commit()
+        result = jsonify( category="Success", 
+                    message=f"User edited") if user else jsonify(category="Error", 
+                          message=f"No User with id: {user_id}")
+    except (InvalidRequestError, IntegrityError) as e:
+        db.session.rollback()
+        result = (jsonify(
+                    category="Error",
+                    message=f"Error while editing user"), 409)
+
+    return result
