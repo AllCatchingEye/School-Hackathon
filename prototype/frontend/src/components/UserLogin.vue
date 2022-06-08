@@ -98,6 +98,6 @@ export default {
   background-color: whitesmoke;
 }
 label{
-  color:black;
+  color:black !important;
 }
 </style>
