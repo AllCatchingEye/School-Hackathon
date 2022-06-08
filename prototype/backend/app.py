@@ -17,18 +17,18 @@ app.config.from_object("config.Config")
 db = SQLAlchemy(app)
 
 # Blueprints for better folder structure
-from blueprint_example.blueprint_example import blueprint_example
-from register.register import Register
-from login.login import Login
-from logout.logout import Logout
-from user.user import User as UserBlueprint
+from api.register.register import Register
+from api.login.login import Login
+from api.logout.logout import Logout
+from api.user.user import User
 
-from models.user import User
-from models.hackathon import Hackathon
-from models.organisation import Organisation
-from models.roles import Roles
-from models.submission import Submission
-from models.token import Token
+# import database models
+from models.user import User as UserModel
+from models.hackathon import Hackathon as HackathonModel
+from models.organisation import Organisation as OrganisationModel
+from models.roles import Roles as RolesModel
+from models.submission import Submission as SubmissionModel
+from models.token import Token as TokenModel
 
 
 db.create_all()
@@ -42,11 +42,10 @@ jwt = JWTManager(app)
 CORS(app, resources={r'*': {'origins': '*'}})
 
 # Register needed Blueprints
-app.register_blueprint(blueprint_example, url_prefix='/api/blueprint')
 app.register_blueprint(Register, url_prefix='/api/register')
 app.register_blueprint(Login, url_prefix='/api/login')
 app.register_blueprint(Logout, url_prefix='/api/logout')
-app.register_blueprint(UserBlueprint, url_prefix='/api/user')
+app.register_blueprint(User, url_prefix='/api/user')
 
 # Global error handle for schema violations 
 @app.errorhandler(400)
