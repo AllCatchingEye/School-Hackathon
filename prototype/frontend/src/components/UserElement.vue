@@ -12,8 +12,8 @@
                       </div>
                     </span>
                     <span class="userNameList" v-else>
-                      <input type="text" :placeholder="userName" class="input" />
-                        <input type="text" :placeholder="userLastName" class="input" />
+                      <input type="text" :value="userName" class="input" />
+                        <input type="text" :value="userLastName" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -21,7 +21,7 @@
                         {{ userDetails[0] }}
                     </span>
                     <span class="UserNameList" v-else>
-                        <input type="text" :placeholder="userDetails[0]" class="input" />
+                        <input type="text" :value="userDetails[0]" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -29,11 +29,11 @@
                         {{ userDetails[1] }}
                     </span>
                     <span class="UserNameList" v-else>
-                        <input type="text" :placeholder="userDetails[1]" class="input" />
+                        <input type="text" :value="userDetails[1]" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
-                    <span class="UserNameList" v-if="edit === true">
+                    <span class="UserNameList button-wrapper" v-if="edit === true">
                         <button class="button is-success is-rounded" @click="update">Update</button>
                         <button class="button is-danger is-rounded" @click="cancel" buttonText="Cancel">Cancel</button>
                     </span>
@@ -41,7 +41,7 @@
                         <button class="button is-link is-rounded" @click="editing">Edit</button>
                     </span>
                 </div>
-            </div><br>
+            </div>
         </div>
     </div>
 </template>
@@ -113,7 +113,6 @@ export default {
   justify-content: space-around;
   width: 55vw;
   flex-wrap: nowrap;
-  margin-top: 1rem;
 }
 
 .userNameList{
@@ -122,7 +121,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
+
 .lineItem {
   margin-right: 1rem;
 }
@@ -146,10 +147,11 @@ export default {
     align-items: center;
     justify-content: center;
     width: 56vw;
-    margin-right: 1%;
-    margin-left: 1%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin: 0.5rem 1%;
     vertical-align: middle;
+    padding-top:0px;
+    padding-bottom:0px;
+    
 }
+
 </style>
