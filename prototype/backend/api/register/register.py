@@ -28,9 +28,6 @@ register_schema = {
 @auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID])
 @expects_json(register_schema) # Compares request schema with expected schema 
 def create():
-    """
-        Creates a teacher.
-    """
     valid = False
     result = jsonify(category = "Error", message="You are not allowed to send this request")
 
@@ -44,15 +41,16 @@ def create():
             valid = True
     if valid:
 
+        # Create User with new password
         user_data = request.get_json()
         user_password = secrets.token_urlsafe(5)
         user = User(**user_data, password=user_password)    
         
+        # Create E-Mail
         msg = Message('Hello', sender = 'no-reply.wirfuerschule@gmx.de', recipients = [user.email])
         msg.body = f"Hi {user.firstname}, Your Password: {user_password} arrived."
         msg.html = render_template('set-password.html', username=user.firstname, password=user_password)
             
-
         db.session.add(user)            
         try:
             db.session.commit()
@@ -60,6 +58,7 @@ def create():
             result = jsonify(
                     category="Success",
                     message=f"User: {user.name} with E-Mail: {user.email} created")#, 201
+            # Send E-Mail
             mail.send(msg)          
         except IntegrityError as e:
             db.session.rollback()
