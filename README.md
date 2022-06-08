@@ -25,6 +25,7 @@ Anton Stimmer <a href="MAILTO:stimmer.anton@hm.edu">stimmer.anton@hm.edu</a>
 ### Start in Development Mode
 - Start Protoype `docker-compose up` 
 - Go to `http://localhost:80`
+- If npm packages are missing this can be fixed by an npm install in the frontend container.
   
 ### Starting Production Build
 - Start Prototype `docker-compose -f docker-compose.yml -f docker-compose.production.yml up`  
