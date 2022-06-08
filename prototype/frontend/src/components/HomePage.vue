@@ -25,7 +25,7 @@
           <p>Email</p>
         </div>
         <div class="lineItem">
-          <p>Rolle</p>
+          <p>Organisation</p>
         </div>
         <div class="lineItem">
           <p>Edit</p>
