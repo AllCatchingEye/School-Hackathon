@@ -12,9 +12,14 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, get_jwt, create_access_token, get_jwt_identity, set_access_cookies
 from datetime import datetime, timedelta, timezone
 
+# Mail 
+from flask_mail import Mail
+
+
 app = Flask(__name__)
 app.config.from_object("config.Config")
 db = SQLAlchemy(app)
+mail= Mail(app)
 
 # Blueprints for better folder structure
 from api.register.register import Register
