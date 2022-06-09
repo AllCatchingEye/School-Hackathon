@@ -1,6 +1,7 @@
 from app import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Hackathon(db.Model):
+class Hackathon(db.Model, SerializerMixin):
     __tablename__ = "hackathon"
 
     hackathonid = db.Column(db.Integer, primary_key=True)
@@ -10,4 +11,4 @@ class Hackathon(db.Model):
 
     def __init__(self, description, organisationid):
         self.description = description
-        self.organisationid = organisatonid
+        self.organisationid = organisationid

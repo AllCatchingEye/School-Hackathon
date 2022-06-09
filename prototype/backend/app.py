@@ -21,6 +21,7 @@ from api.register.register import Register
 from api.login.login import Login
 from api.logout.logout import Logout
 from api.user.user import User
+from api.hackathon.hackathon import Hackathon
 
 # import database models
 from models.user import User as UserModel
@@ -46,6 +47,7 @@ app.register_blueprint(Register, url_prefix='/api/register')
 app.register_blueprint(Login, url_prefix='/api/login')
 app.register_blueprint(Logout, url_prefix='/api/logout')
 app.register_blueprint(User, url_prefix='/api/user')
+app.register_blueprint(Hackathon, url_prefix='/api/hackathon')
 
 # Global error handle for schema violations 
 @app.errorhandler(400)
