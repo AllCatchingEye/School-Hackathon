@@ -29,6 +29,20 @@ def get_hackathon(hackathon_id):
                                     'description'))) if hackathon else jsonify(category="Error", 
                                     message=f"No Hackathon with id: {hackathon_id}")
 
+
+
+@Hackathon.route('/<hackathon_id>/', methods=["DELETE"])
+@auth_required([Config.ADMIN_ID])
+def delete_user(hackathon_id):        
+    organisation = get_jwt()["organisation"]    
+    response = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).first()
+    db.session.delete(response)
+    db.session.commit()
+    return jsonify( category="Success", 
+                    message=f"Hackathon deleted {hackathon_id}") if response else jsonify(category="Error", 
+                          message=f"No Hackathon with id: {hackathon_id}")
+
+
 hackathon_schema = {
     'type': 'object',
     'properties': {
@@ -56,15 +70,3 @@ def create_hackathon():
     except:
         db.session.rollback()
     return result
-
-
-@Hackathon.route('/<hackathon_id>/', methods=["DELETE"])
-@auth_required([Config.ADMIN_ID])
-def delete_user(hackathon_id):        
-    organisation = get_jwt()["organisation"]    
-    response = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).first()
-    db.session.delete(response)
-    db.session.commit()
-    return jsonify( category="Success", 
-                    message=f"Hackathon deleted {hackathon_id}") if response else jsonify(category="Error", 
-                          message=f"No Hackathon with id: {hackathon_id}")
