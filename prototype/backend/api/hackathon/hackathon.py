@@ -62,7 +62,8 @@ def create_hackathon():
 @auth_required([Config.ADMIN_ID])
 def delete_user(hackathon_id):        
     organisation = get_jwt()["organisation"]    
-    response = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).delete()
+    response = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).first()
+    db.session.delete(response)
     db.session.commit()
     return jsonify( category="Success", 
                     message=f"Hackathon deleted {hackathon_id}") if response else jsonify(category="Error", 
