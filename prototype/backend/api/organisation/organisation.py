@@ -1,5 +1,3 @@
-from sqlite3 import IntegrityError
-from unicodedata import category
 from flask import Blueprint, jsonify, request
 from app import db
 from models.organisation import Organisation as Organisationmodel
@@ -14,7 +12,7 @@ Organisation = Blueprint('organisation', __name__)
 def add_organisation():
 
     org = request.get_json()
-    entry = Organisationmodel(org['name'])
+    entry = Organisationmodel(**org)
     db.session.add(entry)
     db.session.commit()
 
