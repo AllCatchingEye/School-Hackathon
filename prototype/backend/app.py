@@ -12,9 +12,14 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, get_jwt, create_access_token, get_jwt_identity, set_access_cookies
 from datetime import datetime, timedelta, timezone
 
+# Mail 
+from flask_mail import Mail
+
+
 app = Flask(__name__)
 app.config.from_object("config.Config")
 db = SQLAlchemy(app)
+mail= Mail(app)
 
 # Blueprints for better folder structure
 from api.register.register import Register
@@ -22,6 +27,7 @@ from api.login.login import Login
 from api.logout.logout import Logout
 from api.user.user import User
 from api.hackathon.hackathon import Hackathon
+from api.organisation.organisation import Organisation
 
 # import database models
 from models.user import User as UserModel
@@ -48,6 +54,7 @@ app.register_blueprint(Login, url_prefix='/api/login')
 app.register_blueprint(Logout, url_prefix='/api/logout')
 app.register_blueprint(User, url_prefix='/api/user')
 app.register_blueprint(Hackathon, url_prefix='/api/hackathon')
+app.register_blueprint(Organisation, url_prefix='/api/organisation')
 
 # Global error handle for schema violations 
 @app.errorhandler(400)

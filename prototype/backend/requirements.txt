@@ -7,3 +7,4 @@ Flask-Migrate
 flask-expects-json
 Flask-JWT-Extended
 SQLAlchemy-serializer
+Flask-Mail
