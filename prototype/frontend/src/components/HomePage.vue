@@ -3,13 +3,17 @@
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Benutzerübersicht</p>
+        <p class="headline" :style="{ 'fontsize': 5 }">Benutzerübersicht</p>
+        <p class="userInfo">Vorname: </p>
+        <p class="userInfo">Nachname: </p>
+        <p class="userInfo">E-Mail: </p>
       </div>
+
       <div class="sidebarBottom">
         <div>
           <LogoutButton></LogoutButton>
         </div>
-        <p class="label">© 2022 wirfuerschule.de</p><br>
+        <p>© 2022 <a href="https://wirfuerschule.de/">wirfuerschule.de</a></p><br>
       </div>
     </div>
     <div class="outerBoxOverview">
@@ -36,10 +40,10 @@
       </div>
       <div class="scrollableUsers">
         <div v-if="adding === true">
-                <div class="field">
-                    <AddUser></AddUser>
+          <div class="field">
+            <AddUser></AddUser>
             <button class="button is-danger is-rounded" @click="cancelAddUser">Cancel</button>
-                </div>
+          </div>
         </div>
         <UserList></UserList>
       </div>
@@ -130,6 +134,14 @@ export default {
   width: 80%;
   text-align: left;
   border-bottom: #d9d9d9 1px solid;
+}
+
+.userInfo {
+  margin: 1%;
+  padding-bottom: 1%;
+  width: 80%;
+  text-align: left;
+  font-size: medium;
 }
 
 .outerBoxOverview {

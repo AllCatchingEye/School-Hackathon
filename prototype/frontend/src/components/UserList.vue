@@ -3,7 +3,7 @@
         <span class="innerBox" v-if="isLoaded === true">
             <h3 v-for="user in response" :key="user.email">
                 <User :userName="user.firstname" :userLastName="user.name"
-                    :userDetails="[user.email, user.organisations.name, user.roles.description]"/>
+                    :userDetails="[user.email, user.organisations.name, user.roles]"/>
             </h3> <br>
         </span>
     </div>
