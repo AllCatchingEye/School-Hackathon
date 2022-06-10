@@ -3,6 +3,7 @@ from app import db
 from models.organisation import Organisation as Organisationmodel
 from utils.user_roles import auth_required, Config
 from sqlalchemy.exc import InvalidRequestError, IntegrityError
+from flask_jwt_extended import get_jwt
 
 Organisation = Blueprint('organisation', __name__)
 
@@ -54,3 +55,10 @@ def delete_organisation(organisation_id):
     return jsonify( category="Success.", 
                     message=f"Organisation with ID {organisation_id} successfully deleted.") if organisation_id is None else jsonify(category="Error", 
                     message=f"No organisation with ID: {organisation_id}")
+
+
+@Organisation.route('/own/', methods=['GET'])
+@auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID, Config.TEACHER_ID])
+def get_own_role():
+    return jsonify(Organisation= get_jwt()["organisation"])
+
