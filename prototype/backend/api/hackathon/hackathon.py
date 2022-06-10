@@ -15,7 +15,8 @@ def get_hackathons():
     organisation = get_jwt()["organisation"]
     hackathons = Hackathonmodel.query.filter_by(organisationid=organisation).all()
     return jsonify([hackathon.to_dict(only=(
-                                'hackathonid',
+                                'title',
+                                'hackathonid',                            
                                 'description')) for hackathon in hackathons])
 
 
@@ -25,6 +26,7 @@ def get_hackathon(hackathon_id):
     organisation = get_jwt()["organisation"]
     hackathon = Hackathonmodel.query.filter_by(organisationid=organisation,hackathonid=hackathon_id).first()
     return jsonify(hackathon.to_dict(only=(
+                                    'title',    
                                     'hackathonid', 
                                     'description'))) if hackathon else jsonify(category="Error", 
                                     message=f"No Hackathon with id: {hackathon_id}")
@@ -46,9 +48,10 @@ def delete_hackathon(hackathon_id):
 hackathon_schema = {
     'type': 'object',
     'properties': {
+        'title': {'type': 'string'},
         'description': {'type': 'string'}
     },
-    'required': ['description']
+    'required': ['description', 'title']
 }
 
 @Hackathon.route('/', methods=["POST"])
@@ -66,7 +69,7 @@ def create_hackathon():
         db.session.commit()
         result = (jsonify(
                     category="Success",
-                    message=f"Added Hackathon"), 201)
+                    message=f"Added Hackathon {hackathon.title}"), 201)
     except:
         db.session.rollback()
     return result

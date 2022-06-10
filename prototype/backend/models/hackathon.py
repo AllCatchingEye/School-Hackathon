@@ -10,7 +10,7 @@ class Hackathon(db.Model, SerializerMixin):
     description = db.Column(db.String(4200000), unique=False, nullable=False)
     title = db.Column(db.String(42000), unique=False, nullable=False)
 
-    token = db.relationship("Token", cascade="all, delete-orphan")
+    token = db.relationship("Token", cascade="all, delete-orphan",back_populates="hackathon")
 
     def __init__(self, title, description, organisationid):
         self.description = description
