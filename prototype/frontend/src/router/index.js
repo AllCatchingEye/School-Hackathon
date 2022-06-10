@@ -1,7 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
 import UserLogin from "../components/UserLogin.vue";
 import HelloWorld from "../components/HelloWorld.vue";
-import HomePage from "../components/HomePage.vue";
+import UserOverview from "../components/UserOverview.vue";
+import DashboardComponent from "../components/DashboardComponent.vue";
+import UserSurvey from "../components/UserSurvey.vue";
+import UserManagement from "../components/UserManagement.vue";
 
 const routes = [
   {
@@ -15,10 +18,25 @@ const routes = [
     component: HelloWorld,
   },
   {
-    path: "/home",
-    name: "Home",
-    component: HomePage,
+    path: "/user-overview",
+    name: "UserOverview",
+    component: UserOverview,
   },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: DashboardComponent,
+  },
+  {
+    path: "/survey",
+    name: "Survey",
+    component: UserSurvey,
+  },
+  {
+    path: "/management",
+    name: "Management",
+    component: UserManagement,
+  }
 ];
 
 const router = createRouter({
