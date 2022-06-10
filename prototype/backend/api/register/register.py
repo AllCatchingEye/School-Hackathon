@@ -29,7 +29,7 @@ register_schema = {
 @expects_json(register_schema) # Compares request schema with expected schema 
 def create():
     valid = False
-    result = jsonify(category = "Error", message="You are not allowed to send this request")
+    result = (jsonify(category = "Error", message="You are not allowed to send this request"), 409)
 
     data_request = request.get_json()
     requested_role = data_request["role"]
@@ -55,17 +55,18 @@ def create():
         try:
             db.session.commit()
                 
-            result = jsonify(
+            result = (jsonify(
                     category="Success",
-                    message=f"User: {user.name} with E-Mail: {user.email} created")#, 201
+                    message=f"User: {user.name} with E-Mail: {user.email} created"), 201)
             # Send E-Mail
             mail.send(msg)          
         except IntegrityError as e:
             db.session.rollback()
-            result = jsonify(
+            result = (jsonify(
                     category="Error",
-                    message=f"error while adding user{e}")#, 409
-
+                    message=f"error while adding user{e}"), 409)
+        except e:
+            print(e)
     return result
 
 # # Testing method to add something to database
