@@ -1,14 +1,19 @@
-from urllib import response
 from flask import Blueprint, jsonify, request
 from app import db
 from models.hackathon import Hackathon as Hackathonmodel
 from flask_jwt_extended import get_jwt
 from utils.user_roles import auth_required, Config
 from flask_expects_json import expects_json
-
+from sqlalchemy.exc import IntegrityError
+from urllib import parse
 
 Hackathon = Blueprint('hackathon', __name__)
 
+
+@Hackathon.route('/test/', methods=["GET"])
+def test():
+    return parse.quote_plus("unser cooler Hackathon")
+    
 @Hackathon.route('/', methods=["GET"])
 @auth_required([Config.ADMIN_ID])
 def get_hackathons():
@@ -49,9 +54,10 @@ hackathon_schema = {
     'type': 'object',
     'properties': {
         'title': {'type': 'string'},
-        'description': {'type': 'string'}
+        'description': {'type': 'string'},
+        'slug': {'type': 'string'}
     },
-    'required': ['description', 'title']
+    'required': ['description', 'title', 'slug']
 }
 
 @Hackathon.route('/', methods=["POST"])
@@ -69,7 +75,40 @@ def create_hackathon():
         db.session.commit()
         result = (jsonify(
                     category="Success",
-                    message=f"Added Hackathon {hackathon.title}"), 201)
+                    message=f"Added Hackathon {hackathon.title} with url: {hackathon.slug}"), 201)
+    except IntegrityError as e:
+        result = (jsonify(
+                    category="Error",
+                    message=f"Hackathon with slug {hackathon.slug} already exists"), 409)
+        db.session.rollback()
     except:
         db.session.rollback()
+
+    return result
+
+
+
+@Hackathon.route('/<hackathon_id>/', methods=["PATCH"])
+@auth_required([Config.ADMIN_ID])
+def edit_hackathon(hackathon_id):        
+    data_request = request.get_json()
+    organisation = get_jwt()["organisation"]    
+    data_request["slug"] = parse.quote_plus(data_request["slug"])
+    result = (jsonify(
+                category="Error",
+                message=f"Error while editing hackathon"), 409) 
+    try:
+        hackathon = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).update(data_request)
+        db.session.commit()
+        result = jsonify( category="Success", 
+                    message=f"Hackathon edited") if hackathon else jsonify(category="Error", 
+                            message=f"No Hackathon with id: {hackathon_id}")
+    except IntegrityError as e:
+        result = (jsonify(
+                    category="Error",
+                    message=f"Hackathon with slug {data_request['slug']} already exists"), 409)
+        db.session.rollback()
+    except:
+        db.session.rollback()
+
     return result
