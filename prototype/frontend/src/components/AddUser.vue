@@ -1,26 +1,43 @@
 <template>
     <div v-if="isLoadedRole === true">
         <div class="field">
-            <label class="label">Vorname</label>
-            <div class="control">
-                <input v-model="firstname" class="input" type="text" placeholder="e.g. Merlinöse" required>
+            <div class="control has-icons-left has-icons-right">
+                <label class="label">Vorname</label>
+                <div class="control">
+                    <input v-model="firstname" class="input is-medium" type="text" placeholder="e.g. Merlinöse"
+                        required>
+                    <span class="icon is-left">
+                        <i class="fas fa-solid fa-user"></i>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="field">
+    </div>
+    <div class="field">
+        <div class="control has-icons-left has-icons-right">
             <label class="label">Nachname</label>
             <div class="control">
-                <input v-model="name" class="input" type="text" placeholder="e.g. Scammerino" required>
+                <input v-model="name" class="input is-medium" type="text" placeholder="e.g. Scammerino" required>
+                <span class="icon is-left">
+                    <i class="fas fa-solid fa-user"></i>
+                </span>
             </div>
         </div>
-        <div class="field">
+    </div>
+    <div class="field">
+        <div class="control has-icons-left has-icons-right">
             <label class="label">Email</label>
             <div class="control">
-                <input v-model="email" class="input" type="email" placeholder="e.g. test@mail.de" required>
+                <input v-model="email" class="input is-medium" type="email" placeholder="e.g. test@mail.de" required>
+                <span class="icon is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
             </div>
         </div>
-        <div v-if="isLoadedRole === true">
-            <div class="field">
-                <label class="label">Rolle</label>
+    </div>
+    <div v-if="isLoadedRole === true">
+        <div class="field">
+            <label class="label">Rolle</label>
                 <div class="dropdown is-hoverable">
                     <div class="dropdown-trigger">
                         <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -40,20 +57,25 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
-        <div v-if="userRole == 420 && isLoadedRole === true">
-            <div class="field">
+    </div>
+    <div v-if="userRole == 420 && isLoadedRole === true">
+        <div class="field">
+            <div class="control has-icons-left has-icons-right">
                 <label class="label">Organisation</label>
                 <div class="control">
-                    <input v-model="organisation" class="input" type="number" placeholder="Schule XY" required>
+                    <input v-model="organisation" class="input is-medium" type="number" placeholder="e.g. 1" required>
+                    <span class="icon is-left">
+                        <i class="fas fa-solid fa-house"></i>
+                    </span>
                 </div>
             </div>
         </div>
-        <div>
-            <button class="button is-success is-rounded" @click="addNewUser">Submit</button>
-        </div>
     </div>
+    <div>
+        <button class="button is-success is-rounded" @click="addNewUser">Submit</button>
+    </div>
+    {{ organisation }}
 </template>
 
 <script>
@@ -75,11 +97,14 @@ export default {
             organisation: 0,
             roles: {},
             userRole: 0,
+            error: false,
+            message: '',
         }
     },
     mounted() {
         this.getRoleInfo();
         this.getCurrentRole();
+        this.getOrgaID();
     },
     methods: {
         changeRole(text, id) {
@@ -92,8 +117,6 @@ export default {
                 withCredentials: true
             })
                 .then((response) => {
-                    console.log('Recieved Data for Role as:');
-                    console.log(response.data);
                     this.roles = response.data;
                     this.isLoadedRole = true;
                 })
@@ -115,6 +138,19 @@ export default {
                     console.log(this.cookies)
                 })
         },
+        getOrgaID() {
+            const path = '/api/organisation/own/'
+            axios.get(path, {
+                withCredentials: true
+            })
+                .then((response) => {
+                    this.organisation = response.orgaid;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
+        },
         addNewUser() {
             const path = '/api/register/'
             this.user = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.organisation });
@@ -129,8 +165,12 @@ export default {
                 })
                     .catch((err) => {
                         console.log(err);
-                        alert(err.response.data.message);
+                        error = true;
+                        message = err.response.data.message;
                     });
+            }
+            if (error === true) {
+                alert(err.response.data.message);
             }
         }
     }
@@ -139,4 +179,8 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.input {
+    $input-radius: 4px;
+}
 </style>

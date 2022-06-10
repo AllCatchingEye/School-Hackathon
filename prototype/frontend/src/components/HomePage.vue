@@ -38,7 +38,7 @@
         <div v-if="adding === true">
                 <div class="field">
                     <AddUser></AddUser>
-            <button class="button is-danger is-rounded" @click="showAddUser">Cancel</button>
+            <button class="button is-danger is-rounded" @click="cancelAddUser">Cancel</button>
                 </div>
         </div>
         <UserList></UserList>
@@ -62,7 +62,10 @@ export default {
   },
   methods: {
     showAddUser() {
-      this.adding = !this.adding;
+      this.adding = true;
+    },
+    cancelAddUser() {
+      this.adding = false;
     },
   }
 }
