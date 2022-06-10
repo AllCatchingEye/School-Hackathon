@@ -1,5 +1,5 @@
 <template>
-<div class="data">
+  <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="../assets/wirfuerschuleLogoweiß.png" />
@@ -10,8 +10,8 @@
           <LogoutButton></LogoutButton>
         </div>
         <p class="label">© 2022 wirfuerschule.de</p><br>
-        </div>
       </div>
+    </div>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
         <p>Benutzer</p>
@@ -30,22 +30,42 @@
         <div class="lineItem">
           <p>Edit</p>
         </div>
+        <div class="lineItem">
+          <button class="button is-success is-rounded" @click="showAddUser">+</button>
+        </div>
       </div>
       <div class="scrollableUsers">
+        <div v-if="adding === true">
+                <div class="field">
+                    <AddUser></AddUser>
+            <button class="button is-danger is-rounded" @click="showAddUser">Cancel</button>
+                </div>
+        </div>
         <UserList></UserList>
       </div>
     </div>
   </div>
-  </template>
+</template>
 
 <script>
 /* eslint-disable */
 import UserList from './UserList.vue';
 import LogoutButton from './LogoutButton.vue';
+import AddUser from './AddUser.vue';
 
-    export default {
-        components: { UserList, LogoutButton },
+export default {
+  components: { UserList, LogoutButton, AddUser },
+  data() {
+    return {
+      adding: false,
     }
+  },
+  methods: {
+    showAddUser() {
+      this.adding = !this.adding;
+    },
+  }
+}
 </script>
 
 <style lang="scss">
@@ -59,14 +79,14 @@ import LogoutButton from './LogoutButton.vue';
   overflow: hidden;
 }
 
-.lineItem{
+.lineItem {
   padding-left: 1rem;
   flex-direction: row;
   display: flex;
   justify-content: space-around;
 }
 
-.lineItem p{
+.lineItem p {
   margin-right: 2rem;
 }
 
@@ -132,7 +152,7 @@ import LogoutButton from './LogoutButton.vue';
   align-items: center;
 }
 
-.sidebarBottom{
+.sidebarBottom {
   position: absolute;
   bottom: 2rem;
   width: 30%;
@@ -140,14 +160,14 @@ import LogoutButton from './LogoutButton.vue';
   color: #d9d9d9;
 }
 
-.userDataHeader{
+.userDataHeader {
   display: flex;
   justify-content: space-evenly;
   width: 60vw;
 
 }
 
-.label{
+.label {
   color: white;
   margin-top: 2vh;
 }
