@@ -22,3 +22,9 @@ def get_roles():
                                     'description',
                                     'permission'
                                     )) for role in roles])
+
+@Role.route('/own/', methods=['GET'])
+@auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID, Config.TEACHER_ID])
+def get_own_role():
+    return jsonify(role= get_jwt()["role"])
+
