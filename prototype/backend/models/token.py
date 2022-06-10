@@ -6,7 +6,9 @@ class Token(db.Model):
     tokenid = db.Column(db.Integer, primary_key=True)
     hackathonid = db.Column(db.Integer, db.ForeignKey('hackathon.hackathonid'))
     hackathon = db.relationship('Hackathon')
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid'))
 
-    def __init__(self, tokenid, hackathonid):
+    def __init__(self, userid, tokenid, hackathonid):
         self.tokenid = tokenid
         self.hackathonid = hackathonid
+        self.userid = userid
