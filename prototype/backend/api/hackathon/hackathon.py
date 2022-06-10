@@ -33,7 +33,7 @@ def get_hackathon(hackathon_id):
 
 @Hackathon.route('/<hackathon_id>/', methods=["DELETE"])
 @auth_required([Config.ADMIN_ID])
-def delete_user(hackathon_id):        
+def delete_hackathon(hackathon_id):        
     organisation = get_jwt()["organisation"]    
     response = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).first()
     db.session.delete(response)
