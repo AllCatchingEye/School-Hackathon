@@ -80,7 +80,7 @@ export default {
       })
       .then((result) => {        
         this.cookies.set("access_token_cookie", result.data.access_token);
-        this.$router.push('/home');
+        this.$router.push('/user-overview');
       }).catch((err) => {
         this.email = '';
         this.password = '';
