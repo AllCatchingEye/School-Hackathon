@@ -9,10 +9,6 @@ from urllib import parse
 
 Hackathon = Blueprint('hackathon', __name__)
 
-
-@Hackathon.route('/test/', methods=["GET"])
-def test():
-    return parse.quote_plus("unser cooler Hackathon")
     
 @Hackathon.route('/', methods=["GET"])
 @auth_required([Config.ADMIN_ID])
