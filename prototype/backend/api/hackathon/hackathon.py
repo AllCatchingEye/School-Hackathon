@@ -21,7 +21,8 @@ def get_hackathons():
     hackathons = Hackathonmodel.query.filter_by(organisationid=organisation).all()
     return jsonify([hackathon.to_dict(only=(
                                 'title',
-                                'hackathonid',                            
+                                'hackathonid',     
+                                'slug',                       
                                 'description')) for hackathon in hackathons])
 
 
@@ -33,6 +34,7 @@ def get_hackathon(hackathon_id):
     return jsonify(hackathon.to_dict(only=(
                                     'title',    
                                     'hackathonid', 
+                                    'slug',
                                     'description'))) if hackathon else jsonify(category="Error", 
                                     message=f"No Hackathon with id: {hackathon_id}")
 
