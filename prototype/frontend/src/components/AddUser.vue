@@ -54,11 +54,6 @@
             <button class="button is-success is-rounded" @click="addNewUser">Submit</button>
         </div>
     </div>
-    Vorname : {{ firstname }} <br>
-    Nachname: {{ name }} <br>
-    Email: {{ email }} <br>
-    Rolle: {{ role }} <br>
-    Orga: {{ organisation }}
 </template>
 
 <script>
@@ -134,6 +129,7 @@ export default {
                 })
                     .catch((err) => {
                         console.log(err);
+                        alert(err.response.data.message);
                     });
             }
         }
