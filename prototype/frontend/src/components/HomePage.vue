@@ -32,6 +32,9 @@
           <p>Organisation</p>
         </div>
         <div class="lineItem">
+          <p>Rolle</p>
+        </div>
+        <div class="lineItem">
           <p>Edit</p>
         </div>
         <div class="lineItem">

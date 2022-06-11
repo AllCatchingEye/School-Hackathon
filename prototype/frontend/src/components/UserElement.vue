@@ -63,7 +63,40 @@
                                 <input type="text" class="input is-small" :value="organisation" disabled />
                             </div>
                         </span>
-
+                    </div>
+                    <div class="lineItem">
+                        <span v-if="edit === false">
+                            {{ roleDescription }}
+                        </span>
+                        <span class="UserNameList" v-else>
+                            <div v-if="role >= 29">
+                                <div class="field">
+                                    <div class="dropdown is-hoverable">
+                                        <div class="dropdown-trigger">
+                                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                                <span> {{ roleDescription }} </span>
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                            <div class="dropdown-content">
+                                                <a v-for="rolle in roles" :key="rolle.roleid">
+                                                    <a href="#" class="dropdown-item"
+                                                        @click="changeRole(rolle.description, rolle.roleid)">
+                                                        {{ rolle.description }}
+                                                    </a>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <input type="text" class="input is-small" :value="organisation" disabled />
+                            </div>
+                        </span>
                     </div>
                     <div class="lineItem">
                         <span class="UserNameList button-wrapper" v-if="edit === true">
@@ -120,6 +153,7 @@ export default {
             email: this.userDetails[0],
             organisation: this.userDetails[1].name,
             role: this.userDetails[2].roleid,
+            roleDescription: this.userDetails[2].description,
             error: false,
             message: '',
             toDelete: {},
@@ -127,10 +161,12 @@ export default {
             choosenOrgaID: this.userDetails[1].orgaid,
             choosenOrga: this.userDetails[1].name,
             userid: this.userDetails[3],
+            roles: {},
         }
     },
     mounted() {
         this.getOrgaInfo();
+        this.getRoleInfo();
     },
     methods: {
         editing() {
@@ -182,6 +218,23 @@ export default {
                 .then((response) => {
                     this.isLoadedOrga = true;
                     this.orgas = response.data;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies);
+                })
+        },
+        changeRole(name, id) {
+            this.role = id;
+            this.roleDescription = name;
+        },
+        getRoleInfo() {
+            const path = '/api/role/'
+            axios.get(path, {
+                withCredentials: true
+            })
+                .then((response) => {
+                    this.roles = response.data;
                 })
                 .catch((err) => {
                     console.log(err);
