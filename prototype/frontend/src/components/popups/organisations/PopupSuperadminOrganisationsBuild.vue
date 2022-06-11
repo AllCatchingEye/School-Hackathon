@@ -14,14 +14,12 @@
         <div class="row">
           <div class="PopupQuestion">
               <div class="PopupInput">
-                <input v-model="id" type="text" autocomplete="off" required />
-                <label>Organisations ID</label>
+                <input v-model="name" type="text" autocomplete="off" required />
+                <label>Name</label>
               </div>
             </div>
             <div class="PopupQuestion">
               <div class="PopupInput">
-                <input v-model="name" type="text" autocomplete="off" required />
-                <label>Organisations Name</label>
               </div>
             </div>
           </div>
@@ -54,7 +52,7 @@ export default {
   },
   data() {
     return {
-      id: '',
+      orgaid: '',
       name: '',
       result: '',
       displayQuestions: true,
@@ -66,8 +64,9 @@ export default {
   methods: {
     async addHackathon(){
       const path = '/api/organisation/';
-      this.test = JSON.stringify({id: this.id, name: this.name});
+      this.test = JSON.stringify({name: this.name});
       await axios.post(path,this.test, {
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
         }
