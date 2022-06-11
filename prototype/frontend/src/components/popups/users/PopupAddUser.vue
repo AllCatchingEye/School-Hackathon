@@ -59,7 +59,6 @@
           <div class="row" v-if="userRole === 420 && isLoadedOrga === true">
             <div class="PopupQuestion">
               <div class="PopupInput">
-                <label class="label">Organisation</label>
                   <div class="dropdown is-hoverable">
                     <div class="dropdown-trigger">
                       <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
