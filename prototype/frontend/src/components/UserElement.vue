@@ -32,7 +32,7 @@
                     </div>
                     <div class="lineItem">
                         <span v-if="edit === false">
-                            {{ userDetails[1] }}
+                            {{ userDetails[1].name }}
                         </span>
                         <span class="UserNameList" v-else>
                             <div v-if="role === 420 && isLoadedOrga === true">
@@ -118,13 +118,15 @@ export default {
             name: this.userLastName,
             firstname: this.userName,
             email: this.userDetails[0],
-            organisation: this.userDetails[1],
+            organisation: this.userDetails[1].name,
             role: this.userDetails[2].roleid,
             error: false,
             message: '',
             toDelete: {},
             toUpdate: {},
-            choosenOrga: this.userDetails[1],
+            choosenOrgaID: this.userDetails[1].orgaid,
+            choosenOrga: this.userDetails[1].name,
+            userid: this.userDetails[3],
         }
     },
     mounted() {
@@ -134,38 +136,43 @@ export default {
         editing() {
             this.edit = !this.edit
         },
+        changeOrga(name, id) {
+            this.organisation = name;
+            this.choosenOrgaID = id;
+            this.choosenOrga = name;
+        },
         update() {
-            const path = '/api/user/update/';
-            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.organisation });
-            // axios.post(path, this.toUpdate, {
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     withCredentials: true
-            // })
-            //     .catch((err) => {
-            //         console.log(err);
-            //         error = true;
-            //         message = err.response.data.message;
-            //     });
+            const path = '/api/user/' + this.userid + '/';
+            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.orgaid });
+            axios.patch(path, this.toUpdate, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            })
+                .catch((err) => {
+                    console.log(err);
+                    error = true;
+                    message = err.response.data.message;
+                });
         },
         cancel() {
             this.edit = false
         },
         deleteUser() {
-            const path = '/api/user/delete/';
-            this.toDelete = JSON.stringify({ email: this.userInfo[0] });
-            // axios.post(path, this.toDelete, {
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     withCredentials: true
-            // })
-            //     .catch((err) => {
-            //         console.log(err);
-            //         error = true;
-            //         message = err.response.data.message;
-            //     });
+            const path = '/api/user/' + this.userid + '/';
+            //this.toDelete = JSON.stringify({ email: this.userInfo[0] });
+            axios.delete(path, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            })
+                .catch((err) => {
+                    console.log(err);
+                    error = true;
+                    message = err.response.data.message;
+                });
         },
         getOrgaInfo() {
             const path = '/api/organisation/'
