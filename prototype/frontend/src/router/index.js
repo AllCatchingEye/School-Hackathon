@@ -1,21 +1,15 @@
 import { createWebHistory, createRouter } from "vue-router";
-import UserLogin from "../components/UserLogin.vue";
-import HelloWorld from "../components/HelloWorld.vue";
-import UserOverview from "../components/UserOverview.vue";
-import DashboardComponent from "../components/DashboardComponent.vue";
-import UserSurvey from "../components/UserSurvey.vue";
-import UserManagement from "../components/UserManagement.vue";
+import UserLogin from "../components/dashboards/users/UserLogin.vue";
+import UserOverview from "../components/dashboards/users/UserOverview.vue";
+import DashboardComponent from "../components/dashboards/main/DashboardMain.vue";
+import HackathonOverview from "../components/dashboards/hackathons/HackathonOverview";
+
 
 const routes = [
   {
-    path: "/",
+    path: "/login",
     name: "Login",
     component: UserLogin,
-  },
-  {
-    path: "/hello",
-    name: "Hello",
-    component: HelloWorld,
   },
   {
     path: "/user-overview",
@@ -23,19 +17,14 @@ const routes = [
     component: UserOverview,
   },
   {
-    path: "/dashboard",
+    path: "/hackathons",
+    name: "Hackathons",
+    component: HackathonOverview,
+  },
+  {
+    path: "/",
     name: "Dashboard",
     component: DashboardComponent,
-  },
-  {
-    path: "/survey",
-    name: "Survey",
-    component: UserSurvey,
-  },
-  {
-    path: "/management",
-    name: "Management",
-    component: UserManagement,
   }
 ];
 

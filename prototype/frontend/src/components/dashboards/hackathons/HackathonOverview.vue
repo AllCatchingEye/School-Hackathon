@@ -65,7 +65,7 @@ import HomeButton from "./HomeButton";
           this.openPopup = true
         },
         goHome(){
-          this.$router.push('/home');
+          this.$router.push('/');
         }
       }
     }

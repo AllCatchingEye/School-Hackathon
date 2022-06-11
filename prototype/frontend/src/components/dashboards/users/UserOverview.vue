@@ -2,7 +2,7 @@
 <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../assets/wirfuerschuleLogoweiß.png" />
+        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
         <p class="headline">Benutzerübersicht</p>
       </div>
       <div class="sidebarBottom">
@@ -13,17 +13,38 @@
         </div>
       </div>
     <div class="outerBoxOverview">
-      <div>Survey Dummy</div>
+      <div class="headlineUsers">
+        <p>Benutzer</p>
+      </div>
+      <div class="userDataHeader">
+        <div class="lineItem firstItem">
+          <p>Vorname </p>
+          <p>Nachname</p>
+        </div>
+        <div class="lineItem">
+          <p>Email</p>
+        </div>
+        <div class="lineItem">
+          <p>Organisation</p>
+        </div>
+        <div class="lineItem">
+          <p>Edit</p>
+        </div>
+      </div>
+      <div class="scrollableUsers">
+        <UserList></UserList>
+      </div>
     </div>
   </div>
   </template>
 
-  <script>
+<script>
 /* eslint-disable */
-import LogoutButton from './LogoutButton.vue';
+import UserList from './UserList.vue';
+import LogoutButton from './../../LogoutButton.vue';
 
     export default {
-        components: { LogoutButton },
+        components: { UserList, LogoutButton },
     }
 </script>
 
@@ -60,9 +81,9 @@ import LogoutButton from './LogoutButton.vue';
 }
 
 .scrollableUsers {
-  overflow: scroll;
+  overflow-x: hidden;
   height: 75%;
-  width: 60vw;
+  width: 63vw;
   margin-top: 5%;
   margin-bottom: 5%;
 }
@@ -91,11 +112,12 @@ import LogoutButton from './LogoutButton.vue';
 .outerBoxOverview {
   align-items: center;
   grid-template-columns: 20% 10% 10% 10%;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 5%;
 }
 
 .fontHeadline {
