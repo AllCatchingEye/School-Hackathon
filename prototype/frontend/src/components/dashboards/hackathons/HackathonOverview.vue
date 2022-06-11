@@ -51,7 +51,7 @@
 import UserList from './HackathonList';
 import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "./openPopupButton";
-import PopupAdminHackathonBuild from "../../Popups/Hackathon/PopupAdminHackathonBuild";
+import PopupAdminHackathonBuild from "../../popups/hackathons/PopupAdminHackathonBuild";
 import HomeButton from "./HomeButton";
 
     export default {
