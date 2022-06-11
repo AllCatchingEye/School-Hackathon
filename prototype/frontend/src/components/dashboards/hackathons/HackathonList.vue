@@ -2,8 +2,8 @@
     <div class="OuterBox">
         <span class="innerBox" v-if="isLoaded === true">
             <h3 v-for="user in response" :key="user.hackathonid">
-                <User :userName="user.title"
-                    :userDetails="[user.slug, user.description]"/>
+                <User :HackathonName="user.title"
+                    :HackathonDetails="[user.slug, user.description]"/>
             </h3> <br>
         </span>
     </div>
