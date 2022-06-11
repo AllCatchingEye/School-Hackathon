@@ -27,12 +27,10 @@
                                 <div class="control">
                                     <input v-model="email" class="input is-small" type="email"
                                         :placeholder="this.email">
-                                    <span class="icon is-left">
-                                        <i class="fas fa-envelope"></i>
-                                    </span>
                                 </div>
                             </div>
                         </div>
+                      </div>
                         <div class="lineItem">
                             <span v-if="edit === false">
                                 {{ userDetails[1].name }}
@@ -115,15 +113,16 @@
                                     </span>
                                 </button>
                             </span>
-                            <span v-else>
+                          <div class="lineItem">
+                            <span  v-if="!edit">
                                 <button class="button is-link is-rounded" @click="editing">Edit</button>
                             </span>
+                          </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -192,6 +191,8 @@ export default {
                     'Content-Type': 'application/json'
                 },
                 withCredentials: true
+            }).then(() => {
+              this.editing()
             })
                 .catch((err) => {
                     console.log(err);
@@ -204,7 +205,6 @@ export default {
         },
         deleteUser() {
             const path = '/api/user/' + this.userid + '/';
-            //this.toDelete = JSON.stringify({ email: this.userInfo[0] });
             axios.delete(path, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -216,7 +216,6 @@ export default {
                     error = true;
                     message = err.response.data.message;
                 });
-            //this.userDeleted = true;
             location.reload();
         },
         getOrgaInfo() {
@@ -281,7 +280,7 @@ export default {
     flex-direction: row;
     display: grid;
     align-items: center;
-    grid-template-columns: 25% 10% 10% 10%;
+    grid-template-columns: 25% 10% 10% 10% 10%;
     justify-content: space-around;
     width: 55vw;
     flex-wrap: nowrap;

@@ -108,9 +108,10 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 
 .PopupOuter{
+  position: fixed;
   width:100vw;
   height: 100vh;
-  background-color: #ffffffad;
+  background-color: #ffffff57;
   backdrop-filter: blur(30px);
   display: flex;
   align-items: center;

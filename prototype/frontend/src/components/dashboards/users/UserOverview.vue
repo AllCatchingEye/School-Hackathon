@@ -1,10 +1,19 @@
 <template>
+  <div v-if="openPopup">
+    <PopupAddUser></PopupAddUser>
+  </div>
 <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
         <p class="headline">Benutzerübersicht</p>
       </div>
+      <div @click="goHome()">
+        <HomeButton></HomeButton>
+      </div>
+        <div @click="changePopup()">
+          <OpenPopupButton :type="'Nutzer'"></OpenPopupButton>
+        </div>
       <div class="sidebarBottom">
         <div>
           <LogoutButton></LogoutButton>
@@ -45,26 +54,31 @@
 /* eslint-disable */
 import UserList from './UserList.vue';
 import LogoutButton from './../../LogoutButton.vue';
+import OpenPopupButton from "../OpenPopupButton";
+import PopupAddUser from "../../popups/users/PopupAddUser";
+import HomeButton from "../HomeButton";
+
 
 export default {
-  components: { UserList, LogoutButton, AddUser },
+  components: {PopupAddUser, UserList, LogoutButton, OpenPopupButton, HomeButton},
   data() {
     return {
       adding: false,
       rendered: false,
+      openPopup: false
     }
   },
   methods: {
-    showAddUser() {
-      this.adding = true;
-    },
-    cancelAddUser() {
-      this.adding = false;
+    changePopup(){
+      this.openPopup = true;
     },
     rerender(value) {
       this.rendered = value;
       this.$forceUpdate();
       location.reload();
+    },
+    goHome(){
+      this.$router.push('/');
     }
   }
 }
@@ -79,6 +93,10 @@ export default {
   height: 100vh;
   width: 100%;
   overflow: hidden;
+}
+
+.firstItem{
+  margin-left: 2%;
 }
 
 .lineItem{
@@ -167,6 +185,7 @@ export default {
   display: flex;
   justify-content: space-evenly;
   width: 60vw;
+  grid-template-columns: 25% 10% 10% 10% 10%;
 
 }
 
@@ -174,4 +193,25 @@ export default {
   color: white;
   margin-top: 2vh;
 }
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+}
+
+a{
+  color: #d9d9d9;
+}
+
+
 </style>
