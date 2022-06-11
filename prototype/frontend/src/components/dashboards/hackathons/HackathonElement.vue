@@ -1,33 +1,33 @@
 <template>
     <div class="box">
         <div>
-            <div class="userData">
+            <div class="HackathonData">
                 <div class="lineItem">
                     <span  v-if="edit === false">
-                        {{ userName }}
+                        {{ HackathonName }}
                     </span>
-                    <span class="UserNameList" v-else>
-                      <input type="text" :value="userName" class="input" />
-                    </span>
-                </div>
-                <div class="lineItem">
-                    <span v-if="edit === false">
-                        {{ userDetails[0] }}
-                    </span>
-                    <span class="UserNameList" v-else>
-                        <input type="text" :value="userDetails[0]" class="input" />
+                    <span class="HackathonNameList" v-else>
+                      <input type="text" :value="HackathonName" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
                     <span v-if="edit === false">
-                        {{ userDetails[1] }}
+                        {{ HackathonDetails[0] }}
                     </span>
-                    <span class="UserNameList" v-else>
-                        <input type="text" :value="userDetails[1]" class="input" />
+                    <span class="HackathonNameList" v-else>
+                        <input type="text" :value="HackathonDetails[0]" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
-                    <span class="UserNameList button-wrapper" v-if="edit === true">
+                    <span v-if="edit === false">
+                        {{ HackathonDetails[1] }}
+                    </span>
+                    <span class="HackathonNameList" v-else>
+                        <input type="text" :value="HackathonDetails[1]" class="input" />
+                    </span>
+                </div>
+                <div class="lineItem">
+                    <span class="HackathonNameList button-wrapper" v-if="edit === true">
                         <button class="button is-success is-rounded" @click="update">Update</button>
                         <button class="button is-danger is-rounded" @click="cancel" buttonText="Cancel">Cancel</button>
                     </span>
@@ -44,15 +44,11 @@
 
 export default {
     props: {
-        userName: {
+        HackathonName: {
             type: String,
             default: () => "Place",
         },
-        userLastName: {
-            type: String,
-            default: () => "Holder"
-        },
-        userDetails: {
+        HackathonDetails: {
             type: Array,
             default: () => []
         },
@@ -93,12 +89,12 @@ export default {
     color: white;
 }
 
-.UserNameListTag{
+.HackathonNameListTag{
   margin-right: 2rem;
   margin-left: 2rem;
 }
 
-.userData {
+.HackathonData {
   vertical-align: top;
   flex-direction: row;
   display: grid;
@@ -110,7 +106,7 @@ export default {
   flex-wrap: nowrap;
 }
 
-.userNameList{
+.HackathonNameList{
   width: 100%;
   margin-right: 1rem;
   display: flex;
@@ -148,7 +144,7 @@ export default {
   margin-bottom: 1rem;
 }
 
-.userName .input{
+.HackathonName .input{
   margin-right: 1rem;
 }
 
