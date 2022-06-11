@@ -52,8 +52,8 @@
 
 <script>
 import axios from 'axios';
-import PopupButtonApprove from "./PopupButtonApprove";
-import PopupButtonDisapprove from "./PopupButtonDisapprove";
+import PopupButtonApprove from "../PopupButtonApprove";
+import PopupButtonDisapprove from "../PopupButtonDisapprove";
 import { useCookies } from 'vue3-cookies';
 axios.defaults.withCredentials = true;
 
