@@ -1,118 +1,124 @@
 <template>
-    <div class="box">
-        <div>
-            <div class="userData">
-                <div class="lineItem">
-                    <span class="userNameList" v-if="edit === false">
-                        <div class="UserNameListTag">
-                            {{ userName }}
-                        </div>
-                        <div class="UserNameListTag">
-                            {{ userLastName }}
-                        </div>
-                    </span>
-                    <span class="userNameList" v-else>
-                        <input v-model="firstname" type="text" class="input is-small" :placeholder="this.firstname" />
-                        <input v-model="name" type="text" class="input is-small" :placeholder="this.name" />
-                    </span>
-                </div>
-                <div class="lineItem">
-                    <span v-if="edit === false">
-                        {{ userDetails[0] }}
-                    </span>
-                    <div class="UserNameList" v-else>
-                        <div class="control has-icons-left has-icons-right">
-                            <div class="control">
-                                <input v-model="email" class="input is-small" type="email" :placeholder="this.email">
-                                <span class="icon is-left">
-                                    <i class="fas fa-envelope"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+    <div v-if="userDeleted === false">
+        <div class="box">
+            <div>
+                <div class="userData">
                     <div class="lineItem">
-                        <span v-if="edit === false">
-                            {{ userDetails[1].name }}
+                        <span class="userNameList" v-if="edit === false">
+                            <div class="UserNameListTag">
+                                {{ userName }}
+                            </div>
+                            <div class="UserNameListTag">
+                                {{ userLastName }}
+                            </div>
                         </span>
-                        <span class="UserNameList" v-else>
-                            <div v-if="role === 420 && isLoadedOrga === true">
-                                <div class="field">
-                                    <div class="dropdown is-hoverable">
-                                        <div class="dropdown-trigger">
-                                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                                <span> {{ choosenOrga }} </span>
-                                                <span class="icon is-small">
-                                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                            <div class="dropdown-content">
-                                                <a v-for="organisation in orgas" :key="organisation.orgaid">
-                                                    <a href="#" class="dropdown-item"
-                                                        @click="changeOrga(organisation.name, organisation.orgaid)">
-                                                        {{ organisation.name }}
-                                                    </a>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div v-else>
-                                <input type="text" class="input is-small" :value="organisation" disabled />
-                            </div>
+                        <span class="userNameList" v-else>
+                            <input v-model="firstname" type="text" class="input is-small"
+                                :placeholder="this.firstname" />
+                            <input v-model="name" type="text" class="input is-small" :placeholder="this.name" />
                         </span>
                     </div>
                     <div class="lineItem">
                         <span v-if="edit === false">
-                            {{ roleDescription }}
+                            {{ userDetails[0] }}
                         </span>
-                        <span class="UserNameList" v-else>
-                            <div v-if="role >= 29">
-                                <div class="field">
-                                    <div class="dropdown is-hoverable">
-                                        <div class="dropdown-trigger">
-                                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                                <span> {{ roleDescription }} </span>
-                                                <span class="icon is-small">
-                                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                            <div class="dropdown-content">
-                                                <a v-for="rolle in roles" :key="rolle.roleid">
-                                                    <a href="#" class="dropdown-item"
-                                                        @click="changeRole(rolle.description, rolle.roleid)">
-                                                        {{ rolle.description }}
+                        <div class="UserNameList" v-else>
+                            <div class="control has-icons-left has-icons-right">
+                                <div class="control">
+                                    <input v-model="email" class="input is-small" type="email"
+                                        :placeholder="this.email">
+                                    <span class="icon is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lineItem">
+                            <span v-if="edit === false">
+                                {{ userDetails[1].name }}
+                            </span>
+                            <span class="UserNameList" v-else>
+                                <div v-if="role === 420 && isLoadedOrga === true">
+                                    <div class="field">
+                                        <div class="dropdown is-hoverable">
+                                            <div class="dropdown-trigger">
+                                                <button class="button" aria-haspopup="true"
+                                                    aria-controls="dropdown-menu">
+                                                    <span> {{ choosenOrga }} </span>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                                <div class="dropdown-content">
+                                                    <a v-for="organisation in orgas" :key="organisation.orgaid">
+                                                        <a href="#" class="dropdown-item"
+                                                            @click="changeOrga(organisation.name, organisation.orgaid)">
+                                                            {{ organisation.name }}
+                                                        </a>
                                                     </a>
-                                                </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div v-else>
-                                <input type="text" class="input is-small" :value="organisation" disabled />
-                            </div>
-                        </span>
-                    </div>
-                    <div class="lineItem">
-                        <span class="UserNameList button-wrapper" v-if="edit === true">
-                            <button class="button is-success is-rounded" @click="update">Update</button>
-                            <button class="button is-danger is-rounded" @click="cancel"
-                                buttonText="Cancel">Cancel</button>
-                            <button class="button is-danger is-rounded is-outlined" @click="deleteUser">
-                                <span>Delete</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-times"></i>
-                                </span>
-                            </button>
-                        </span>
-                        <span v-else>
-                            <button class="button is-link is-rounded" @click="editing">Edit</button>
-                        </span>
+                                <div v-else>
+                                    <input type="text" class="input is-small" :value="organisation" disabled />
+                                </div>
+                            </span>
+                        </div>
+                        <div class="lineItem">
+                            <span v-if="edit === false">
+                                {{ roleDescription }}
+                            </span>
+                            <span class="UserNameList" v-else>
+                                <div v-if="role >= 29">
+                                    <div class="field">
+                                        <div class="dropdown is-hoverable">
+                                            <div class="dropdown-trigger">
+                                                <button class="button" aria-haspopup="true"
+                                                    aria-controls="dropdown-menu">
+                                                    <span> {{ roleDescription }} </span>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                                <div class="dropdown-content">
+                                                    <a v-for="rolle in roles" :key="rolle.roleid">
+                                                        <a href="#" class="dropdown-item"
+                                                            @click="changeRole(rolle.description, rolle.roleid)">
+                                                            {{ rolle.description }}
+                                                        </a>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <input type="text" class="input is-small" :value="organisation" disabled />
+                                </div>
+                            </span>
+                        </div>
+                        <div class="lineItem">
+                            <span class="UserNameList button-wrapper" v-if="edit === true">
+                                <button class="button is-success is-rounded" @click="update">Update</button>
+                                <button class="button is-danger is-rounded" @click="cancel"
+                                    buttonText="Cancel">Cancel</button>
+                                <button class="button is-danger is-rounded is-outlined" @click="deleteUser">
+                                    <span>Delete</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </button>
+                            </span>
+                            <span v-else>
+                                <button class="button is-link is-rounded" @click="editing">Edit</button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,6 +168,7 @@ export default {
             choosenOrga: this.userDetails[1].name,
             userid: this.userDetails[3],
             roles: {},
+            userDeleted: false,
         }
     },
     mounted() {
@@ -209,6 +216,8 @@ export default {
                     error = true;
                     message = err.response.data.message;
                 });
+            //this.userDeleted = true;
+            location.reload();
         },
         getOrgaInfo() {
             const path = '/api/organisation/'

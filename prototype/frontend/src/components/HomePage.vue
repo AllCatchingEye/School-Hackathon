@@ -44,7 +44,7 @@
       <div class="scrollableUsers">
         <div v-if="adding === true">
           <div class="field">
-            <AddUser></AddUser>
+            <AddUser @name="rerender"></AddUser>
             <button class="button is-danger is-rounded" @click="cancelAddUser">Cancel</button>
           </div>
         </div>
@@ -59,12 +59,14 @@
 import UserList from './UserList.vue';
 import LogoutButton from './LogoutButton.vue';
 import AddUser from './AddUser.vue';
+import { render } from 'vue';
 
 export default {
   components: { UserList, LogoutButton, AddUser },
   data() {
     return {
       adding: false,
+      rendered: false,
     }
   },
   methods: {
@@ -74,6 +76,11 @@ export default {
     cancelAddUser() {
       this.adding = false;
     },
+    rerender(value) {
+      this.rendered = value;
+      this.$forceUpdate();
+      location.reload();
+    } 
   }
 }
 </script>

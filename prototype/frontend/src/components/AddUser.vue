@@ -74,7 +74,8 @@
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                     <div class="dropdown-content">
                         <a v-for="organisation in orgas" :key="organisation.orgaid">
-                            <a href="#" class="dropdown-item" @click="changeOrga(organisation.name, organisation.orgaid)">
+                            <a href="#" class="dropdown-item"
+                                @click="changeOrga(organisation.name, organisation.orgaid)">
                                 {{ organisation.name }}
                             </a>
                         </a>
@@ -112,6 +113,7 @@ export default {
             message: '',
             choosenOrga: 'none',
             orgas: {},
+            responseCode: 0,
         }
     },
     mounted() {
@@ -189,6 +191,7 @@ export default {
             if (this.organisation === 0 || this.name === '' || this.firstname === '' || this.role === 0) {
                 alert('Please provide all the information needed');
             } else {
+                //location.reload();
                 axios.post(path, this.user, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -200,11 +203,12 @@ export default {
                         error = true;
                         message = err.response.data.message;
                     });
+                setTimeout(() => location.reload(), 200);
             }
             if (error === true) {
                 alert(err.response.data.message);
             }
-        }
+        },
     }
 }
 </script>
