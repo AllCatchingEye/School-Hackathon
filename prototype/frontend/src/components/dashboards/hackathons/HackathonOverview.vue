@@ -1,11 +1,20 @@
 <template>
+  <div v-if="openPopup">
+    <PopupAdminHackathonBuild></PopupAdminHackathonBuild>
+  </div>
 <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Benutzerübersicht</p>
+        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
+        <p class="headline">Hackathonübersicht</p>
       </div>
-      <div class="sidebarBottom">
+      <div @click="goHome()">
+        <HomeButton></HomeButton>
+      </div>
+      <div @click="changePopup()">
+          <OpenPopupButton></OpenPopupButton>
+      </div>
+      <div  v-if="!openPopup" class="sidebarBottom">
         <div>
           <LogoutButton></LogoutButton>
         </div>
@@ -14,18 +23,17 @@
       </div>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
-        <p>Benutzer</p>
+        <p>Hackathons</p>
       </div>
       <div class="userDataHeader">
-        <div class="lineItem firstItem">
-          <p>Vorname </p>
-          <p>Nachname</p>
+        <div class="lineItem">
+          <p>Name</p>
         </div>
         <div class="lineItem">
-          <p>Email</p>
+          <p>slug</p>
         </div>
         <div class="lineItem">
-          <p>Organisation</p>
+          <p>Beschreibung</p>
         </div>
         <div class="lineItem">
           <p>Edit</p>
@@ -40,15 +48,30 @@
 
 <script>
 /* eslint-disable */
-import UserList from './UserList.vue';
-import LogoutButton from './LogoutButton.vue';
+import UserList from './HackathonList';
+import LogoutButton from './../../LogoutButton.vue';
+import OpenPopupButton from "./OpenPopupButton";
+import PopupAdminHackathonBuild from "../../popups/hackathons/PopupAdminHackathonBuild";
+import HomeButton from "./HomeButton";
 
     export default {
-        components: { UserList, LogoutButton },
+        components: {HomeButton, PopupAdminHackathonBuild, OpenPopupButton, UserList, LogoutButton },
+      data() {
+        return {
+          openPopup: false,
+        }},
+      methods: {
+        changePopup(){
+          this.openPopup = true
+        },
+        goHome(){
+          this.$router.push('/home');
+        }
+      }
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .data {
@@ -111,7 +134,7 @@ import LogoutButton from './LogoutButton.vue';
 
 .outerBoxOverview {
   align-items: center;
-  grid-template-columns: 20% 10% 10% 10%;
+  grid-template-columns: 15% 10% 10% 10%;
   justify-content: space-around;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
@@ -141,11 +164,28 @@ import LogoutButton from './LogoutButton.vue';
 }
 
 .userDataHeader{
-  display: flex;
+  display: grid;
   justify-content: space-evenly;
   width: 60vw;
+  grid-template-columns: 25% 10% 10% 10%;
 
 }
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+}
+
 
 .label{
   color: white;

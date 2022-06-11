@@ -1,9 +1,9 @@
 <template>
     <div class="OuterBox">
         <span class="innerBox" v-if="isLoaded === true">
-            <h3 v-for="user in response" :key="user.email">
-                <User :userName="user.firstname" :userLastName="user.name"
-                    :userDetails="[user.email, user.organisations.name, user.roles.description]"/>
+            <h3 v-for="user in response" :key="user.hackathonid">
+                <User :HackathonName="user.title"
+                    :HackathonDetails="[user.slug, user.description]"/>
             </h3> <br>
         </span>
     </div>
@@ -12,7 +12,7 @@
 <script>
 import axios from 'axios';
 import { useCookies } from 'vue3-cookies';
-import User from './UserElement.vue'
+import User from './HackathonElement'
 export default {
     setup() {
         const { cookies } = useCookies();
@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         getUserInfo() {
-            const path = '/api/user/'
+            const path = '/api/hackathon/'
             axios.get(path, {
                 withCredentials: true
             })
@@ -62,4 +62,6 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
+
+
 </style>
