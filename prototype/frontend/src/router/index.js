@@ -1,24 +1,31 @@
 import { createWebHistory, createRouter } from "vue-router";
-import UserLogin from "../components/UserLogin.vue";
-import HelloWorld from "../components/HelloWorld.vue";
-import HomePage from "../components/HomePage.vue";
+import UserLogin from "../components/dashboards/users/UserLogin.vue";
+import UserOverview from "../components/dashboards/users/UserOverview.vue";
+import DashboardComponent from "../components/dashboards/main/DashboardMain.vue";
+import HackathonOverview from "../components/dashboards/hackathons/HackathonOverview";
+
 
 const routes = [
   {
-    path: "/",
+    path: "/login",
     name: "Login",
     component: UserLogin,
   },
   {
-    path: "/hello",
-    name: "Hello",
-    component: HelloWorld,
+    path: "/user-overview",
+    name: "UserOverview",
+    component: UserOverview,
   },
   {
-    path: "/home",
-    name: "Home",
-    component: HomePage,
+    path: "/hackathons",
+    name: "Hackathons",
+    component: HackathonOverview,
   },
+  {
+    path: "/",
+    name: "Dashboard",
+    component: DashboardComponent,
+  }
 ];
 
 const router = createRouter({

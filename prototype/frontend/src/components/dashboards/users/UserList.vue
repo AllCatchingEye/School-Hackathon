@@ -23,17 +23,6 @@ export default {
     },
     data() {
         return {
-            // fullNames: [
-            //     { first: 'Anton', last: 'Aloah', email: 'anton@aloah.de', password: 'xyz', organization: 'Schule ABC', role: 'admin' },
-            //     { first: 'Bernd', last: 'Birne', email: 'bernd@birne.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-            //     { first: 'Caesar', last: 'Couch', email: 'caesar@couch.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-            //     { first: 'Dirk', last: 'Dentist', email: 'dirk@dentist.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-            //     { first: 'Egon', last: 'Epsilon', email: 'egon@e.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-            //     { first: 'Ferdinand', last: 'Fahrradreifen', email: 'ferdi@freifen.de', password: 'xyz', organization: 'Schule ABC', role: 'admin' },
-            //     { first: 'Gerhald', last: 'Gehörsturz', email: 'gerhald@gsturz.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-            //     { first: 'Heinrich', last: 'Halligalli', email: 'heini@galli.de', password: 'xyz', organization: 'Schule ABC', role: 'lehrer' },
-            //     { first: 'Imbissbude', last: 'Am Eck', email: 'imbissbude-am-eck@essen.to', password: 'xyz', organization: 'Schule ABC', role: 'superadmin' },
-            // ],
             isLoaded: false,
             response: {},
         }

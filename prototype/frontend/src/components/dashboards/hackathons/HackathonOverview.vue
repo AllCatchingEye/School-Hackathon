@@ -1,91 +1,77 @@
 <template>
-  <div class="data">
+  <div v-if="openPopup">
+    <PopupAdminHackathonBuild></PopupAdminHackathonBuild>
+  </div>
+<div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline" :style="{ 'fontsize': 5 }">Benutzerübersicht</p>
-        <p class="userInfo">Vorname: </p>
-        <p class="userInfo">Nachname: </p>
-        <p class="userInfo">E-Mail: </p>
+        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
+        <p class="headline">Hackathonübersicht</p>
       </div>
-
-      <div class="sidebarBottom">
+      <div @click="goHome()">
+        <HomeButton></HomeButton>
+      </div>
+      <div @click="changePopup()">
+          <OpenPopupButton :type="'Hackathons'"></OpenPopupButton>
+      </div>
+      <div  v-if="!openPopup" class="sidebarBottom">
         <div>
           <LogoutButton></LogoutButton>
         </div>
-        <p>© 2022 <a href="https://wirfuerschule.de/">wirfuerschule.de</a></p><br>
+        <p class="label">© 2022 wirfuerschule.de</p><br>
+        </div>
       </div>
-    </div>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
-        <p>Benutzer</p>
+        <p>Hackathons</p>
       </div>
       <div class="userDataHeader">
-        <div class="lineItem firstItem">
-          <p>Vorname </p>
-          <p>Nachname</p>
+        <div class="lineItem">
+          <p>Name</p>
         </div>
         <div class="lineItem">
-          <p>Email</p>
+          <p>slug</p>
         </div>
         <div class="lineItem">
-          <p>Organisation</p>
-        </div>
-        <div class="lineItem">
-          <p>Rolle</p>
+          <p>Beschreibung</p>
         </div>
         <div class="lineItem">
           <p>Edit</p>
         </div>
-        <div class="lineItem">
-          <button class="button is-success is-rounded" @click="showAddUser">+</button>
-        </div>
       </div>
       <div class="scrollableUsers">
-        <div v-if="adding === true">
-          <div class="field">
-            <AddUser @name="rerender"></AddUser>
-            <button class="button is-danger is-rounded" @click="cancelAddUser">Cancel</button>
-          </div>
-        </div>
         <UserList></UserList>
       </div>
     </div>
   </div>
-</template>
+  </template>
 
 <script>
 /* eslint-disable */
-import UserList from './UserList.vue';
-import LogoutButton from './LogoutButton.vue';
-import AddUser from './AddUser.vue';
-import { render } from 'vue';
+import UserList from './HackathonList';
+import LogoutButton from './../../LogoutButton.vue';
+import OpenPopupButton from "../OpenPopupButton";
+import PopupAdminHackathonBuild from "../../popups/hackathons/PopupAdminHackathonBuild";
+import HomeButton from "../HomeButton";
 
-export default {
-  components: { UserList, LogoutButton, AddUser },
-  data() {
-    return {
-      adding: false,
-      rendered: false,
+    export default {
+        components: {HomeButton, PopupAdminHackathonBuild, OpenPopupButton, UserList, LogoutButton },
+      data() {
+        return {
+          openPopup: false,
+        }},
+      methods: {
+        changePopup(){
+          this.openPopup = true
+        },
+        goHome(){
+          this.$router.push('/');
+        }
+      }
     }
-  },
-  methods: {
-    showAddUser() {
-      this.adding = true;
-    },
-    cancelAddUser() {
-      this.adding = false;
-    },
-    rerender(value) {
-      this.rendered = value;
-      this.$forceUpdate();
-      location.reload();
-    } 
-  }
-}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .data {
@@ -96,14 +82,14 @@ export default {
   overflow: hidden;
 }
 
-.lineItem {
+.lineItem{
   padding-left: 1rem;
   flex-direction: row;
   display: flex;
   justify-content: space-around;
 }
 
-.lineItem p {
+.lineItem p{
   margin-right: 2rem;
 }
 
@@ -118,9 +104,9 @@ export default {
 }
 
 .scrollableUsers {
-  overflow: scroll;
+  overflow-x: hidden;
   height: 75%;
-  width: 60vw;
+  width: 63vw;
   margin-top: 5%;
   margin-bottom: 5%;
 }
@@ -146,17 +132,9 @@ export default {
   border-bottom: #d9d9d9 1px solid;
 }
 
-.userInfo {
-  margin: 1%;
-  padding-bottom: 1%;
-  width: 80%;
-  text-align: left;
-  font-size: medium;
-}
-
 .outerBoxOverview {
   align-items: center;
-  grid-template-columns: 20% 10% 10% 10%;
+  grid-template-columns: 15% 10% 10% 10%;
   justify-content: space-around;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
@@ -177,7 +155,7 @@ export default {
   align-items: center;
 }
 
-.sidebarBottom {
+.sidebarBottom{
   position: absolute;
   bottom: 2rem;
   width: 30%;
@@ -185,14 +163,31 @@ export default {
   color: #d9d9d9;
 }
 
-.userDataHeader {
-  display: flex;
+.userDataHeader{
+  display: grid;
   justify-content: space-evenly;
   width: 60vw;
+  grid-template-columns: 25% 10% 10% 10%;
 
 }
 
-.label {
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+}
+
+
+.label{
   color: white;
   margin-top: 2vh;
 }

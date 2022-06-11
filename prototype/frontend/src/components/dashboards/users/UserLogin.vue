@@ -4,7 +4,7 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <img src="../assets/wirfuerschuleLogo.png" alt="wirfuerschule logo"/>
+            <img src="../../../assets/wirfuerschuleLogo.png" alt="wirfuerschule logo"/>
             <div class="box">
               <article class="message is-danger" v-if="error">
                 <div class="message-header">
@@ -14,7 +14,7 @@
                   {{message}}
                 </div>
               </article>
-              
+
               <div class="field">
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
@@ -46,7 +46,7 @@
     <div>
     </div>
   </section>
-  
+
 </template>
 
 <script>
@@ -68,6 +68,9 @@ export default {
         message: ""
       }
   },
+  mounted() {
+    this.deleteCookie();
+  },
   methods: {
     async verifyLogin(){
       const path = '/api/login/';
@@ -78,9 +81,9 @@ export default {
           'Content-Type': 'application/json'
         }
       })
-      .then((result) => {        
+      .then((result) => {
         this.cookies.set("access_token_cookie", result.data.access_token);
-        this.$router.push('/home');
+        this.$router.push('/');
       }).catch((err) => {
         this.email = '';
         this.password = '';
@@ -88,7 +91,10 @@ export default {
         this.message = err.response.data.message;
 
       });
-      }
+      },
+    deleteCookie(){
+      document.cookie = "access_token_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
   }
 }
 </script>
