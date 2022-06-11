@@ -106,6 +106,7 @@ export default {
   grid-template-columns: 25% 10% 10% 10%;
   justify-content: space-around;
   width: 55vw;
+  height: auto;
   flex-wrap: nowrap;
 }
 
@@ -120,7 +121,27 @@ export default {
 
 .lineItem {
   margin-right: 1rem;
+  height: auto;
+  width: 100%;
+
+
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0D2385;
+  border-radius: 10px;
+}
+
+
 
 .button{
   margin-top: 1rem;

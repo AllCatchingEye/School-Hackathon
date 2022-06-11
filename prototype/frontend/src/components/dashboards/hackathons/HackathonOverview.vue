@@ -164,6 +164,22 @@ import PopupAdminHackathonBuild from "../../Popups/Hackathon/PopupAdminHackathon
 
 }
 
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+}
+
+
 .label{
   color: white;
   margin-top: 2vh;
