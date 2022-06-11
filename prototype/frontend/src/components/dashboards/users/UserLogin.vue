@@ -68,6 +68,9 @@ export default {
         message: ""
       }
   },
+  mounted() {
+    this.deleteCookie();
+  },
   methods: {
     async verifyLogin(){
       const path = '/api/login/';
@@ -88,7 +91,10 @@ export default {
         this.message = err.response.data.message;
 
       });
-      }
+      },
+    deleteCookie(){
+      document.cookie = "access_token_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
   }
 }
 </script>
