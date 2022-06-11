@@ -50,7 +50,7 @@
 /* eslint-disable */
 import UserList from './HackathonList';
 import LogoutButton from './../../LogoutButton.vue';
-import OpenPopupButton from "./openPopupButton";
+import OpenPopupButton from "./OpenPopupButton";
 import PopupAdminHackathonBuild from "../../popups/hackathons/PopupAdminHackathonBuild";
 import HomeButton from "./HomeButton";
 
