@@ -1,18 +1,18 @@
 <template>
   <div v-if="openPopup">
-    <PopupAdminHackathonBuild></PopupAdminHackathonBuild>
+    <PopupSuperadminOrganisationsBuildVue></PopupSuperadminOrganisationsBuildVue>
   </div>
 <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Hackathonübersicht</p>
+        <p class="headline">Organisationsübersicht</p>
       </div>
       <div @click="goHome()">
         <HomeButton></HomeButton>
       </div>
       <div @click="changePopup()">
-          <OpenPopupButton :type="'Hackathons'"></OpenPopupButton>
+          <OpenPopupButton :type="'Organisation'"></OpenPopupButton>
       </div>
       <div  v-if="!openPopup" class="sidebarBottom">
         <div>
@@ -23,24 +23,21 @@
       </div>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
-        <p>Hackathons</p>
+        <p>Organisationen</p>
       </div>
       <div class="userDataHeader">
         <div class="lineItem">
+          <p>ID</p>
+        </div>
+        <div class="lineItem">
           <p>Name</p>
-        </div>
-        <div class="lineItem">
-          <p>slug</p>
-        </div>
-        <div class="lineItem">
-          <p>Beschreibung</p>
         </div>
         <div class="lineItem">
           <p>Edit</p>
         </div>
       </div>
       <div class="scrollableUsers">
-        <UserList></UserList>
+        <OrganisationList></OrganisationList>
       </div>
     </div>
   </div>
@@ -48,14 +45,14 @@
 
 <script>
 /* eslint-disable */
-import UserList from './HackathonList';
+import OrganisationList from './OrganisationList.vue';
 import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "../OpenPopupButton";
-import PopupAdminHackathonBuild from "../../popups/hackathons/PopupAdminHackathonBuild";
+import PopupSuperadminOrganisationsBuildVue from '../../popups/organisations/PopupSuperadminOrganisationsBuild.vue';
 import HomeButton from "../HomeButton";
 
     export default {
-        components: {HomeButton, PopupAdminHackathonBuild, OpenPopupButton, UserList, LogoutButton },
+        components: {HomeButton, PopupSuperadminOrganisationsBuildVue, OpenPopupButton, OrganisationList, LogoutButton },
       data() {
         return {
           openPopup: false,
