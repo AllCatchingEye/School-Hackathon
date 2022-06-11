@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from app import db
 from models.user import User as Usermodel
 from models.roles import Roles 
-from flask_jwt_extended import get_jwt
+from flask_jwt_extended import get_jwt, get_jwt_identity
 from utils.user_roles import auth_required, Config
 from sqlalchemy.exc import InvalidRequestError,IntegrityError
 
@@ -93,3 +93,19 @@ def edit_user(user_id):
                     message=f"Error while editing user"), 409)
 
     return result
+
+
+
+
+@User.route('/own/', methods=['GET'])
+@auth_required([Config.ADMIN_ID, Config.SUPERADMIN_ID, Config.TEACHER_ID])
+def get_own_user():
+    user = Usermodel.query.filter_by(email=get_jwt_identity()).first()
+    return jsonify(user.to_dict(only=(
+                                'userid', 
+                                'email', 
+                                'organisations', 
+                                'roles', 
+                                'firstname', 
+                                'name')))
+
