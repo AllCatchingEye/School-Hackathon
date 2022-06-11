@@ -8,6 +8,9 @@
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
         <p class="headline">Hackathonübersicht</p>
       </div>
+      <div @click="goHome()">
+        <HomeButton></HomeButton>
+      </div>
       <div @click="changePopup()">
           <OpenPopupButton></OpenPopupButton>
       </div>
@@ -49,9 +52,10 @@ import UserList from './HackathonList';
 import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "./openPopupButton";
 import PopupAdminHackathonBuild from "../../Popups/Hackathon/PopupAdminHackathonBuild";
+import HomeButton from "./HomeButton";
 
     export default {
-        components: {PopupAdminHackathonBuild, OpenPopupButton, UserList, LogoutButton },
+        components: {HomeButton, PopupAdminHackathonBuild, OpenPopupButton, UserList, LogoutButton },
       data() {
         return {
           openPopup: false,
@@ -59,6 +63,9 @@ import PopupAdminHackathonBuild from "../../Popups/Hackathon/PopupAdminHackathon
       methods: {
         changePopup(){
           this.openPopup = true
+        },
+        goHome(){
+          this.$router.push('/home');
         }
       }
     }
