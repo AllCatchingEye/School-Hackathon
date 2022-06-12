@@ -37,7 +37,7 @@ def get_token():
     if role == Config.ADMIN_ID:
         tokens = Tokenmodel.query.join(Usermodel).filter_by(organisation=organisation).all()
     else:
-        tokens = Tokenmodel.query.join(Usermodel).filter_by(userid = user.userid).all()
+        tokens = Tokenmodel.query.filter_by(userid = user.userid).all()
     return jsonify([token.to_dict(only=(
                                 'userid', 
                                 'hackathon',
