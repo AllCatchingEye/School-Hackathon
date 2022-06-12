@@ -30,99 +30,97 @@
                                 </div>
                             </div>
                         </div>
-                      </div>
-                        <div class="lineItem">
-                            <span v-if="edit === false">
-                                {{ userDetails[1].name }}
-                            </span>
-                            <span class="UserNameList" v-else>
-                                <div v-if="role === 420 && isLoadedOrga === true">
-                                    <div class="field">
-                                        <div class="dropdown is-hoverable">
-                                            <div class="dropdown-trigger">
-                                                <button class="button" aria-haspopup="true"
-                                                    aria-controls="dropdown-menu">
-                                                    <span> {{ choosenOrga }} </span>
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                                <div class="dropdown-content">
-                                                    <a v-for="organisation in orgas" :key="organisation.orgaid">
-                                                        <a href="#" class="dropdown-item"
-                                                            @click="changeOrga(organisation.name, organisation.orgaid)">
-                                                            {{ organisation.name }}
-                                                        </a>
+                    </div>
+                    <div class="lineItem">
+                        <span v-if="edit === false">
+                            {{ userDetails[1].name }}
+                        </span>
+                        <span class="UserNameList" v-else>
+                            <div v-if="currentRole === 420 && isLoadedOrga === true">
+                                <div class="field">
+                                    <div class="dropdown is-hoverable">
+                                        <div class="dropdown-trigger">
+                                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                                <span> {{ choosenOrga }} </span>
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                            <div class="dropdown-content">
+                                                <a v-for="organisation in orgas" :key="organisation.orgaid">
+                                                    <a href="#" class="dropdown-item"
+                                                        @click="changeOrga(organisation.name, organisation.orgaid)">
+                                                        {{ organisation.name }}
                                                     </a>
-                                                </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-else>
-                                    <input type="text" class="input is-small" :value="organisation" disabled />
-                                </div>
-                            </span>
-                        </div>
-                        <div class="lineItem">
-                            <span v-if="edit === false">
-                                {{ roleDescription }}
-                            </span>
-                            <span class="UserNameList" v-else>
-                                <div v-if="role >= 29">
-                                    <div class="field">
-                                        <div class="dropdown is-hoverable">
-                                            <div class="dropdown-trigger">
-                                                <button class="button" aria-haspopup="true"
-                                                    aria-controls="dropdown-menu">
-                                                    <span> {{ roleDescription }} </span>
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                                <div class="dropdown-content">
-                                                    <a v-for="rolle in roles" :key="rolle.roleid">
-                                                        <a href="#" class="dropdown-item"
-                                                            @click="changeRole(rolle.description, rolle.roleid)">
-                                                            {{ rolle.description }}
-                                                        </a>
+                            </div>
+                            <div v-else>
+                                <input type="text" class="input is-small" :value="organisation" disabled />
+                            </div>
+                        </span>
+                    </div>
+                    <div class="lineItem">
+                        <span v-if="edit === false">
+                            {{ roleDescription }}
+                        </span>
+                        <span class="UserNameList" v-else>
+                            <div v-if="currentRole >= 29">
+                                <div class="field">
+                                    <div class="dropdown is-hoverable">
+                                        <div class="dropdown-trigger">
+                                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                                <span> {{ roleDescription }} </span>
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                            <div class="dropdown-content">
+                                                <a v-for="rolle in roles" :key="rolle.roleid">
+                                                    <a href="#" class="dropdown-item"
+                                                        @click="changeRole(rolle.description, rolle.roleid)">
+                                                        {{ rolle.description }}
                                                     </a>
-                                                </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-else>
-                                    <input type="text" class="input is-small" :value="organisation" disabled />
-                                </div>
-                            </span>
-                        </div>
+                            </div>
+                            <div v-else>
+                                <input type="text" class="input is-small" :value="organisation" disabled />
+                            </div>
+                        </span>
+                    </div>
+                    <div class="lineItem">
+                        <span class="UserNameList button-wrapper" v-if="edit === true">
+                            <button class="button is-success is-rounded" @click="update">Update</button>
+                            <button class="button is-danger is-rounded" @click="cancel"
+                                buttonText="Cancel">Cancel</button>
+                            <button class="button is-danger is-rounded is-outlined" @click="deleteUser">
+                                <span>Delete</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </button>
+                        </span>
                         <div class="lineItem">
-                            <span class="UserNameList button-wrapper" v-if="edit === true">
-                                <button class="button is-success is-rounded" @click="update">Update</button>
-                                <button class="button is-danger is-rounded" @click="cancel"
-                                    buttonText="Cancel">Cancel</button>
-                                <button class="button is-danger is-rounded is-outlined" @click="deleteUser">
-                                    <span>Delete</span>
-                                    <span class="icon is-small">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </button>
-                            </span>
-                          <div class="lineItem">
-                            <span  v-if="!edit">
+                            <span v-if="!edit">
                                 <button class="button is-link is-rounded" @click="editing">Edit</button>
                             </span>
-                          </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <script>
@@ -158,6 +156,7 @@ export default {
             email: this.userDetails[0],
             organisation: this.userDetails[1].name,
             role: this.userDetails[2].roleid,
+            choosenRole: this.userDetails[2].roleid,
             roleDescription: this.userDetails[2].description,
             error: false,
             message: '',
@@ -168,11 +167,13 @@ export default {
             userid: this.userDetails[3],
             roles: {},
             userDeleted: false,
+            currentRole: 0,
         }
     },
     mounted() {
         this.getOrgaInfo();
         this.getRoleInfo();
+        this.getCurrentRole();
     },
     methods: {
         editing() {
@@ -185,14 +186,14 @@ export default {
         },
         update() {
             const path = '/api/user/' + this.userid + '/';
-            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.orgaid });
+            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.choosenRole, organisation: this.orgaid });
             axios.patch(path, this.toUpdate, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 withCredentials: true
             }).then(() => {
-              this.editing()
+                this.editing()
             })
                 .catch((err) => {
                     console.log(err);
@@ -243,6 +244,19 @@ export default {
             })
                 .then((response) => {
                     this.roles = response.data;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
+        },
+        getCurrentRole() {
+            const path = '/api/role/own/'
+            axios.get(path, {
+                withCredentials: true
+            })
+                .then((response) => {
+                    this.currentRole = response.data.role;
                 })
                 .catch((err) => {
                     console.log(err);
