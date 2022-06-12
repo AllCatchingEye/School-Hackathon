@@ -194,6 +194,8 @@ axios.defaults.withCredentials = true;
   align-content: center;
   justify-content: space-around;
   align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 100;
 }
 
 .NameSection{
@@ -260,6 +262,11 @@ axios.defaults.withCredentials = true;
   align-content: center;
 }
 
+p{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 100;
+}
+
 .bigButton{
   cursor: pointer;
   border-radius: 30px;
@@ -298,6 +305,10 @@ axios.defaults.withCredentials = true;
   margin-top: 2rem;
   padding-bottom: 1rem;
   border-bottom: rgba(109, 105, 114, 0.46) 1px solid;
+}
+
+.headlineUsers *{
+  font-weight: bold;
 }
 
 .scrollableUsers {
