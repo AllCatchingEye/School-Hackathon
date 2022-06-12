@@ -29,6 +29,7 @@ from api.user.user import User
 from api.hackathon.hackathon import Hackathon
 from api.organisation.organisation import Organisation
 from api.role.role import Role
+from api.token.token import Token
 
 # import database models
 from models.user import User as UserModel
@@ -57,6 +58,7 @@ app.register_blueprint(User, url_prefix='/api/user')
 app.register_blueprint(Hackathon, url_prefix='/api/hackathon')
 app.register_blueprint(Organisation, url_prefix='/api/organisation')
 app.register_blueprint(Role, url_prefix='/api/role')
+app.register_blueprint(Token, url_prefix='/api/token')
 
 # Global error handle for schema violations 
 @app.errorhandler(400)
