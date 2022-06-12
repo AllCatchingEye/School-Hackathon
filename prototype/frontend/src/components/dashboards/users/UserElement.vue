@@ -99,6 +99,7 @@
                             </div>
                         </span>
                     </div>
+                     {{ choosenRole }}
                     <div class="lineItem">
                         <span class="UserNameList button-wrapper" v-if="edit === true">
                             <button class="button is-success is-rounded" @click="update">Update</button>
@@ -156,7 +157,6 @@ export default {
             email: this.userDetails[0],
             organisation: this.userDetails[1].name,
             role: this.userDetails[2].roleid,
-            choosenRole: this.userDetails[2].roleid,
             roleDescription: this.userDetails[2].description,
             error: false,
             message: '',
@@ -186,7 +186,7 @@ export default {
         },
         update() {
             const path = '/api/user/' + this.userid + '/';
-            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.choosenRole, organisation: this.orgaid });
+            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.orgaid });
             axios.patch(path, this.toUpdate, {
                 headers: {
                     'Content-Type': 'application/json'

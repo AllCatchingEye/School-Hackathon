@@ -219,7 +219,7 @@ export default {
       const path = '/api/register/'
       console.log(this.organisation);
       this.user = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.organisation });
-      if (this.organisation === 0 || this.name === '' || this.firstname === '' || this.role === 0) {
+      if (this.organisation === 0 || this.name === '' || this.firstname === '' || this.role === 0 || this.choosenOrga === 'none' || this.changeRole === 'none') {
         alert('Please provide all the information needed');
       } else {
 
