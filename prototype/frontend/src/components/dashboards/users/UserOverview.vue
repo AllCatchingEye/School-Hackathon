@@ -2,7 +2,7 @@
 <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../assets/wirfuerschuleLogoweiß.png" />
+        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
         <p class="headline">Benutzerübersicht</p>
       </div>
       <div class="sidebarBottom">
@@ -41,7 +41,7 @@
 <script>
 /* eslint-disable */
 import UserList from './UserList.vue';
-import LogoutButton from './LogoutButton.vue';
+import LogoutButton from './../../LogoutButton.vue';
 
     export default {
         components: { UserList, LogoutButton },
@@ -112,11 +112,12 @@ import LogoutButton from './LogoutButton.vue';
 .outerBoxOverview {
   align-items: center;
   grid-template-columns: 20% 10% 10% 10%;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 5%;
 }
 
 .fontHeadline {

@@ -1,7 +1,7 @@
 <template>
   <div class="PopupOuterButton">
     <div class="PopupOpenHackathon">
-      <p>Hackathon anlegen</p>
+      <p>{{ type }} anlegen</p>
       <i class="fa-solid fa-angle-right"></i>
     </div>
   </div>
@@ -9,6 +9,9 @@
 
 <script>
 export default {
+  props: {
+    type: String
+  },
   name: "openPopupButton"
 }
 </script>
