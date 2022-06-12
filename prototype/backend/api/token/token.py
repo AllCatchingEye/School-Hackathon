@@ -31,7 +31,13 @@ def generate_token():
 @auth_required([Config.ADMIN_ID, Config.TEACHER_ID])
 def get_token():
     organisation = get_jwt()["organisation"]
-    tokens = Tokenmodel.query.join(Usermodel).filter_by(organisation=organisation).all()
+    role = get_jwt()["role"]    
+    user = Usermodel.query.filter_by(email=get_jwt_identity()).first()
+
+    if role == Config.ADMIN_ID:
+        tokens = Tokenmodel.query.join(Usermodel).filter_by(organisation=organisation).all()
+    else:
+        tokens = Tokenmodel.query.join(Usermodel).filter_by(userid = user.userid).all()
     return jsonify([token.to_dict(only=(
                                 'userid', 
                                 'hackathon',
@@ -62,12 +68,3 @@ def delete_token(token_id):
 
 
 
-
-@Token.route('/<token_id>/', methods=['GET'])
-def check_token(token_id):
-    token = Tokenmodel.query.filter_by(tokenid=token_id).first()
-    return jsonify( category="Success", 
-                    message=f"Token is valid") if token else jsonify(category="Error", 
-                          message=f"Token is invalid")
-
- 
