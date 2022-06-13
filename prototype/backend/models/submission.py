@@ -1,6 +1,7 @@
 from app import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Submission(db.Model):
+class Submission(db.Model, SerializerMixin):
     __tablename__ = "submission"
 
     subid = db.Column(db.Integer, primary_key=True)

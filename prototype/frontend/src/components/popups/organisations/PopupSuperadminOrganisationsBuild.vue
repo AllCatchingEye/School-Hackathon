@@ -8,28 +8,14 @@
         <i class="fa-solid fa-xmark"></i>
       </div>
       <div v-if="displayQuestions" class="HeaderPopup">
-        <p>Hackathon anlegen</p>
+        <p>Organisation anlegen</p>
       </div>
       <div v-if="displayQuestions" class="BodyPopup">
         <div class="row">
           <div class="PopupQuestion">
               <div class="PopupInput">
-                <input v-model="title" type="text" autocomplete="off" required />
+                <input v-model="name" type="text" autocomplete="off" required />
                 <label>Name</label>
-              </div>
-            </div>
-            <div class="PopupQuestion">
-              <div class="PopupInput">
-                <input v-model="slug" type="text" autocomplete="off" required />
-                <label>Kurzname</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="PopupQuestion">
-              <div class="PopupInput">
-                <input v-model="description" type="text" autocomplete="off" required />
-                <label>Beschreibung</label>
               </div>
             </div>
             <div class="PopupQuestion">
@@ -58,7 +44,7 @@ import { useCookies } from 'vue3-cookies';
 axios.defaults.withCredentials = true;
 
 export default {
-  name: "PopupAdminHackathonBuild",
+  name: "PopupSuperadminOrganisationBuild",
   components: {PopupButtonDisapprove, PopupButtonApprove},
   setup() {
     const { cookies } = useCookies();
@@ -66,9 +52,8 @@ export default {
   },
   data() {
     return {
-      title: '',
-      slug: '',
-      description: '',
+      orgaid: '',
+      name: '',
       result: '',
       displayQuestions: true,
       displayApproved: false,
@@ -78,9 +63,10 @@ export default {
 
   methods: {
     async addHackathon(){
-      const path = '/api/hackathon/';
-      this.test = JSON.stringify({title: this.title, slug: this.slug, description: this.description});
+      const path = '/api/organisation/';
+      this.test = JSON.stringify({name: this.name});
       await axios.post(path,this.test, {
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
         }
@@ -108,10 +94,9 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 
 .PopupOuter{
-  position: fixed;
   width:100vw;
   height: 100vh;
-  background-color: #ffffff57;
+  background-color: #ffffffad;
   backdrop-filter: blur(30px);
   display: flex;
   align-items: center;

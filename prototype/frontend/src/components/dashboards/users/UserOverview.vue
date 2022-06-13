@@ -1,39 +1,43 @@
 <template>
   <div v-if="openPopup">
-    <PopupAdminHackathonBuild></PopupAdminHackathonBuild>
+    <PopupAddUser></PopupAddUser>
   </div>
 <div class="data">
     <div class="sidebar">
       <div class="fontHeadline">
         <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Hackathonübersicht</p>
+        <p class="headline">Benutzerübersicht</p>
       </div>
       <div @click="goHome()">
         <HomeButton></HomeButton>
       </div>
-      <div @click="changePopup()">
-          <OpenPopupButton :type="'Hackathons'"></OpenPopupButton>
-      </div>
-      <div  v-if="!openPopup" class="sidebarBottom">
+        <div @click="changePopup()">
+          <OpenPopupButton :type="'Nutzer'"></OpenPopupButton>
+        </div>
+      <div class="sidebarBottom">
         <div>
           <LogoutButton></LogoutButton>
         </div>
-        <p class="label">© 2022 wirfuerschule.de</p><br>
-        </div>
+        <p>© 2022 <a href="https://wirfuerschule.de/">wirfuerschule.de</a></p><br>
       </div>
+    </div>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
-        <p>Hackathons</p>
+        <p>Benutzer</p>
       </div>
       <div class="userDataHeader">
-        <div class="lineItem">
-          <p>Name</p>
+        <div class="lineItem firstItem">
+          <p>Vorname </p>
+          <p>Nachname</p>
         </div>
         <div class="lineItem">
-          <p>slug</p>
+          <p>Email</p>
         </div>
         <div class="lineItem">
-          <p>Beschreibung</p>
+          <p>Organisation</p>
+        </div>
+        <div class="lineItem">
+          <p>Rolle</p>
         </div>
         <div class="lineItem">
           <p>Edit</p>
@@ -48,30 +52,39 @@
 
 <script>
 /* eslint-disable */
-import UserList from './HackathonList';
+import UserList from './UserList.vue';
 import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "../OpenPopupButton";
-import PopupAdminHackathonBuild from "../../popups/hackathons/PopupAdminHackathonBuild";
+import PopupAddUser from "../../popups/users/PopupAddUser";
 import HomeButton from "../HomeButton";
 
-    export default {
-        components: {HomeButton, PopupAdminHackathonBuild, OpenPopupButton, UserList, LogoutButton },
-      data() {
-        return {
-          openPopup: false,
-        }},
-      methods: {
-        changePopup(){
-          this.openPopup = true
-        },
-        goHome(){
-          this.$router.push('/');
-        }
-      }
+
+export default {
+  components: {PopupAddUser, UserList, LogoutButton, OpenPopupButton, HomeButton},
+  data() {
+    return {
+      adding: false,
+      rendered: false,
+      openPopup: false
     }
+  },
+  methods: {
+    changePopup(){
+      this.openPopup = true;
+    },
+    rerender(value) {
+      this.rendered = value;
+      this.$forceUpdate();
+      location.reload();
+    },
+    goHome(){
+      this.$router.push('/');
+    }
+  }
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .data {
@@ -80,6 +93,10 @@ import HomeButton from "../HomeButton";
   height: 100vh;
   width: 100%;
   overflow: hidden;
+}
+
+.firstItem{
+  margin-left: 2%;
 }
 
 .lineItem{
@@ -134,12 +151,13 @@ import HomeButton from "../HomeButton";
 
 .outerBoxOverview {
   align-items: center;
-  grid-template-columns: 15% 10% 10% 10%;
-  justify-content: space-around;
+  grid-template-columns: 20% 10% 10% 10%;
+  justify-content: space-between;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 5%;
 }
 
 .fontHeadline {
@@ -164,11 +182,16 @@ import HomeButton from "../HomeButton";
 }
 
 .userDataHeader{
-  display: grid;
+  display: flex;
   justify-content: space-evenly;
   width: 60vw;
-  grid-template-columns: 25% 10% 10% 10%;
+  grid-template-columns: 25% 10% 10% 10% 10%;
 
+}
+
+.label{
+  color: white;
+  margin-top: 2vh;
 }
 
 
@@ -186,9 +209,9 @@ import HomeButton from "../HomeButton";
   border-radius: 10px;
 }
 
-
-.label{
-  color: white;
-  margin-top: 2vh;
+a{
+  color: #d9d9d9;
 }
+
+
 </style>
