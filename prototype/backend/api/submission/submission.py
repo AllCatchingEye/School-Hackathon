@@ -1,26 +1,48 @@
 from flask import Blueprint, jsonify, request
 from app import db
-from models.organisation import Organisation as Organisationmodel
 from models.submission import Submission as Submissionmodel
 from models.hackathon import Hackathon as Hackathonmodel
+from models.token import Token as Tokenmodel
 from utils.user_roles import auth_required, Config
-from sqlalchemy.exc import InvalidRequestError, IntegrityError
 from flask_jwt_extended import get_jwt
+from flask_expects_json import expects_json
+
 
 Submission = Blueprint('submission', __name__)
+submission_schema={
+    'type': 'object',
+    'properties': {
+        'result': {
+            'type': 'array',
+            'properties': {
+                'description': {'type': 'string'}
+            }
+        }
+    },
+    'required': ['result']
+}
 
+@Submission.route('/<hackathon_slug>/<uuid>/', methods=["POST"])
+@expects_json(submission_schema)
+def submission(hackathon_slug, uuid):
 
-""" @Submission.route('/', methods=["POST"])
-@auth_required([Config.SUPERADMIN_ID])
-def add_organisation():
+    result = jsonify(category="Error", message=f"Token not valid.")
+    data = request.get_json()
+    valid = Tokenmodel.query.filter_by(tokenid=uuid).join(Hackathonmodel).filter_by(slug=hackathon_slug).first()
 
-    org = request.get_json()
-    entry = Organisationmodel(**org)
-    db.session.add(entry)
-    db.session.commit()
+    if valid:
+        try:
+            for item in data['result']:
+                submission = Submissionmodel(**item, hackathonid=valid.hackathonid)
+                db.session.add(submission)
+            token = Tokenmodel.query.filter_by(tokenid = uuid).delete()
+            db.session.commit()
+            result = jsonify(category="Success.", message=f"Submission added.") if token else jsonify(category="Error.", message=f"Error while deleting token.")
+        except:
+            db.session.rollback()
+            result = jsonify(category="Error", message=f"Error while submitting.")
 
-    return jsonify(category="Success.", message=f"Organisation added.")
- """
+    return result
 
 @Submission.route('/<hackathon_id>/', methods=["GET"])
 @auth_required([Config.TEACHER_ID, Config.ADMIN_ID])
