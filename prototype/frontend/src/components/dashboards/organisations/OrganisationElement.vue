@@ -91,7 +91,7 @@ export default {
   flex-direction: row;
   display: grid;
   align-items: center;
-  grid-template-columns: 25% 10% 10% 10%;
+  grid-template-columns: 33% 33% 33%;
   justify-content: space-around;
   width: 55vw;
   height: auto;

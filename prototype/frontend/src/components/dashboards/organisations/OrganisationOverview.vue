@@ -53,6 +53,7 @@ import HomeButton from "../HomeButton";
 
     export default {
         components: {HomeButton, PopupSuperadminOrganisationsBuildVue, OpenPopupButton, OrganisationList, LogoutButton },
+      name: "Organisation",
       data() {
         return {
           openPopup: false,
@@ -131,7 +132,7 @@ import HomeButton from "../HomeButton";
 
 .outerBoxOverview {
   align-items: center;
-  grid-template-columns: 15% 10% 10% 10%;
+  grid-template-columns: 33% 33% 33%;
   justify-content: space-around;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
@@ -161,12 +162,14 @@ import HomeButton from "../HomeButton";
 }
 
 .userDataHeader{
+  margin-left: 3vw;
   display: grid;
   justify-content: space-evenly;
-  width: 60vw;
-  grid-template-columns: 25% 10% 10% 10%;
+  width: 55vw;
+  grid-template-columns: 33% 33% 33%;
 
 }
+
 
 
 ::-webkit-scrollbar {

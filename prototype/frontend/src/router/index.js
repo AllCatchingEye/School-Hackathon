@@ -24,8 +24,8 @@ const routes = [
   },
   {
     path: "/schools",
-    name: "Schools",
-    components: OrganisationOverview,
+    name: "Organisation",
+    component: OrganisationOverview,
   },
   {
     path: "/",
