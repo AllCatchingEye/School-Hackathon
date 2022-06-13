@@ -49,7 +49,7 @@ def change_submission(submission_id):
             result = jsonify( category="Success.", 
                 message=f"Submission with ID {submission_id} successfully modified.") if sub else (jsonify (category="Error",
                 message=f"No Submission with ID: {submission_id}"))
-    except (InvalidRequestError, IntegrityError) as e:
+    except:
         db.session.rollback()
         result = jsonify(category="Error", message=f"Error while editing Submission.")
 
