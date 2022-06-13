@@ -6,36 +6,45 @@ from models.hackathon import Hackathon as Hackathonmodel
 from utils.user_roles import auth_required, Config
 from flask_jwt_extended import get_jwt_identity, get_jwt
 from app import db
+from flask_expects_json import expects_json
+
+
 Token = Blueprint('token', __name__)
+token_schema={
+    'type': 'object',
+    'properties': {
+        'hackathon': {'type': 'integer'},
+        'count': {'type': 'integer'}
+    },
+    'required': ['hackathon', 'count']
+}
+
 
 @Token.route('/', methods=['POST'])
 @auth_required([Config.ADMIN_ID, Config.TEACHER_ID])
+@expects_json(token_schema)
 def generate_token():
     hackathon_id=request.get_json()["hackathon"]
     number_of_token=request.get_json()["count"]
-    assert number_of_token > 0
     organisation  = get_jwt()["organisation"]
     is_valid = Hackathonmodel.query.filter_by(organisationid = organisation, hackathonid = hackathon_id).first()
+    result= (jsonify(category="Error",message=f"Not allowed"), 401)
 
-    if is_valid: 
+    if is_valid and number_of_token > 0: 
         user = Usermodel.query.filter_by(email=get_jwt_identity()).first()
         for x in range(0,number_of_token):
             token = Tokenmodel(user.userid, hackathon_id)
             db.session.add(token)            
-        
         try:
             db.session.commit() 
-        except:
-            db.session.rollback()
-    
-        return (jsonify(
+            result = (jsonify(
                     category="Success",
                     message=f"Created {number_of_token} Token"), 201)
-    else:
-        return (jsonify(
-                    category="Error",
-                    message=f"Not allowed"), 401)
-
+        except:
+            db.session.rollback()
+            result= (jsonify(category="Error",message=f"An Error occured"), 401)
+    return result
+        
 
 @Token.route('/', methods=['GET'])
 @auth_required([Config.ADMIN_ID, Config.TEACHER_ID])
