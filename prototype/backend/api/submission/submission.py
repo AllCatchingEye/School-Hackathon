@@ -25,7 +25,8 @@ def add_organisation():
 @Submission.route('/<hackathon_id>/', methods=["GET"])
 @auth_required([Config.TEACHER_ID, Config.ADMIN_ID])
 def get_submissions(hackathon_id):
-    result = (jsonify(category="Error", message=f"No Access rights."),403)    organisation = get_jwt()["organisation"]
+    result = jsonify(category="Error", message=f"No Access rights.")
+    organisation = get_jwt()["organisation"]
     valid = Hackathonmodel.query.filter_by(hackathonid = hackathon_id, organisationid=organisation).first()
     if valid:
         getAll = Submissionmodel.query.filter_by(hackathonid=hackathon_id).all()    
