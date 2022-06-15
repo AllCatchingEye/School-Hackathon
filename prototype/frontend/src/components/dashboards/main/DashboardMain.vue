@@ -31,50 +31,30 @@
         <p class="label">© 2022 wirfuerschule.de</p><br>
         </div>
       </div>
-    <div class="outerBoxOverview">
 
-      <div class="headlineUsers">
-        <p>Dashboard</p>
-      </div>
-      <div class="userDataHeader">
-      </div>
-      <div class="UpperLinks">
-        <div class="ButtonElement UserManagement">
-          <div v-if="this.role === 'Admin' || this.role === 'Superadmin'" @click="routeUserManagement()">
-            <p>Usermanagement</p>
-            <i class="fa-solid fa-angle-right"></i>
-          </div>
-          <div @click="routeHackathons()" v-if="this.role === 'Teacher'">
-            <p>Hackathons</p>
-            <i class="fa-solid fa-angle-right"></i>
-          </div>
 
-        </div>
-        <div class="ButtonElement Hackathons">
-          <div @click="routeHackathons()" v-if="this.role === 'Admin'">
-            <p>Hackathons</p>
+    <div class="tiles-wrapper">
+      <h1>Hi {{ this.firstname }}, <br> was möchtest du tun?</h1>
+      <div class="ctile" v-if="this.role === 'Admin' || this.role === 'Superadmin'" @click="routeUserManagement()">
+            <h2>Usermanagement</h2>
+
             <i class="fa-solid fa-angle-right"></i>
-          </div>
-          <div @click="routeSchools()" v-if="this.role === 'Superadmin'">
-            <p>Schulen</p>
-            <i class="fa-solid fa-angle-right"></i>
-          </div>
-          <div @click="routeKeys()" v-if="this.role === 'Teacher'">
-            <p>Schlüssel</p>
-            <i class="fa-solid fa-angle-right"></i>
-          </div>
-        </div>
       </div>
-      <div class="LowerLinks" v-if="this.role !== 'Superadmin'">
-        <div class="bigButton" @click="routeEvaluation()">
-          <p>Evaluation</p>
-          <i class="fa-solid fa-angle-right"></i>
-        </div>
+      <div class="ctile" @click="routeHackathons()" v-if="this.role === 'Admin'">
+      <h2>Hackathonmanagement</h2>
+      <i class="fa-solid fa-angle-right"></i></div>
+      
+      <div  class="ctile" @click="routeSchools()" v-if="this.role === 'Superadmin'">
+            <h2>Schulmanagement</h2>
+            <i class="fa-solid fa-angle-right"></i>
       </div>
-      <router-view></router-view>
+          <div  class="ctile" @click="routeKeys()" v-if="this.role === 'Teacher'">
+            <h2>Schlüsselmanagement</h2>
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
     </div>
-  </div>
-  </template>
+    </div>
+</template>
 
 <script>
 /* eslint-disable */
@@ -175,6 +155,64 @@ axios.defaults.withCredentials = true;
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+$green :#37b1c5;
+
+.tiles-wrapper{
+display: flex;
+justify-content: space-around;
+flex-wrap: wrap;
+align-items:flex-start;
+align-content:center;
+margin-top:7%;
+  h1{
+    width: 100%;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    font-size: 3.5rem;
+    position: absolute;
+    top: 5%;
+  }
+  .ctile{
+    &:hover{
+        background:$green;
+        color:white;
+        transition:.3s;
+
+    }
+    transition:.3s;
+    cursor:pointer;
+    width: 75%;
+    max-height: 117px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+    box-shadow: 1px 6px 15px -3px rgba(0, 0, 0, 0.56);
+    margin: 10px;
+    border-left:6px solid $green;
+    h2{
+      text-transform:uppercase;
+      font-size: 2rem;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 100;
+      font-weight:bold;
+      width:75%;
+      padding-left:8%;
+
+    }
+    i{
+      width:20%;
+      background:$green;
+      color:white;
+      height:100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 70px;
+    }
+  }
+}
 
 .data {
   display: grid;
@@ -184,19 +222,7 @@ axios.defaults.withCredentials = true;
   overflow: hidden;
 }
 
-.UpperLinks{
-  margin-top: 5%;
-  position: relative;
-  display: flex;
-  width: 95%;
-  height: 30%;
-  flex-direction: row;
-  align-content: center;
-  justify-content: space-around;
-  align-items: center;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 100;
-}
+
 
 .NameSection{
   margin-top: 5%;
@@ -219,19 +245,10 @@ axios.defaults.withCredentials = true;
 
 }
 
-.UserManagement{
-  background: rgb(13,35,133);
-  background: linear-gradient(142deg, rgba(13,35,133,1) 7%, rgba(52,152,219,1) 100%);
-}
 
-.Hackathons{
-  background: rgb(85,0,61);
-  background: linear-gradient(142deg, rgba(85,0,61,1) 7%, rgba(168,3,122,1) 100%);
-}
 .ButtonElement{
   cursor: pointer;
-  border-radius: 30px;
-  color: white;
+  color: black;
   font-size: 2rem;
   font-family: 'Open Sans', sans-serif;
   font-weight: 100;
@@ -241,6 +258,16 @@ axios.defaults.withCredentials = true;
   align-content: center;
   width:40%;
   height: 80%;
+  background:white;
+
+  p{
+    font-weight:bold;
+  }
+  i{
+    color:white;
+    background:$green;
+
+  }
 }
 
 .ButtonElement *{
