@@ -25,6 +25,7 @@
                     </span>
                     <span v-else>
                         <button class="button is-link is-rounded" @click="editing">Edit</button>
+                        <button class="button is-danger is-rounded" @click="deleting">Delete</button>
                     </span>
                 </div>
             </div>
@@ -33,8 +34,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 
-export default {
+export default {    
     props: {
         OrganisationName: {
             type: String,
@@ -59,6 +61,21 @@ export default {
         },
         cancel() {
             this.edit = false
+        },
+        deleting() {
+            const path = "/api/organisation/" + this.OrganisationID + "/";
+
+            axios.delete(path, {
+                withCredentials: true
+            })
+                .then((response) => {
+                    console.log(response);
+                    setTimeout(() => {location.reload();}, 100);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
         }
     }
 }
