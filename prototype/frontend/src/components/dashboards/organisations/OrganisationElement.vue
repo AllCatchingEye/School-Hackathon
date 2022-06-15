@@ -15,7 +15,7 @@
                         {{ OrganisationName }}
                     </span>
                     <span class="HackathonNameList" v-else>
-                        <input type="text" :value="OrganisationName" class="input" />
+                        <input type="text" v-model="newName" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -25,6 +25,7 @@
                     </span>
                     <span v-else>
                         <button class="button is-link is-rounded" @click="editing">Edit</button>
+                        <button class="button is-danger is-rounded" @click="deleting">Delete</button>
                     </span>
                 </div>
             </div>
@@ -33,8 +34,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 
-export default {
+export default {    
     props: {
         OrganisationName: {
             type: String,
@@ -47,6 +49,7 @@ export default {
     },
     data() {
         return {
+            newName: this.OrganisationName,
             edit: false
         }
     },
@@ -55,10 +58,41 @@ export default {
             this.edit = !this.edit
         },
         update() {
-            this.edit = false
+            const path = "/api/organisation/" + this.OrganisationID + "/";
+            const data = JSON.stringify({orgaid: this.OrganisationID, name: this.newName});
+
+            axios.patch(path, data, {
+                ithCredentials: true,
+                headers: {
+                 'Content-Type': 'application/json'
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    setTimeout(() => {location.reload();}, 100);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
         },
         cancel() {
             this.edit = false
+        },
+        deleting() {
+            const path = "/api/organisation/" + this.OrganisationID + "/";
+
+            axios.delete(path, {
+                withCredentials: true
+            })
+                .then((response) => {
+                    console.log(response);
+                    setTimeout(() => {location.reload();}, 100);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
         }
     }
 }
