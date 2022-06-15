@@ -38,7 +38,7 @@
 
                             <div class="entry">
                                 <span v-if="edit === false">
-                                {{ userDetails[1].name }}
+                                 {{ organisation }}
                             </span>
                             <span class="UserNameList" v-else>
                                 <div v-if="currentRole === 420 && isLoadedOrga === true">
@@ -193,7 +193,8 @@ export default {
         },
         update() {
             const path = '/api/user/' + this.userid + '/';
-            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.orgaid });
+            this.toUpdate = JSON.stringify({ email: this.email, name: this.name, firstname: this.firstname, role: this.role, organisation: this.choosenOrgaID });
+            console.log(this.toUpdate);
             axios.patch(path, this.toUpdate, {
                 headers: {
                     'Content-Type': 'application/json'
