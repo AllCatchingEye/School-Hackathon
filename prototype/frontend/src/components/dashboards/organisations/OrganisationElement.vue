@@ -15,7 +15,7 @@
                         {{ OrganisationName }}
                     </span>
                     <span class="HackathonNameList" v-else>
-                        <input type="text" :value="OrganisationName" class="input" />
+                        <input type="text" v-model="newName" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -49,6 +49,7 @@ export default {
     },
     data() {
         return {
+            newName: this.OrganisationName,
             edit: false
         }
     },
@@ -57,7 +58,23 @@ export default {
             this.edit = !this.edit
         },
         update() {
-            this.edit = false
+            const path = "/api/organisation/" + this.OrganisationID + "/";
+            const data = JSON.stringify({orgaid: this.OrganisationID, name: this.newName});
+
+            axios.patch(path, data, {
+                ithCredentials: true,
+                headers: {
+                 'Content-Type': 'application/json'
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    setTimeout(() => {location.reload();}, 100);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
         },
         cancel() {
             this.edit = false
