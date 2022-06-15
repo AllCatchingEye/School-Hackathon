@@ -35,22 +35,40 @@
 
     <div class="tiles-wrapper">
       <h1>Hi {{ this.firstname }}, <br> was möchtest du tun?</h1>
-      <div class="ctile" v-if="this.role === 'Admin' || this.role === 'Superadmin'" @click="routeUserManagement()">
+      <div class="ctile" v-if="this.role === 'Admin' || this.role === 'Superadmin'">
+            <router-link to="/user-overview">
+
             <h2>Usermanagement</h2>
 
             <i class="fa-solid fa-angle-right"></i>
+                  </router-link> 
+
       </div>
-      <div class="ctile" @click="routeHackathons()" v-if="this.role === 'Admin'">
+
+      <div class="ctile" v-if="this.role === 'Admin'">
+                  <router-link to="/hackathons">
+
       <h2>Hackathonmanagement</h2>
-      <i class="fa-solid fa-angle-right"></i></div>
+      <i class="fa-solid fa-angle-right"></i>
+                        </router-link> 
+
+      </div>
       
-      <div  class="ctile" @click="routeSchools()" v-if="this.role === 'Superadmin'">
+      <div  class="ctile" v-if="this.role === 'Superadmin'">
+            <router-link to="/schools">
+
             <h2>Schulmanagement</h2>
             <i class="fa-solid fa-angle-right"></i>
+              </router-link> 
+
       </div>
-          <div  class="ctile" @click="routeKeys()" v-if="this.role === 'Teacher'">
+          <div  class="ctile" v-if="this.role === 'Teacher'">
+            <router-link to="/keys">
+
             <h2>Schlüsselmanagement</h2>
             <i class="fa-solid fa-angle-right"></i>
+            </router-link> 
+
           </div>
     </div>
     </div>
@@ -129,23 +147,7 @@ axios.defaults.withCredentials = true;
             .catch((e) => {
               console.log(e);
             })
-        },
-
-        routeUserManagement(){
-          window.open("/user-overview", "_self");
-        },
-        routeHackathons(){
-          window.open("/hackathons", "_self");
-        },
-        routeEvaluation() {
-          window.open("/evaluation", "_self");
-        },
-        routeSchools() {
-          window.open("/schools", "_self");
-        },
-        routeKeys() {
-          window.open("/keys", "_self");
-        },
+        }
       }
 
     }
@@ -158,12 +160,14 @@ axios.defaults.withCredentials = true;
 $green :#37b1c5;
 
 .tiles-wrapper{
+
 display: flex;
 justify-content: space-around;
 flex-wrap: wrap;
 align-items:flex-start;
 align-content:center;
 margin-top:7%;
+
   h1{
     width: 100%;
     text-align: center;
@@ -180,17 +184,25 @@ margin-top:7%;
         transition:.3s;
 
     }
+    
     transition:.3s;
     cursor:pointer;
     width: 75%;
     max-height: 117px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    justify-content: space-between;
+        height: 100%;
+
     box-shadow: 1px 6px 15px -3px rgba(0, 0, 0, 0.56);
     margin: 10px;
     border-left:6px solid $green;
+
+    a{
+      width:100%;
+      display: flex;
+      height:100%;
+    align-items: center;
+    justify-content: space-between;
+    color:black;
+    }
     h2{
       text-transform:uppercase;
       font-size: 2rem;
