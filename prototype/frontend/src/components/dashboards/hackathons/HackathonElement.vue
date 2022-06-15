@@ -7,7 +7,7 @@
                         {{ HackathonName }}
                     </span>
                     <span class="HackathonNameList" v-else>
-                      <input type="text" :value="HackathonName" class="input" />
+                      <input type="text" v-model="newName" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -15,7 +15,7 @@
                         {{ HackathonDetails[0] }}
                     </span>
                     <span class="HackathonNameList" v-else>
-                        <input type="text" :value="HackathonDetails[0]" class="input" />
+                        <input type="text" v-model="newSlug" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -23,7 +23,7 @@
                         {{ HackathonDetails[1] }}
                     </span>
                     <span class="HackathonNameList" v-else>
-                        <input type="text" :value="HackathonDetails[1]" class="input" />
+                        <input type="text" v-model="newDesc" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -41,9 +41,13 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
     props: {
+        HackathonID: {
+            type: String,
+            default: () => "",
+        },
         HackathonName: {
             type: String,
             default: () => "Place",
@@ -55,6 +59,9 @@ export default {
     },
     data() {
         return {
+            newName: this.HackathonName,
+            newSlug: this.HackathonDetails[0],
+            newDesc: this.HackathonDetails[1],
             edit: false
         }
     },
@@ -63,7 +70,23 @@ export default {
             this.edit = !this.edit
         },
         update() {
-            this.edit = false
+            const path = "/api/hackathon/" + this.HackathonID + "/";
+            const data = JSON.stringify({hackathonid: this.HackathonID, title: this.newName, 
+                                        slug: this.newSlug, description: this.newDesc});
+            axios.patch(path, data, {
+                ithCredentials: true,
+                headers: {
+                 'Content-Type': 'application/json'
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    setTimeout(() => {location.reload();}, 100);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
         },
         cancel() {
             this.edit = false
