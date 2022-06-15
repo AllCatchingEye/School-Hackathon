@@ -25,24 +25,9 @@
       <div class="headlineUsers">
         <p>Benutzer</p>
       </div>
-      <div class="userDataHeader">
-        <div class="lineItem firstItem">
-          <p>Vorname </p>
-          <p>Nachname</p>
-        </div>
-        <div class="lineItem">
-          <p>Email</p>
-        </div>
-        <div class="lineItem">
-          <p>Organisation</p>
-        </div>
-        <div class="lineItem">
-          <p>Rolle</p>
-        </div>
-        <div class="lineItem">
-          <p>Edit</p>
-        </div>
-      </div>
+<div class="button-wrapper">
+      <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
+</div>
       <div class="scrollableUsers">
         <UserList></UserList>
       </div>
@@ -122,10 +107,10 @@ export default {
 
 .scrollableUsers {
   overflow-x: hidden;
-  height: 75%;
+  height: 80%;
   width: 63vw;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 1%;
+  margin-bottom: 2%;
 }
 
 .sidebar {
@@ -181,13 +166,6 @@ export default {
   color: #d9d9d9;
 }
 
-.userDataHeader{
-  display: flex;
-  justify-content: space-evenly;
-  width: 60vw;
-  grid-template-columns: 25% 10% 10% 10% 10%;
-
-}
 
 .label{
   color: white;
@@ -213,5 +191,8 @@ a{
   color: #d9d9d9;
 }
 
-
+.button-wrapper{
+  width:85%;
+text-align:right;
+}
 </style>
