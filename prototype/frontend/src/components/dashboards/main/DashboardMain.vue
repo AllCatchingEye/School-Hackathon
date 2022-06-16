@@ -1,36 +1,6 @@
 <template>
 <div class="data">
-    <div class="sidebar">
-      <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Dashboard</p>
-      </div>
-      <div class="NameSection">
-        <div class="NameItem">
-          <p>Hallo</p>
-          {{ this.firstname }}
-          {{ this.name }}
-        </div>
-        <div class="NameItem">
-          <p>Email:</p>
-          {{ this.email }}
-        </div>
-        <div class="NameItem">
-          <p>Organisation:</p>
-          {{ this.organisation }}
-        </div>
-        <div class="NameItem">
-          <p>Position:</p>
-          {{ this.role }}
-        </div>
-      </div>
-      <div class="sidebarBottom">
-        <div>
-          <LogoutButton></LogoutButton>
-        </div>
-        <p class="label">© 2022 wirfuerschule.de</p><br>
-        </div>
-      </div>
+    <sidebar :currentpage = "this.currentsite" ></sidebar>
     <div class="outerBoxOverview">
 
       <div class="headlineUsers">
@@ -80,11 +50,11 @@
 /* eslint-disable */
 import axios from 'axios';
 import { useCookies } from 'vue3-cookies';
-import LogoutButton from './../../LogoutButton.vue';
+import Sidebar from "../sidebar/sidebarDash";
 axios.defaults.withCredentials = true;
 
     export default {
-      components: {LogoutButton},
+      components: {Sidebar},
       data() {
         return {
           email: '',
@@ -92,6 +62,7 @@ axios.defaults.withCredentials = true;
           firstname: '',
           name: '',
           organisation: '',
+          currentsite :"dashboard",
         }
       },
       mounted() {
@@ -317,12 +288,6 @@ p{
   width: 60vw;
   margin-top: 5%;
   margin-bottom: 5%;
-}
-
-.sidebar {
-  height: 100%;
-  width: 100%;
-  background-color: #000a38;
 }
 
 .wirfuerschuleimg {

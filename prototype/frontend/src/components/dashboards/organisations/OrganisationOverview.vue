@@ -3,24 +3,7 @@
     <PopupSuperadminOrganisationsBuildVue></PopupSuperadminOrganisationsBuildVue>
   </div>
 <div class="data">
-    <div class="sidebar">
-      <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Organisationsübersicht</p>
-      </div>
-      <div @click="goHome()">
-        <HomeButton></HomeButton>
-      </div>
-      <div @click="changePopup()">
-          <OpenPopupButton :type="'Organisation'"></OpenPopupButton>
-      </div>
-      <div  v-if="!openPopup" class="sidebarBottom">
-        <div>
-          <LogoutButton></LogoutButton>
-        </div>
-        <p class="label">© 2022 wirfuerschule.de</p><br>
-        </div>
-      </div>
+    <sidebarDash></sidebarDash>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
         <p>Organisationen</p>
@@ -46,13 +29,13 @@
 <script>
 /* eslint-disable */
 import OrganisationList from './OrganisationList.vue';
-import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "../OpenPopupButton";
 import PopupSuperadminOrganisationsBuildVue from '../../popups/organisations/PopupSuperadminOrganisationsBuild.vue';
 import HomeButton from "../HomeButton";
+import sidebarDash from "../sidebar/sidebarDash";
 
     export default {
-        components: {HomeButton, PopupSuperadminOrganisationsBuildVue, OpenPopupButton, OrganisationList, LogoutButton },
+        components: {HomeButton, PopupSuperadminOrganisationsBuildVue, OpenPopupButton, OrganisationList, sidebarDash },
       name: "Organisation",
       data() {
         return {

@@ -1,26 +1,9 @@
 <template>
   <div v-if="openPopup">
-    <PopupAddUser></PopupAddUser>
+    <PopupAddUser ></PopupAddUser>
   </div>
 <div class="data">
-    <div class="sidebar">
-      <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Benutzerübersicht</p>
-      </div>
-      <div @click="goHome()">
-        <HomeButton></HomeButton>
-      </div>
-        <div @click="changePopup()">
-          <OpenPopupButton :type="'Nutzer'"></OpenPopupButton>
-        </div>
-      <div class="sidebarBottom">
-        <div>
-          <LogoutButton></LogoutButton>
-        </div>
-        <p>© 2022 <a href="https://wirfuerschule.de/">wirfuerschule.de</a></p><br>
-      </div>
-    </div>
+  <sidebarDash :currentpage="this.currentpage"></sidebarDash>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
         <p>Benutzer</p>
@@ -53,19 +36,20 @@
 <script>
 /* eslint-disable */
 import UserList from './UserList.vue';
-import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "../OpenPopupButton";
 import PopupAddUser from "../../popups/users/PopupAddUser";
 import HomeButton from "../HomeButton";
+import sidebarDash from "../sidebar/sidebarDash";
 
 
 export default {
-  components: {PopupAddUser, UserList, LogoutButton, OpenPopupButton, HomeButton},
+  components: {PopupAddUser, UserList, OpenPopupButton, HomeButton, sidebarDash},
   data() {
     return {
       adding: false,
       rendered: false,
-      openPopup: false
+      openPopup: false,
+      currentpage: "user"
     }
   },
   methods: {
@@ -84,7 +68,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .data {
@@ -128,12 +112,6 @@ export default {
   margin-bottom: 5%;
 }
 
-.sidebar {
-  height: 100%;
-  width: 100%;
-  background-color: #000a38;
-}
-
 .wirfuerschuleimg {
   align-items: center;
   width: 60%;
@@ -173,13 +151,6 @@ export default {
   align-items: center;
 }
 
-.sidebarBottom{
-  position: absolute;
-  bottom: 2rem;
-  width: 30%;
-  text-align: center;
-  color: #d9d9d9;
-}
 
 .userDataHeader{
   display: flex;
