@@ -92,7 +92,7 @@ export default {
 .scrollableUsers {
   overflow-x: hidden;
   height: 80%;
-  width: 63vw;
+  width: 64vw;
   margin-top: 1%;
   margin-bottom: 2%;
 }
@@ -163,7 +163,7 @@ a{
 }
 
 .button-wrapper{
-  width:85%;
+  width:84%;
 text-align:right;
 }
 </style>

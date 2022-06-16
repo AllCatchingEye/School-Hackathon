@@ -3,11 +3,8 @@
         <div>
             <div class="HackathonData">
                 <div class="lineItem">
-                    <span  v-if="edit === false">
+                    <span>
                         {{ OrganisationID }}
-                    </span>
-                    <span class="HackathonNameList" v-else>
-                      <input type="text" :value="OrganisationID" class="input" />
                     </span>
                 </div>
                 <div class="lineItem">
@@ -21,11 +18,11 @@
                 <div class="lineItem">
                     <span class="HackathonNameList button-wrapper" v-if="edit === true">
                         <button class="button is-success is-rounded" @click="update">Update</button>
-                        <button class="button is-danger is-rounded" @click="cancel" buttonText="Cancel">Cancel</button>
+                        <button class="button is-danger is-rounded" @click="cancel">Cancel</button>
                     </span>
                     <span v-else>
-                        <button class="button is-link is-rounded" @click="editing">Edit</button>
-                        <button class="button is-danger is-rounded" @click="deleting">Delete</button>
+                        <button class="button editbutton is-link is-rounded" @click="editing">Edit</button>
+                        <button class="button is-danger is-rounded is-outlined" @click="deleting">Delete</button>
                     </span>
                 </div>
             </div>
@@ -36,7 +33,7 @@
 <script>
 import axios from 'axios';
 
-export default {    
+export default {
     props: {
         OrganisationName: {
             type: String,
@@ -100,36 +97,27 @@ export default {
 
 
 <style scoped>
-.buttonUser {
-    background-color: rgba(130, 0, 205, 0.83);
-    color: white;
-    margin-right: 1rem;
-}
-
-.buttonUser:hover {
-    background-color: rgba(130, 0, 205, 0.83);
-    color: white;
-}
-
-.buttonUser:active {
-    color: white;
-}
-
-.HackathonNameListTag{
-  margin-right: 2rem;
-  margin-left: 2rem;
-}
 
 .HackathonData {
   vertical-align: top;
   flex-direction: row;
-  display: grid;
+  display: flex;
   align-items: center;
-  grid-template-columns: 33% 33% 33%;
   justify-content: space-around;
   width: 55vw;
   height: auto;
   flex-wrap: nowrap;
+}
+
+.editbutton{
+  background-color: #1ABC9C;
+}
+
+.editbutton:hover{
+  background-color: #1ABC9C;
+}
+.button{
+  border: white 2px solid;
 }
 
 .HackathonNameList{
@@ -142,9 +130,13 @@ export default {
 }
 
 .lineItem {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
   margin-right: 1rem;
   height: auto;
-  width: 100%;
+  width:100%;
 
 
 }
@@ -157,12 +149,6 @@ export default {
 ::-webkit-scrollbar-track {
   background: white;
 }
-
-::-webkit-scrollbar-thumb {
-  background-color: #0D2385;
-  border-radius: 10px;
-}
-
 
 
 .button{

@@ -4,20 +4,35 @@
       <p>Navigation</p>
     </div>
     <div class="navigationlist">
-      <div class="navigationitem" :class="dashboardactive ? 'navigationitemcurrent' : 'navigationitem'" @click="routeHome()">
+      <div class="navigationitem" :class="dashboardactive ? 'navigationitemcurrent' : 'navigationitem'">
+        <router-link to="/">
         <p>Dashboard</p>
+        </router-link>
       </div>
-      <div class="navigationitem" :class="useractive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Superadmin'" @click="routeUserManagement()">
-        <p>Benutzerübersicht</p>
+      <div class="navigationitem" :class="useractive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Superadmin'">
+        <router-link to="/user-overview">
+        <p>Usermanagement</p>
+        </router-link>
       </div>
-      <div class="navigationitem" :class="hackathonactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'"  @click="routeHackathons()">
+      <div class="navigationitem" :class="hackathonactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'">
+        <router-link to="/hackathons">
         <p>Hackathonübersicht</p>
+        </router-link>
       </div>
-      <div class="navigationitem" :class="tokenactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Teacher'" @click="routeKeys()">
+      <div class="navigationitem" :class="tokenactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Teacher'">
+        <router-link to="/keys">
         <p>Tokens</p>
+        </router-link>
       </div>
-      <div class="navigationitem" :class="analyseactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'" @click="routeEvaluation()">
+      <div class="navigationitem" :class="analyseactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'">
+        <router-link to="/evaluation">
         <p>Analyse</p>
+        </router-link>
+      </div>
+      <div class="navigationitem" :class="schoolactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Superadmin'">
+        <router-link to="/schools">
+        <p>Schulmanagement</p>
+        </router-link>
       </div>
     </div>
   </div>
@@ -41,7 +56,8 @@ export default {
       useractive : false,
       hackathonactive : false,
       tokenactive : false,
-      analyseactive : false
+      analyseactive : false,
+      schoolactive: false
     }},
   mounted() {
     console.log(this.currentpage);
@@ -70,24 +86,7 @@ export default {
       this.hackathonactive = this.currentpage === "hackathon";
       this.tokenactive = this.currentpage === "token";
       this.analyseactive = this.currentpage === "analyse";
-    },
-    routeHome() {
-      window.open("/", "_self");
-    },
-    routeUserManagement(){
-      window.open("/user-overview", "_self");
-    },
-    routeHackathons(){
-      window.open("/hackathons", "_self");
-    },
-    routeEvaluation() {
-      window.open("/evaluation", "_self");
-    },
-    routeSchools() {
-      window.open("/schools", "_self");
-    },
-    routeKeys() {
-      window.open("/keys", "_self");
+      this.schoolactive = this.currentpage === "schools";
     },
   }
   }
@@ -116,7 +115,7 @@ export default {
   cursor: pointer;
 }
 
-.navigationitemcurrent{
+.navigationitemcurrent p{
   font-weight: bold;
   cursor: auto !important;
   color: #5AC6CE;
@@ -128,6 +127,10 @@ export default {
 
 .navigationitem :hover{
   font-weight: bold;
+}
+
+p{
+  color: black;
 }
 
 </style>

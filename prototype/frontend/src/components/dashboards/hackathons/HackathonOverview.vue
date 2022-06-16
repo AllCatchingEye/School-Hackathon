@@ -8,19 +8,8 @@
       <div class="headlineUsers">
         <p>Hackathons</p>
       </div>
-      <div class="userDataHeader">
-        <div class="lineItem">
-          <p>Name</p>
-        </div>
-        <div class="lineItem">
-          <p>slug</p>
-        </div>
-        <div class="lineItem">
-          <p>Beschreibung</p>
-        </div>
-        <div class="lineItem">
-          <p>Edit</p>
-        </div>
+      <div class="button-wrapper">
+        <button class="add-hackathon button is-success is-rounded" @click="changePopup()">Hackathon hinzufügen</button>
       </div>
       <div class="scrollableUsers">
         <UserList></UserList>
@@ -161,5 +150,10 @@ import sidebarDash from "../sidebar/sidebarDash";
 .label{
   color: white;
   margin-top: 2vh;
+}
+
+.button-wrapper{
+  width:84%;
+  text-align:right;
 }
 </style>

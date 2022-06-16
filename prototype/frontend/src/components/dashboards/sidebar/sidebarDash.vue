@@ -37,7 +37,7 @@ export default {
 .sidebar{
   display: flex;
   height: 100vh;
-  width: 30vw;
+  width: 100%;
   background-color: #EEEEEE;
   flex-direction: column;
   justify-content: flex-start;

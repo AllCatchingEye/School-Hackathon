@@ -3,7 +3,7 @@
         <span class="innerBox" v-if="isLoaded === true">
             <h3 v-for="user in response" :key="user.hackathonid">
                 <User :HackathonName="user.title" :HackathonID="user.hackathonid"
-                    :HackathonDetails="[user.slug, user.description]"/>
+                    :HackathonDetails="[user.slug, user.description, user.hackathonid]"/>
             </h3> <br>
         </span>
     </div>

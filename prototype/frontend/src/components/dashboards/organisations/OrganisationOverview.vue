@@ -3,22 +3,15 @@
     <PopupSuperadminOrganisationsBuildVue></PopupSuperadminOrganisationsBuildVue>
   </div>
 <div class="data">
-    <sidebarDash></sidebarDash>
+    <sidebarDash :currentpage = "this.currentpage"></sidebarDash>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
-        <p>Organisationen</p>
+        <p>Schulen</p>
       </div>
-      <div class="userDataHeader">
-        <div class="lineItem">
-          <p>ID</p>
-        </div>
-        <div class="lineItem">
-          <p>Name</p>
-        </div>
-        <div class="lineItem">
-          <p>Edit</p>
-        </div>
+      <div class="button-wrapper">
+        <button class="add-organisation button is-success is-rounded" @click="changePopup()">Schule hinzufügen</button>
       </div>
+
       <div class="scrollableUsers">
         <OrganisationList></OrganisationList>
       </div>
@@ -40,6 +33,7 @@ import sidebarDash from "../sidebar/sidebarDash";
       data() {
         return {
           openPopup: false,
+          currentpage: "schools"
         }},
       methods: {
         changePopup(){
@@ -87,17 +81,10 @@ import sidebarDash from "../sidebar/sidebarDash";
 .scrollableUsers {
   overflow-x: hidden;
   height: 75%;
-  width: 63vw;
+  width: 65vw;
   margin-top: 5%;
   margin-bottom: 5%;
 }
-
-.sidebar {
-  height: 100%;
-  width: 100%;
-  background-color: #000a38;
-}
-
 .wirfuerschuleimg {
   align-items: center;
   width: 60%;
@@ -136,14 +123,6 @@ import sidebarDash from "../sidebar/sidebarDash";
   align-items: center;
 }
 
-.sidebarBottom{
-  position: absolute;
-  bottom: 2rem;
-  width: 30%;
-  text-align: center;
-  color: #d9d9d9;
-}
-
 .userDataHeader{
   margin-left: 3vw;
   display: grid;
@@ -173,5 +152,10 @@ import sidebarDash from "../sidebar/sidebarDash";
 .label{
   color: white;
   margin-top: 2vh;
+}
+
+.button-wrapper{
+  width:75%;
+  text-align:right;
 }
 </style>

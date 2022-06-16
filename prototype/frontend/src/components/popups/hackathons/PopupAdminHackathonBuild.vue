@@ -102,16 +102,49 @@ export default {
 }
 
 </script>
-
 <style scoped>
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&family=Roboto&display=swap');
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+
+.dropdown{
+  position: relative;
+  height: 100%;
+  width:100%;
+}
+.dropdown-trigger{
+  height: 100%;
+  width:100%;
+  border-radius: 1rem;
+}
+.dropdown-menu{
+  height: 100%;
+  width:100%;
+}
+
+
+
+.button{
+  font-size: 1rem;
+  display: flex;
+  align-content: flex-start;
+  height: 100%;
+  width: 100%;
+  justify-content: space-around;
+  font-family: inter, san-serif,serif;
+  border: 0.2rem solid #D9D9D9;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: none;
+  border-radius: 1rem;
+}
+
 
 .PopupOuter{
   position: fixed;
   width:100vw;
   height: 100vh;
-  background-color: #ffffff57;
+  background-color: #00000078;
   backdrop-filter: blur(30px);
   display: flex;
   align-items: center;
@@ -129,11 +162,10 @@ export default {
 
 .PopupInner{
   position: relative;
-  background-color: #000a38;
-  width: 80%;
+  background-color: #FFFFFF;
+  width: 60%;
   height: 80%;
   border-radius: 40px;
-  box-shadow: 11px 11px 23px 9px rgba(0,12,109,0.33);
 }
 
 .PopupFooterButton{
@@ -151,17 +183,17 @@ export default {
 }
 
 .fa-solid{
-  color: white;
   font-size: 50vh;
 }
 
 .HeaderPopup{
+  font-family: inter, san-serif,serif;
   width: 100%;
   height: 15%;
   padding-left: 5%;
-  color: white;
-  font-size: 40px;
-  font-weight: normal;
+  font-size: 25px;
+  font-weight: bold;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -179,11 +211,15 @@ export default {
 }
 
 .PopupFooter{
-  height: 10%;
+  height: 15%;
   width: 100%;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #F0F0F0;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  padding-right: 5%;
 }
 
 
@@ -196,12 +232,12 @@ input{
   width: 100%;
   height: 100%;
   font-family:'Open Sans', san-serif, serif;
-  border: .2rem solid #0c9bfa;
-  font-size:1.5rem;
+  border: .2rem solid #D9D9D9;
+  font-size:1rem;
   padding: 1rem 1rem;
-  color:#fff;
-  border-radius:.5rem;
+  border-radius: 1rem;
   background: none;
+  outline: none;
 }
 
 input:focus{
@@ -217,9 +253,8 @@ label{
   top:50%;
   left:2rem;
   transform: translateY(-50%);
-  font-size: 1.5rem;
-  background:#000a38;
-  color:#fff !important;
+  font-size: 1rem;
+  background:#FFFFFF;
   transition: all .25s linear;
   pointer-events:none;
 }
@@ -227,10 +262,11 @@ label{
 input:focus ~ label,
 input:not(:focus):valid ~ label{
   transform: translateY(50%);
-  top:-40%;
+  top:-45%;
   left:1rem;
   font-size:1.25rem;
   padding: 0 .3rem;
+  outline: none;
 }
 
 </style>
