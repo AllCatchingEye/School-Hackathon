@@ -1,11 +1,12 @@
 <template>
+
     <div class="OuterBox">
-        <span class="innerBox" v-if="isLoaded === true">
-            <h3 v-for="user in response" :key="user.email">
+        <div class="innerBox" v-if="isLoaded === true">
+            <div class="list-wrapper" v-for="user in response" :key="user.email">
                 <User :userName="user.firstname" :userLastName="user.name"
                     :userDetails="[user.email, user.organisations, user.roles, user.userid]"/>
-            </h3> <br>
-        </span>
+            </div> <br>
+        </div>
     </div>
 </template>
 
@@ -57,9 +58,9 @@ export default {
 }
 
 .innerBox{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+    position:relative;
+}
+.list-wrapper{
+    width:100%;
 }
 </style>
