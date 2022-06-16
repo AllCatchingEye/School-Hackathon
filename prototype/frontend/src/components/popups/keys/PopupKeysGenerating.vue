@@ -14,31 +14,6 @@
                 <div class="row">
                     <div class="PopupQuestion">
                         <div class="PopupInput">
-                            <div class="dropdown is-hoverable">
-                                <div class="dropdown-trigger">
-                                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                        <span> {{ hackathon }} </span>
-                                        <span class="icon is-small">
-                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                    <div class="dropdown-content">
-                                        <a v-for="unit in hackathons" :key="unit.hackathonid">
-                                            <a href="#" class="dropdown-item"
-                                                @click="changeHackathon(unit.hackathonid, unit.title)">
-                                                {{ unit.title }}
-                                            </a>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- <label>Hackathon</label> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="PopupQuestion">
-                        <div class="PopupInput">
                             <input v-model="amount" type="number" min=0 max=200 autocomplete="off" required />
                             <label>Menge</label>
                         </div>
@@ -71,11 +46,17 @@ export default {
         const { cookies } = useCookies();
         return { cookies };
     },
+    props: {
+        hackathonID: {
+            type: Number,
+            default: () => -1,
+        },
+    },
     data() {
         return {
             fullHackathon: {},
             hackathon: 'Auswählen',
-            hackathonid: -1,
+            hackathonid: this.hackathonID,
             amount: 0,
             result: '',
             hackathons: {},

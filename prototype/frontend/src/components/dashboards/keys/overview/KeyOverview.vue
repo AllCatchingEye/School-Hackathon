@@ -1,6 +1,6 @@
 <template>
     <div v-if="openPopup">
-        <PopupKeysGenerating></PopupKeysGenerating>
+        <PopupKeysGenerating :hackathonID="hackathonID"></PopupKeysGenerating>
     </div>
     <div class="data">
         <div class="sidebar">
@@ -24,19 +24,24 @@
         </div>
         <div class="outerBoxOverview">
             <div class="headlineUsers">
-                <p>Schlüsselübersicht</p>
+                <p>Schlüsselübersicht für {{ hackathonName }}</p>
             </div>
             <div class="userDataHeader">
                 <div class="lineItem">
-                    <p>Hackathon</p>
+                    <p>Token</p>
                 </div>
                 <div class="lineItem">
-                    <p>Schlüssel</p>
+                    <p>Action</p>
                 </div>
             </div>
             <div class="scrollableUsers">
-                <!-- <KeyOverview></KeyOverview> -->
+                <a v-for="unit in hackathons" :key="unit.hackathonid">
+                    <HackathonUnit :hackathonName="unit.title" :hackathonID="unit.hackathonid"></HackathonUnit>
+                </a>
             </div>
+        </div>
+        <div class="scrollableUsers">
+                <TokenList></TokenList>
         </div>
     </div>
 </template>
@@ -47,13 +52,23 @@ import LogoutButton from '../../../LogoutButton.vue';
 import OpenPopupButton from '../../OpenPopupButton.vue';
 import PopupKeysGenerating from '../../../popups/keys/PopupKeysGenerating.vue';
 import HomeButton from '../../HomeButton.vue';
+import TokenList from './TokenList.vue';
 
 export default {
-    components: { HomeButton, OpenPopupButton, LogoutButton, PopupKeysGenerating },
+    components: { HomeButton, OpenPopupButton, LogoutButton, PopupKeysGenerating, TokenList },
     data() {
         return {
             openPopup: false,
             hackathonName: this.$route.query.hackathon,
+            hackathonID: this.$route.query.id,
+        }
+    },
+    methods: {
+        changePopup(){
+          this.openPopup = true
+        },
+        goHome(){
+          this.$router.push('/keys');
         }
     },
     methods: {
@@ -61,7 +76,7 @@ export default {
             this.openPopup = true
         },
         goHome() {
-            this.$router.push('/');
+            this.$router.push('/keys');
         }
     }
 }
