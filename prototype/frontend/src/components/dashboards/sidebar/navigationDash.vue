@@ -126,7 +126,8 @@ export default {
 }
 
 .navigationitem :hover{
-  font-weight: bold;
+  opacity:0.8;
+  transition:.3;
 }
 
 p{

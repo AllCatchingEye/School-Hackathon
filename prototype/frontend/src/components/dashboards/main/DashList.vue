@@ -136,7 +136,9 @@ h1{
   .ctile{
     &:hover{
       background:$green;
+      h2{
       color:white;
+      }
       transition:.3s;
 
     }
@@ -146,7 +148,6 @@ h1{
     width: 75%;
     max-height: 117px;
     height: 100%;
-
     box-shadow: 1px 6px 15px -3px rgba(0, 0, 0, 0.56);
     margin: 10px;
     border-left:6px solid $green;
