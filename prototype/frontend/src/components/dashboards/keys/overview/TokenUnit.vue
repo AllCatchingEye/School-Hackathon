@@ -2,11 +2,16 @@
     <div class="box">
         <div>
             <div class="HackathonData">
+
                 <div class="lineItem">
-                    {{ hackathonName }}
+                    <span class="HackathonNameList">
+                        {{ token }}
+                    </span>
                 </div>
                 <div class="lineItem">
-                    <buttom class="button is-rounded is-success" @click="getOverview">Anzeigen</buttom>
+                    <span class="HackathonNameList">
+                        <buttom class="button is-rounded is-danger" @click="deleteToken">Delete</buttom>
+                    </span>
                 </div>
             </div>
         </div>
@@ -14,27 +19,27 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     props: {
-        hackathonID: {
-            type: Number,
+        tokenID: {
             default: () => -1,
-        },
-        hackathonName: {
-            type: String,
-            default: () => "None",
         },
     },
     data() {
         return {
-            hackathon: this.hackathonName,
-            hackathon_id: this.hackathonID,
+            token: this.tokenID,
         }
     },
     methods: {
-        getOverview() {
-            this.$router.push({ path: '/keys/overview', query: { hackathon: this.hackathon, id: this.hackathonID } });
-        },
+        async deleteToken() {
+            const path = '/api/token/' + this.token + '/';
+            await axios.delete(path)
+                .catch((err) => {
+                    console.log(err);
+                });
+            location.reload();
+        }
     }
 }
 </script>
@@ -79,7 +84,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .lineItem {

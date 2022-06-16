@@ -1,7 +1,4 @@
 <template>
-    <div v-if="openPopup">
-        <PopupKeysGenerating></PopupKeysGenerating>
-    </div>
     <div class="data">
         <div class="sidebar">
             <div class="fontHeadline">
@@ -11,9 +8,6 @@
             </div>
             <div @click="goHome()">
                 <HomeButton></HomeButton>
-            </div>
-            <div @click="changePopup()">
-                <OpenPopupButton :type="'Keys'"></OpenPopupButton>
             </div>
             <div v-if="!openPopup" class="sidebarBottom">
                 <div>
@@ -35,9 +29,9 @@
                 </div>
             </div>
             <div class="scrollableUsers">
-            <a v-for="unit in hackathons" :key="unit.hackathonid">
-                <HackathonUnit :hackathonName="unit.title" :hackathonID="unit.hackathonid"></HackathonUnit>
-            </a>
+                <a v-for="unit in hackathons" :key="unit.hackathonid">
+                    <HackathonUnit :hackathonName="unit.title" :hackathonID="unit.hackathonid"></HackathonUnit>
+                </a>
             </div>
         </div>
     </div>
@@ -48,17 +42,13 @@
 import axios from 'axios';
 import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "../OpenPopupButton";
-import PopupKeysGenerating from "../../popups/keys/PopupKeysGenerating";
 import HomeButton from "../HomeButton";
 import HackathonUnit from './HackathonUnit';
 
 export default {
-    components: { HomeButton, OpenPopupButton, LogoutButton, PopupKeysGenerating, HackathonUnit },
+    components: { HomeButton, OpenPopupButton, LogoutButton, HackathonUnit },
     data() {
         return {
-            openPopup: false,
-            hackathon: '',
-            hackathonID: -1,
             hackathons: {},
         }
     },
@@ -66,9 +56,6 @@ export default {
         this.getHackathons();
     },
     methods: {
-        changePopup() {
-            this.openPopup = true
-        },
         goHome() {
             this.$router.push('/');
         },
