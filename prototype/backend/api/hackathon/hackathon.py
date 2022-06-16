@@ -11,7 +11,7 @@ Hackathon = Blueprint('hackathon', __name__)
 
     
 @Hackathon.route('/', methods=["GET"])
-@auth_required([Config.ADMIN_ID])
+@auth_required([Config.ADMIN_ID, Config.TEACHER_ID])
 def get_hackathons():
     organisation = get_jwt()["organisation"]
     hackathons = Hackathonmodel.query.filter_by(organisationid=organisation).all()
@@ -23,7 +23,7 @@ def get_hackathons():
 
 
 @Hackathon.route('/<hackathon_id>/', methods=["GET"])
-@auth_required([Config.ADMIN_ID])
+@auth_required([Config.ADMIN_ID, Config.TEACHER_ID])
 def get_hackathon(hackathon_id):
     organisation = get_jwt()["organisation"]
     hackathon = Hackathonmodel.query.filter_by(organisationid=organisation,hackathonid=hackathon_id).first()
