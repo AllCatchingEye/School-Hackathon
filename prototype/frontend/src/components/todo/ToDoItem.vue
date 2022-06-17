@@ -2,11 +2,11 @@
         <div class="box">
                     <div class="entry-wrapper" v-if="!edit">
                         <div class="data-wrapper">                          
-                            <div class="entry"><p>{{ name }}</p></div>
-                            <div class="entry"><p>{{ firstname }}</p></div>
-                            <div class="entry"><p>{{ email }}</p></div>
-                            <div class="entry"><p>{{ organisation }}</p></div>
-                            <div class="entry"><p>{{ role }}</p></div>
+                            <div class="entry"><p>{{ User.name }}</p></div>
+                            <div class="entry"><p>{{ User.firstname }}</p></div>
+                            <div class="entry"><p>{{ User.email }}</p></div>
+                            <div class="entry"><p>{{ User.organisations.name }}</p></div>
+                            <div class="entry"><p>{{ User.roles.description }}</p></div>
                         </div>
                         <div class="lineItem buttons">
                             <div  class="editbutton is-link is-rounded" @click="editing">Edit</div>
@@ -21,21 +21,21 @@
                     <div class="entry-wrapper" v-else>
                         <div class="data-wrapper">   
                             <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="User['name']"  />
+                            <input type="text" class="input is-small" v-model="User.name"  />
                             </p></div>
                             <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="User['firstname']"/>
+                            <input type="text" class="input is-small" v-model="User.firstname"/>
                             </p></div>
                             <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="User['email']"/>
+                            <input type="text" class="input is-small" v-model="User.email"/>
                             </p></div>
                             <div class="entry">
-                                <select v-model="User['organisation']">
+                                <select v-model="User.organisations.orgaid">
                                         <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
                                 </select>                                
                             </div>
                             <div class="entry">
-                                <select v-model="User['role']">
+                                <select v-model="User.roles.roleid">
                                         <option v-for="role in Roles" :value="role.roleid" :key="role.roleid">{{role.description}}</option>
                                 </select>                                
                             </div>                             
@@ -68,12 +68,11 @@
 <script>
 import axios from 'axios';
 export default {
- props: ['organisations','roles', 'userid', 'name', 'firstname', 'email', 'organisation', 'role'],
+ props: ['organisations','roles', 'user'],
  data() {
     return{
         edit:false,
-        UserId: this.userid,
-        User: {"name": this.name, "firstname":this.firstname, "email":this.email, "role":this.role, "organisation": this.organisation},
+        User: this.user,
         Roles: this.roles,
         Organisations: this.organisations
     }
@@ -85,11 +84,31 @@ export default {
        cancel() {
             this.edit = false;
         },
+         deleteUser() {
+            const path = '/api/user/' + this.User.userid + '/';
+            axios.delete(path, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            }).then(() => {
+                this.edit=false;
+                this.$emit('user-delete', this.User.userid);
+            }).catch((err) => {
+                console.log(err);
+                    // error = true;
+                    // message = err.response.data.message;
+                });
+        },
         update() {
-            const path = '/api/user/'  + this.UserId +'/';
-            const userJson = JSON.stringify(this.User);
-            console.log(this.User);
-            axios.patch(path, userJson, {
+            const path = '/api/user/'  + this.User.userid +'/';
+            const payload = {name: this.User.name, 
+                            firstname: this.User.firstname, 
+                            organisation: this.User.organisations.orgaid,
+                            role: this.User.roles.roleid,
+                            email: this.User.email
+                            }
+            axios.patch(path, JSON.stringify(payload), {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -97,8 +116,7 @@ export default {
             }).then((response) => {
                 this.User = response.data.dataobj;
                 this.edit=false;
-                this.UserId += 1;
-                this.$emit('user-updated');
+                this.$emit('user-updated', this.User);
             }).catch((err)=>{             
             switch(err.response.status) {
                 case 409:

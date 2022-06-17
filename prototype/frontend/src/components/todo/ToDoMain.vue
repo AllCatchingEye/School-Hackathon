@@ -5,13 +5,8 @@
     <to-do-form @user-added="addUser"></to-do-form>
     <ul>
       <li v-for="user in orderedUsersById" :key="user.userid">  
-        <to-do-item @user-updated="updateUser"
-                    :userid="user.userid"
-                    :name="user.name" 
-                    :firstname="user.firstname" 
-                    :organisation="user.organisations.orgaid" 
-                    :role="user.roles.roleid" 
-                    :email="user.email"
+        <to-do-item @user-updated="updateUser" @user-delete="deleteUser"
+                    :user="user"                    
                     :roles="Roles"
                     :organisations="Organisations"></to-do-item>
       </li>
@@ -46,20 +41,23 @@ computed: {
   }
 },
 mounted() {
-        this.getUserData();
-        this.getRoleData();
+        this.getRoleData();        
         this.getOrganisationData();
+        this.getUserData();
+
     },
 methods:{
     addUser(user){
         this.postUserData(user);
-        
     },
-    updateUser(){
-        //console.log(this.componentKey);
-
-
-
+    updateUser(user){
+    const itemIndex = this.User.findIndex(x => x.userid == user.userid);
+    this.User[itemIndex] = user;
+    },
+    deleteUser(id){
+        let itemIndex = this.User.findIndex(x => x.userid == id);
+        this.User.splice(itemIndex,1);
+        
     },
     getUserData(){
         const path = '/api/user/'
@@ -68,11 +66,6 @@ methods:{
         })
         .then((response) => {
             this.accessAllowed = true;
-
-            let bla = response.data;
-            for(let i = 0; i < response.data.length; i++){
-                bla[i]["incrementor"] = 0;
-            }
             this.User = response.data;
             console.log(this.User);
 
@@ -122,7 +115,7 @@ methods:{
     },
      getRoleData(){
             const path = '/api/role/'
-            axios.get(path, {
+            return axios.get(path, {
                 withCredentials:true
             })
             .then((response) => {
@@ -143,7 +136,7 @@ methods:{
         },    
     getOrganisationData(){
             const path = '/api/organisation/'
-            axios.get(path, {
+            return axios.get(path, {
                 withCredentials:true
             })
             .then((response) => {
