@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="entry-wrapper" v-else>
-                        <div class="data-wrapper">   
+                        <div class="data-wrapper fw">   
                             <div class="entry"><p>
                             <input type="text" class="input is-small" v-model="User.name"  />
                             </p></div>
@@ -30,12 +30,12 @@
                             <input type="text" class="input is-small" v-model="User.email"/>
                             </p></div>
                             <div class="entry">
-                                <select v-model="User.organisations.orgaid">
+                                <select class="select" v-model="User.organisations.orgaid">
                                         <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
                                 </select>                                
                             </div>
                             <div class="entry">
-                                <select v-model="User.roles.roleid">
+                                <select class="select" v-model="User.roles.roleid">
                                         <option v-for="role in Roles" :value="role.roleid" :key="role.roleid">{{role.description}}</option>
                                 </select>                                
                             </div>                             
@@ -170,6 +170,9 @@ export default {
     display:flex;
     .data-wrapper{
         width:80%;
+        &.fw{
+            width:100%;
+        }
         display:grid;
         grid-template-columns: 1fr 1fr 1.5fr 1fr 1fr;
         height:80px;
@@ -247,5 +250,57 @@ export default {
 
     }
 
+}
+
+select {
+  /* Reset Select */
+  appearance: none;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  flex: 1;
+  padding: 0 1em;
+  
+  background-color: none;
+  
+  background-image: none;
+  width:100%;
+  cursor: pointer;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select wrapper */
+.select {
+  position: relative;
+  display: flex;
+  border-radius: .25em;
+  overflow: hidden;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  background-color: #34495e;
+  transition: .25s all ease;
+  pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+
+a {
+  font-weight: bold;
+  color: var(--gray);
+  text-decoration: none;
+  padding: .25em;
+  border-radius: .25em;
+  background: white;
 }
 </style>
