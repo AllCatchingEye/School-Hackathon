@@ -57,15 +57,16 @@ def create():
                 
             result = (jsonify(
                     category="Success",
-                    message=f"User: {user.name} with E-Mail: {user.email} created"), 201)
+                    message=f"User: created",
+                    dataobj=user.to_dict()), 201)
             # Send E-Mail
             mail.send(msg)          
-        except IntegrityError as e:
+        except IntegrityError as er:
             db.session.rollback()
             result = (jsonify(
                     category="Error",
-                    message=f"error while adding user{e}"), 409)
-        except e:
+                    message=f"error while adding user {er}"), 409)
+        except Exception as e:
             print(e)
     return result
 
