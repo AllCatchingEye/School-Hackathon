@@ -55,7 +55,6 @@ export default {
     data() {
         return {
             fullHackathon: {},
-            hackathon: 'Auswählen',
             hackathonid: this.hackathonID,
             amount: 0,
             result: '',
@@ -73,9 +72,7 @@ export default {
         async generateCodes() {
             const path = '/api/token/';
             this.test = JSON.stringify({ hackathon: this.hackathonid, count: this.amount });
-            if (this.hackathon == 'Auswählen') {
-                alert("Please choose a hackathon!");
-            } else if (this.amount > 200 || this.amount <= 0) {
+            if (this.amount > 200 || this.amount <= 0) {
                 alert("Please choose an amount between 1 and 200!");
             } else {
                 await axios.post(path, this.test, {
