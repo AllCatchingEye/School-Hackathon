@@ -55,7 +55,7 @@ export default {
     data() {
         return {
             fullHackathon: {},
-            hackathonid: this.hackathonID,
+            hackathonid: parseInt(this.hackathonID),
             amount: 0,
             result: '',
             hackathons: {},
