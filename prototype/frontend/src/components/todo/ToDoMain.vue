@@ -1,4 +1,12 @@
 <template>
+<Transition name="slide-fade">
+<div  v-if="PopUp" >
+        <to-do-form @user-added="addUser" @close-pop-up="closePopUp"
+                  :organisations="Organisations"
+                  :roles="Roles"
+></to-do-form>
+</div>
+</Transition>
 <div class="data">
       <sidebarDash :currentpage="this.currentpage"></sidebarDash>
 <div class="outerBoxOverview">
@@ -9,7 +17,6 @@
       <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
 </div>
       <div class="scrollableUsers">
-        <!-- <to-do-form @user-added="addUser"></to-do-form> -->
         <ul>
         <li v-for="user in orderedUsersById" :key="user.userid">  
             <to-do-item @user-updated="updateUser" @user-delete="deleteUser"
@@ -28,13 +35,13 @@
 import axios from 'axios';
 // import { useCookies } from 'vue3-cookies';
 
-// import ToDoForm from './ToDoForm.vue';
+import ToDoForm from './ToDoForm.vue';
 import ToDoItem from './ToDoItem.vue';
 import sidebarDash from "../dashboards/sidebar/sidebarDash";
 
 export default{
 components:{
-    // ToDoForm,
+    ToDoForm,
     ToDoItem,
     sidebarDash
 },
@@ -44,8 +51,8 @@ components:{
       Roles: [],
       Organisations: [],
       accessAllowed: false,
-      currentpage: "user"
-
+      currentpage: "user",
+      PopUp: false
     };
   },
 computed: {
@@ -60,6 +67,12 @@ mounted() {
 
     },
 methods:{
+    changePopup(){
+        this.PopUp=true;
+    },
+    closePopUp(){
+      this.PopUp=false;
+    },
     addUser(user){
         this.postUserData(user);
     },
@@ -286,6 +299,22 @@ a{
 text-align:right;
 }
 
+/*
+  Enter and leave animations can use different
+  durations and timing functions.
+*/
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
 
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(0.5, 1, 1, 0.8);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}
 
 </style>

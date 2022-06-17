@@ -1,44 +1,135 @@
 <template>
-<form @submit.prevent="onSubmit">
+
+<div class="wrapper">
+<div class="inner-wrapper">
+<h1>Add User</h1>
+<form class="add-user" @submit.prevent="onSubmit">
     <label for="name">
-        name
-</label>
+        Name
+    </label>
     <input type="text" id="name" v-model="User['name']" />
     <label for="firstname">
-        Firstname
+        Vorname
     </label>
     <input type="text" id="firstname" v-model="User['firstname']" />
     <label for="email">
-        Email
+        E-mail
     </label>
     <input type="text" id="email" v-model="User['email']" />
       <label for="organisation">
         Organisation
     </label>
-    <input type="number" id="organisation" v-model="User['organisation']" />
-       <label for="role">
-        Role
+    <select class="select" v-model="User.organisation">
+        <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
+    </select>  
+
+  <label for="orgroleanisation">
+        Rolle
     </label>
-    <input type="number" id="role" v-model="User['role']" />
-    <button type="submit">
-      Add
-    </button>
+    <select class="select" v-model="User.role">
+    <option v-for="role in Roles" :value="role.roleid" :key="role.roleid">{{role.description}}</option>
+    </select> 
+
+<div class="button-wrapper">
+     <button class="button is-danger is-rounded" @click="cancel">Cancel</button>
+
+    <button  class="button is-success is-rounded" type="submit">Add</button>
+  </div>
   </form>
+  </div>
+  </div>
 </template>
 <script>
 export default {
-  methods: {
-    onSubmit() {
-        console.log(this.User);
-        
-        this.$emit("user-added", this.User);
-    }
-  },
+    props: ['organisations','roles'],
   data() {
     return {
-      User: {"name": "", "firstname":"", "email":"", "role":0, "organisation": 0}
+      User: {"name": "", "firstname":"", "email":"", "role":12, "organisation": 0},
+      Organisations: this.organisations,
+        Roles: this.roles,
+
+
     };
+  },
+  methods: {
+    onSubmit() {
+        this.$emit("user-added", this.User);
+        this.$emit("close-pop-up");
+
+    },
+  cancel(){
+        this.$emit("close-pop-up");
+
   }
+  }
+   
 };
 
 </script>
+
+<style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.wrapper{
+    position:absolute;
+    width:100vw;
+    height:100vh;
+    z-index:10;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    h1{
+        position:absolute;
+        top:0%;
+        padding:5% 0% 3%;
+            display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#9fe3d7;
+        font-size:2em;
+        font-weight:bold;
+        width:100%;
+        color:white;
+    }
+    .inner-wrapper{
+        box-shadow: 0 0.5em 1em -0.125em rgb(68, 61, 61), 0 0 0 1px rgba(0, 0, 0, 0);
+        width:70vh;
+        height:70vw;
+        background:white;
+        position:relative;
+         display:flex;
+        justify-content:center;
+        max-height:750px;
+        min-height:700px;
+            .add-user{
+                margin-top:15%;
+                display:flex;
+                flex-direction:column;
+                width:60%;
+
+                label{
+                    margin-top:10%;
+                    font-family:'Roboto';
+                    font-weight:bold;
+                }
+                input,select{
+                    height:40px;
+                    font-size:1.2em;
+                }
+            }
+    .button-wrapper{
+        position:absolute;
+        bottom:10px;
+        right:20%;
+        button{
+            &:not(:first-child){
+                margin-left:30px;
+            }
+        }
+    }
+
+}
+
+}
+</style>
