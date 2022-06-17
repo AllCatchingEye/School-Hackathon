@@ -3,12 +3,13 @@
     <div class="InnerSymbol">
       <div class="headline">
         <h2>Dein Vorschlag</h2>
-        <div class="biggerButton">
+        <div class="biggerButton" @click="() => TogglePopup()">
           <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
         </div>
       </div>
       <div class="textBox">
-        <textarea placeholder="Tippe hier um zu schreiben"></textarea>
+        <textarea placeholder="Tippe hier um zu schreiben" :value="modelValue"
+                  @input="$emit('update:modelValue', $event.target.value)"></textarea>
       </div>
     </div>
   </div>
@@ -16,7 +17,9 @@
 
 <script>
 export default {
-  name: "InputSymbol"
+  name: "InputSymbol",
+  props: ['TogglePopup', 'modelValue'],
+  emits: ['update:modelValue'],
 }
 </script>
 

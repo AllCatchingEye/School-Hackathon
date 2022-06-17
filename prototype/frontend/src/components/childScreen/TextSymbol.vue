@@ -7,7 +7,7 @@
       <div class="textBox">
         <p>Schreibe deinen Vorschlag in die Textbox unten. Wenn du fertig mit allen Vorschlägen bist klicke auf den Papierflieger.</p>
       </div>
-      <div class="readMore" @click="() => TogglePopup('buttonTrigger')">
+      <div class="readMore" @click="() => TogglePopup()">
         <p>mehr lesen</p>
       </div>
     </div>
