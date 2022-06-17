@@ -13,7 +13,7 @@ import baseScreen from "../components/childScreen/BaseScreen";
 const routes = [
   
   {
-    path: "/submit",
+    path: "/submission/:hackathonSlug?/:uuid?",
     name: "baseScreen",
     component: baseScreen
   },
@@ -41,7 +41,7 @@ const routes = [
     path: "/",
     name: "Dashboard",
     component: DashboardComponent,
-  }
+  },
 ];
 
 const router = createRouter({
