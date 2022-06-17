@@ -29,7 +29,7 @@
                             <div class="entry"><p>
                             <input type="text" class="input is-small" v-model="User.email"/>
                             </p></div>
-                            <div class="entry">
+                            <div v-if="currentRole == 420" class="entry">
                                 <select class="select" v-model="User.organisations.orgaid">
                                         <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
                                 </select>                                
@@ -68,7 +68,7 @@
 <script>
 import axios from 'axios';
 export default {
- props: ['organisations','roles', 'user'],
+ props: ['organisations','roles', 'user', 'currentRole'],
  data() {
     return{
         edit:false,

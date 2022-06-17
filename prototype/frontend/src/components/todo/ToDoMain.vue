@@ -1,27 +1,49 @@
 <template>
+
 <Transition name="slide-fade">
 <div  v-if="PopUp" >
         <to-do-form @user-added="addUser" @close-pop-up="closePopUp"
                   :organisations="Organisations"
+                  :currentRole= "CurrentRole"
                   :roles="Roles"
 ></to-do-form>
 </div>
 </Transition>
 <div class="data">
+  
       <sidebarDash :currentpage="this.currentpage"></sidebarDash>
 <div class="outerBoxOverview">
+  
       <div class="headlineUsers">
         <p>Benutzer</p>
       </div>
+       <article class="message is-danger" v-if="Errormessage.length > 0">
+                <div class="message-header">
+                  <p>Error</p>
+                </div>
+                <div class="message-body">
+                  {{Errormessage}}
+                </div>
+      </article>
+      <article class="message is-success" v-if="Successmessage.length > 0">
+                <div class="message-header">
+                  <p>Success</p>
+                </div>
+                <div class="message-body">
+                  {{Successmessage}}
+                </div>
+      </article>
 <div class="button-wrapper">
       <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
 </div>
-      <div class="scrollableUsers">
+
+  <div class="scrollableUsers">
         <ul>
         <li v-for="user in orderedUsersById" :key="user.userid">  
             <to-do-item @user-updated="updateUser" @user-delete="deleteUser"
                         :user="user"                    
                         :roles="Roles"
+                        :currentRole= "CurrentRole"
                         :organisations="Organisations"></to-do-item>
         </li>
         </ul>
@@ -52,7 +74,10 @@ components:{
       Organisations: [],
       accessAllowed: false,
       currentpage: "user",
-      PopUp: false
+      PopUp: false,
+      Errormessage: "",
+      Successmessage: "",
+      CurrentRole: 1
     };
   },
 computed: {
@@ -79,11 +104,13 @@ methods:{
     updateUser(user){
     const itemIndex = this.User.findIndex(x => x.userid == user.userid);
     this.User[itemIndex] = user;
+    this.Successmessage = "User edited";
     },
     deleteUser(id){
         let itemIndex = this.User.findIndex(x => x.userid == id);
         this.User.splice(itemIndex,1);
-        
+        this.Successmessage = "User deleted";
+
     },
     getUserData(){
         const path = '/api/user/'
@@ -107,7 +134,7 @@ methods:{
                     this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
                     break;
                 default:
-                    console.log("An unexpected Error occurred.")
+                    this.Errormessage = "An unexpected Error occurred.";
 
                 }   
         })
@@ -126,17 +153,22 @@ methods:{
         .then((response) => {
             console.log(response.data.dataobj)
             this.User.push(response.data.dataobj);
+            this.closePopUp();
+            this.Successmessage = "User created";
+
         }).catch((err)=>{             
             switch(err.response.status) {
                 case 409:
-                    console.log("This Emails exists")
+                    this.Errormessage = "This Emails exists";
                     break;
                 case 500:
-                    console.log("Please enter valid mail")
+                    this.Errormessage  = "Please enter valid mail";
                     break;
                 default:
-                    console.log("An unexpected Error occurred.")
+                    this.Errormessage = "An unexpected Error occurred.";
                 }        
+            this.closePopUp();
+
         })
     },
      getRoleData(){
@@ -180,6 +212,19 @@ methods:{
                     }   
             })
         },
+        getCurrentRole() {
+            const path = '/api/role/own/'
+            axios.get(path, {
+                withCredentials: true
+            })
+                .then((response) => {
+                    this.CurrentRole = response.data.role;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(this.cookies)
+                })
+        }
 }
 
 }
@@ -242,6 +287,9 @@ methods:{
   width: 80%;
   text-align: left;
   border-bottom: #d9d9d9 1px solid;
+}
+.message{
+  width:80%;
 }
 
 .outerBoxOverview {

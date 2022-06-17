@@ -2,31 +2,33 @@
 
 <div class="wrapper">
 <div class="inner-wrapper">
+
 <h1>Add User</h1>
 <form class="add-user" @submit.prevent="onSubmit">
     <label for="name">
         Name
     </label>
-    <input type="text" id="name" v-model="User['name']" />
+    <input type="text" id="name" required="required" v-model="User['name']" />
     <label for="firstname">
         Vorname
     </label>
-    <input type="text" id="firstname" v-model="User['firstname']" />
+    <input type="text" id="firstname" required="required" v-model="User['firstname']" />
     <label for="email">
+
         E-mail
     </label>
-    <input type="text" id="email" v-model="User['email']" />
-      <label for="organisation">
+    <input  type="email" id="email" required="required" v-model="User['email']" />
+      <label v-if="currentRole == 420"  for="organisation">
         Organisation
     </label>
-    <select class="select" v-model="User.organisation">
+    <select v-if="currentRole == 420" class="select" required="required" v-model="User.organisation">
         <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
     </select>  
 
   <label for="orgroleanisation">
         Rolle
     </label>
-    <select class="select" v-model="User.role">
+    <select class="select" required="required" v-model="User.role">
     <option v-for="role in Roles" :value="role.roleid" :key="role.roleid">{{role.description}}</option>
     </select> 
 
@@ -41,12 +43,12 @@
 </template>
 <script>
 export default {
-    props: ['organisations','roles'],
+    props: ['organisations','roles','currentRole'],
   data() {
     return {
-      User: {"name": "", "firstname":"", "email":"", "role":12, "organisation": 0},
-      Organisations: this.organisations,
-        Roles: this.roles,
+    User: {"name": "", "firstname":"", "email":"", "role":12, "organisation": 0},
+    Organisations: this.organisations,
+    Roles: this.roles
 
 
     };
@@ -54,7 +56,6 @@ export default {
   methods: {
     onSubmit() {
         this.$emit("user-added", this.User);
-        this.$emit("close-pop-up");
 
     },
   cancel(){
