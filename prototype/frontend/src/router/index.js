@@ -27,16 +27,6 @@ const routes = [
     component: HackathonOverview,
   },
   {
-    path: "/keys",
-    name: "SelectHackathon",
-    component: SelectHackathon,
-  },
-  {
-    path: "/keys/overview",
-    name: "KeyOverview",
-    component: KeyOverview,
-  },
-  {
     path: "/schools",
     name: "Organisation",
     component: OrganisationOverview,
