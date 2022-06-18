@@ -1,15 +1,21 @@
 <template>
-  <div class="OuterSymbol">
+  <div class="OuterSymbol" @click="() => TogglePopup()">
     <div class="InnerSymbol">
       <div class="headline">
         <h2>Dein Vorschlag</h2>
-        <div class="biggerButton" @click="() => TogglePopup()">
+        <div class="biggerButton">
           <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
         </div>
       </div>
       <div class="textBox">
-        <textarea placeholder="Tippe hier um zu schreiben" :value="modelValue"
-                  @input="$emit('update:modelValue', $event.target.value)"></textarea>
+        <div class="textarea">
+          <div v-if="modelValue.length > 0">
+            {{ this.modelValue }}
+          </div>
+          <div v-else>
+            Tippe hier um zu schreiben
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -91,9 +97,10 @@ export default {
   letter-spacing: 1.25px;
 }
 
-textarea {
+.textarea {
   font-size: 5vw;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   color: white;
   padding: 5%;
   width: 100%;
@@ -105,36 +112,4 @@ textarea {
   border-radius: 30px;
   background-color: #ffffff3d;
 }
-
-textarea::-webkit-input-placeholder {
-  color: white;
-  font-size: 5vw;
-  font-weight: 600;
-}
-
-textarea:-moz-placeholder { /* Firefox 18- */
-  color: white;
-  font-size: 5vw;
-  font-weight: 600;
-}
-
-textarea::-moz-placeholder {  /* Firefox 19+ */
-  color: white;
-  font-size: 5vw;
-  font-weight: 600;
-}
-
-textarea:-ms-input-placeholder {
-  color: white;
-  font-size: 5vw;
-  font-weight: 600;
-}
-
-textarea::placeholder {
-  color: white;
-  font-size: 5vw;
-  font-weight: 600;
-}
-
-textarea:focus { outline: none; }
 </style>

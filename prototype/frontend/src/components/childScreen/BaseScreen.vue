@@ -4,8 +4,12 @@
       <div class="Symbols">
         <TextSymbol :TogglePopup="() => TogglePopup('Text')"></TextSymbol>
         <InputSymbol v-model="entry[0]" :TogglePopup="() => TogglePopup('popup0')"></InputSymbol>
+        <transition name="fade">
         <InputSymbol v-model="entry[1]" :TogglePopup="() => TogglePopup('popup1')" v-if="amountEntries >= 2"></InputSymbol>
+        </transition>
+        <transition name="fade">
         <InputSymbol v-model="entry[2]" :TogglePopup="() => TogglePopup('popup2')" v-if="amountEntries >= 3"></InputSymbol>
+        </transition>
       </div>
       <div class="buttons">
         <div v-if="amountEntries < 3" class="addButton childButton" @click="addInput()">
@@ -21,24 +25,34 @@
     </div>
   </div>
   <div class="popups">
+    <transition name="fade">
     <SendPop :amount="amountEntries" :entrys="entry" :hackathonSlug="hackathonSlug" :uuid="uuid" v-if="popupTriggers.Send"
              :TogglePopup="() => TogglePopup('Send')"></SendPop>
+    </transition>
+    <transition name="fade">
     <TextSymbolPop
       v-if="popupTriggers.Text"
       :TogglePopup="() => TogglePopup('Text')">
     </TextSymbolPop>
+    </transition>
+    <transition name="fade">
     <InputSymbolPop v-model="entry[0]"
       v-if="popupTriggers.popup0"
       :TogglePopup="() => TogglePopup('popup0')">
     </InputSymbolPop>
+    </transition>
+    <transition name="fade">
     <InputSymbolPop v-model="entry[1]"
                     v-if="popupTriggers.popup1 && amountEntries >= 2"
                     :TogglePopup="() => TogglePopup('popup1', 2)">
     </InputSymbolPop>
+    </transition>
+    <transition name="fade">
     <InputSymbolPop v-model="entry[2]"
                     v-if="popupTriggers.popup2 && amountEntries >= 3"
                     :TogglePopup="() => TogglePopup('popup2', 3)">
     </InputSymbolPop>
+    </transition>
   </div>
 </template>
 
@@ -162,4 +176,24 @@ export default {
   font-size: 10vw;
   color: white;
 }
+
+.fade-enter-from{
+  opacity: 0;
+}
+.fade-enter-to{
+  opacity: 1;
+}
+.fade-enter-active{
+  transition: all 0.5s ease;
+}
+.fade-leave-from{
+  opacity: 1;
+}
+.fade-leave-to{
+  opacity: 0;
+}
+.fade-leave-active{
+  transition: all 0.5s ease;
+}
+
 </style>
