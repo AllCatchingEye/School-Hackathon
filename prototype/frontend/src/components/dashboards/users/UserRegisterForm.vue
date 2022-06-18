@@ -89,37 +89,24 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .delete-model{
     display:flex;
-  }
- 
-    h1{
-        position:absolute;
-        top:0%;
-        padding:5% 0% 3%;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        background: #48c78e;
-        font-size:2em;
-        font-weight:bold;
-        width:100%;
-        color:white;
-    }
-
     .add-user{
         display:flex;
         flex-direction:column;
         width:100%;
-        margin:2% 0 6%;
+        margin:0% 0 2%;
+        padding:0px 8%;
         label{
-            margin-top:5%;
             font-family:'Roboto';
             font-weight:bold;
         }
         input,select{
             height:40px;
             font-size:1.2em;
+            margin-bottom:5%;
+
         }
     }
+  }
    
 
 </style>

@@ -1,18 +1,17 @@
 <template>
 
 <div v-if="PopUp" >
-        <to-do-form @user-added="addUser"
+        <user-register-form @user-added="addUser"
                   @close-pop-up="closePopUp" 
                   @error="onError"
                   @success="onSuccess"
                   :organisations="Organisations"
                   :currentRole= "CurrentRole"
                   :roles="Roles"
-></to-do-form>
+></user-register-form>
 </div>
 
 
-<Transition name="slide-fade">
 <div v-if="DeleteModal" class="modal delete-model">
     <div class="modal-background"></div>
     <div class="modal-card">
@@ -27,7 +26,7 @@
         </footer>
     </div>
 </div>
-</Transition>
+
 <div class="data">  
 <sidebarDash :currentpage="this.currentpage"></sidebarDash>
 
@@ -63,7 +62,7 @@
     <div class="scrollableUsers">
           <ul>
           <li v-for="user in orderedUsersById" :key="user.userid">  
-              <to-do-item @user-updated="updateUser" 
+              <user-entry @user-updated="updateUser" 
                           @user-delete-approve="openDeleteApproval" 
                           @user-delete="deleteUser"
                           @error="onError"
@@ -72,7 +71,7 @@
                           :user="user"                    
                           :roles="Roles"
                           :currentRole= "CurrentRole"
-                          :organisations="Organisations"></to-do-item>
+                          :organisations="Organisations"></user-entry>
           </li>
           </ul>
     </div>
@@ -83,14 +82,14 @@
 
 <script>
 import axios from 'axios';
-import ToDoForm from './ToDoForm.vue';
-import ToDoItem from './ToDoItem.vue';
-import sidebarDash from "../dashboards/sidebar/sidebarDash";
+import UserRegisterForm from './UserRegisterForm.vue';
+import UserEntry from './UserEntry.vue';
+import sidebarDash from "../sidebar/sidebarDash";
 
 export default{
 components:{
-    ToDoForm,
-    ToDoItem,
+    UserRegisterForm,
+    UserEntry,
     sidebarDash
 },
  data() {
