@@ -1,6 +1,6 @@
 <template>
-<Transition name="slide-fade">
-<div  v-if="PopUp" >
+
+<div v-if="PopUp" >
         <to-do-form @user-added="addUser"
                   @close-pop-up="closePopUp" 
                   @error="onError"
@@ -10,7 +10,8 @@
                   :roles="Roles"
 ></to-do-form>
 </div>
-</Transition>
+
+
 <Transition name="slide-fade">
 <div v-if="DeleteModal" class="modal delete-model">
     <div class="modal-background"></div>
