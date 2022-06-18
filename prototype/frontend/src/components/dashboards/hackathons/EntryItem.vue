@@ -81,7 +81,7 @@ export default {
             this.$emit('item-delete-approve', id);
         },
         deleteItem() {
-            const path = '/api/user/' + this.Data.hackathonid + '/';
+            const path = '/api/hackathon/' + this.Data.hackathonid + '/';
             axios.delete(path, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -98,12 +98,10 @@ export default {
         },
 
         update() {
-            const path = '/api/user/'  + this.Data.userid +'/';
-            const payload = {name: this.Data.name, 
-                            firstname: this.Data.firstname, 
-                            organisation: this.Data.organisations.orgaid,
-                            role: this.Data.roles.roleid,
-                            email: this.Data.email
+            const path = '/api/hackathon/'  + this.Data.hackathonid +'/';
+            const payload = {title: this.Data.title, 
+                            description: this.Data.description, 
+                            slug: this.Data.slug
                             }
             axios.patch(path, JSON.stringify(payload), {
                 headers: {

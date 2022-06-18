@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import UserLogin from "../components/dashboards/users/UserLogin.vue";
 import UserOverview from "../components/dashboards/users/EntryList.vue";
 import DashboardComponent from "../components/dashboards/main/DashboardMain.vue";
-import HackathonOverview from "../components/dashboards/hackathons/HackathonOverview";
+import HackathonOverview from "../components/dashboards/hackathons/EntryList";
 import OrganisationOverview from "../components/dashboards/organisations/OrganisationOverview";
 
 const routes = [

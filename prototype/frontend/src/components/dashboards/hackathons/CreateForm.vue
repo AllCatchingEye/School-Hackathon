@@ -12,8 +12,8 @@
                 <label for="title">Hackathon Title</label>
                 <input type="text" id="title" required v-model="Data.title" />
                 
-                <label for="desc">Description</label>
-                <input type="text" id="desc" required v-model="Data.description" />
+                <label for="description">Description</label>
+                <input type="text" id="description" required v-model="Data.description" />
                 
                 <label for="slug">Hackathon Slug</label>
                 <input  type="text" id="slug" required v-model="Data.slug" />       
@@ -34,7 +34,7 @@ export default {
     props: ['currentRole'],
   data() {
     return {
-    Data: {"title": "", "desc":"", "slug":""},
+    Data: {"title": "", "description":"", "slug":""},
     };
   },
   methods: {
