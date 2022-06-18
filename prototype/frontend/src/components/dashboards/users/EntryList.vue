@@ -1,16 +1,14 @@
 <template>
 
 <div v-if="PopUp" >
-        <user-register-form @user-added="addUser"
+        <create-form @item-added="addItem"
                   @close-pop-up="closePopUp" 
                   @error="onError"
                   @success="onSuccess"
                   :organisations="Organisations"
-                  :currentRole= "CurrentRole"
                   :roles="Roles"
-></user-register-form>
+></create-form>
 </div>
-
 
 <div v-if="DeleteModal" class="modal delete-model">
     <div class="modal-background"></div>
@@ -32,7 +30,7 @@
 
 
 <div class="outerBoxOverview">  
-      <div class="headlineUsers">
+      <div class="headlineItems">
         <p>Benutzer</p>
       </div>
     <Transition name="slide-fade">
@@ -56,22 +54,21 @@
       </article>
 </Transition>
       <div class="button-wrapper">
-            <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
+            <button class="add-item button is-success is-rounded" @click="changePopup()">Add User</button>
       </div>
 
-    <div class="scrollableUsers">
+    <div class="scrollable-items">
           <ul>
-          <li v-for="user in orderedUsersById" :key="user.userid">  
-              <user-entry @user-updated="updateUser" 
-                          @user-delete-approve="openDeleteApproval" 
-                          @user-delete="deleteUser"
+          <li v-for="item in orderedItemsById" :key="item.userid">  
+              <entry-item @update-item="updateItem" 
+                          @item-delete-approve="openDeleteApproval" 
+                          @delete-item="deleteItem"
                           @error="onError"
                           @success="onSuccess"
                           :deleteApproval="DeleteApprove"
-                          :user="user"                    
+                          :data="item"                    
                           :roles="Roles"
-                          :currentRole= "CurrentRole"
-                          :organisations="Organisations"></user-entry>
+                          :organisations="Organisations"></entry-item>
           </li>
           </ul>
     </div>
@@ -82,19 +79,19 @@
 
 <script>
 import axios from 'axios';
-import UserRegisterForm from './UserRegisterForm.vue';
-import UserEntry from './UserEntry.vue';
+import CreateForm from './CreateForm.vue';
+import EntryItem from './EntryItem.vue';
 import sidebarDash from "../sidebar/sidebarDash";
 
 export default{
 components:{
-    UserRegisterForm,
-    UserEntry,
+    CreateForm,
+    EntryItem,
     sidebarDash
 },
  data() {
     return {
-      User: [],
+      Data: [],
       Roles: [],
       Organisations: [],
       accessAllowed: false,
@@ -102,20 +99,19 @@ components:{
       PopUp: false,
       Errormessage: "",
       Successmessage: "",
-      CurrentRole: 1,
       DeleteModal: false,
       DeleteApprove: 0      
     };
   },
 computed: {
-  orderedUsersById: function () {
-    return [...this.User].sort((a,b) => b.userid - a.userid);
+  orderedItemsById: function () {
+    return [...this.Data].sort((a,b) => b.userid - a.userid);
   }
 },
 mounted() {
         this.getRoleData();        
         this.getOrganisationData();
-        this.getUserData();
+        this.getData();
     },
 methods:{
     changePopup(){
@@ -128,8 +124,8 @@ methods:{
       this.DeleteModal = false;
       this.DeleteApprove = 0;
     },
-    addUser(user){
-      this.User.push(user);
+    addItem(item){
+      this.Data.push(item);
     },
     onSuccess(message){
       this.Errormessage = "";
@@ -143,13 +139,13 @@ methods:{
       setTimeout(() => this.Errormessage = "", 2000);
 
     },
-    updateUser(user){
-      const itemIndex = this.User.findIndex(x => x.userid == user.userid);
-      this.User[itemIndex] = user;
+    updateItem(item){
+      const itemIndex = this.Data.findIndex(x => x.userid == item.userid);
+      this.Data[itemIndex] = item;
     },
-    deleteUser(id){
-      let itemIndex = this.User.findIndex(x => x.userid == id);
-      this.User.splice(itemIndex,1);
+    deleteItem(id){
+      let itemIndex = this.Data.findIndex(x => x.userid == id);
+      this.Data.splice(itemIndex,1);
       this.DeleteApprove = 0;
       this.DeleteModal = false;
     },
@@ -162,14 +158,14 @@ methods:{
         this.DeleteModal = true;            
 
     },
-    getUserData(){
+    getData(){
         const path = '/api/user/'
         axios.get(path, {
             withCredentials:true
         })
         .then((response) => {
             this.accessAllowed = true;
-            this.User = response.data;
+            this.Data = response.data;
         }).catch((err)=>{
             if(err.response.status == 403) {
               this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
@@ -243,7 +239,7 @@ methods:{
   margin-right: 2rem;
 }
 
-.headlineUsers {
+.headlineItems {
   width: 59vw;
   text-align: left;
   align-items: flex-start;
@@ -253,7 +249,7 @@ methods:{
   border-bottom: rgba(109, 105, 114, 0.46) 1px solid;
 }
 
-.scrollableUsers {
+.scrollable-items {
   overflow-x: hidden;
   height: 80%;
   width: 64vw;

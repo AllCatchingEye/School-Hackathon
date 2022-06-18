@@ -30,6 +30,7 @@ register_schema = {
 def create():
     valid = False
     result = (jsonify(category = "Error", message="You are not allowed to send this request"), 409)
+    organisation = get_jwt()["organisation"]    
 
     data_request = request.get_json()
     requested_role = data_request["role"]
@@ -44,8 +45,11 @@ def create():
         # Create User with new password
         user_data = request.get_json()
         user_password = secrets.token_urlsafe(5)
+        if get_jwt()["role"] == Config.ADMIN_ID:
+                user_data['organisation'] = organisation
+
         user = User(**user_data, password=user_password)    
-        
+
         # Create E-Mail
         msg = Message('Hello', sender = 'no-reply.wirfuerschule@gmx.de', recipients = [user.email])
         msg.body = f"Hi {user.firstname}, Your Password: {user_password} arrived."

@@ -8,27 +8,27 @@
         <button class="delete" aria-label="close" @click="cancel"></button>
         </header>
         <section class="modal-card-body">
-            <form class="add-user">
+            <form class="add-item">
                 <label for="name">Name</label>
-                <input type="text" id="name" required v-model="User.name" />
+                <input type="text" id="name" required v-model="Data.name" />
                 
                 <label for="firstname">Vorname</label>
-                <input type="text" id="firstname" required v-model="User.firstname" />
+                <input type="text" id="firstname" required v-model="Data.firstname" />
                 
                 <label for="email">E-mail</label>
-                <input  type="email" id="email" required v-model="User.email" />
+                <input  type="email" id="email" required v-model="Data.email" />
 
                 <label v-if="Organisations.length"  for="organisation">Organisation</label>
-                <select v-if="Organisations.length" class="select" required v-model="User.organisation">
+                <select v-if="Organisations.length" class="select" required v-model="Data.organisation">
                     <option selected disabled value="">Choose Organisation</option>
                     <option v-for="organisation in Organisations" 
                             :value="organisation.orgaid" 
                             :key="organisation.orgaid">{{organisation.name}}</option>
                 </select>  
 
-                <label for="orgroleanisation">Rolle</label>
-                    <select class="select" required v-model="User.role">
-                    <option selected disabled value="">Choose Role</option>
+                <label for="role">Rolle</label>
+                    <select class="select" required v-model="Data.role">
+                    <option selected disabled value="0">Choose Role</option>
                     <option v-for="role in Roles" 
                             :value="role.roleid" 
                             :key="role.roleid">{{role.description}}</option>
@@ -50,7 +50,7 @@ export default {
     props: ['organisations','roles','currentRole'],
   data() {
     return {
-    User: {"name": "", "firstname":"", "email":"", "role":"", "organisation": ""},
+    Data: {"name": "", "firstname":"", "email":"", "role":0, "organisation": 0},
     Organisations: this.organisations,
     Roles: this.roles
     };
@@ -58,22 +58,20 @@ export default {
   methods: {
     onSubmit() {
         const path = '/api/register/'
-        const userJson = JSON.stringify(this.User);
-        console.log(userJson);
-
-        axios.post(path, userJson, {
+        const dataJson = JSON.stringify(this.Data);
+        axios.post(path, dataJson, {
           headers: {
             'Content-Type': 'application/json'
           },
           withCredentials: true
         })
         .then((response) => {
-            this.$emit("user-added", response.data.dataobj);            
+            this.$emit("item-added", response.data.dataobj);            
             this.$emit("success", response.data.message);    
             this.$emit("close-pop-up");           
        
         }).catch((err)=>{    
-            this.onError(err.response.data.message);                          
+            this.$emit('error',err.response.data.message);                          
             this.$emit("close-pop-up");           
         })
     },
@@ -89,7 +87,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .delete-model{
     display:flex;
-    .add-user{
+    .add-item{
         display:flex;
         flex-direction:column;
         width:100%;

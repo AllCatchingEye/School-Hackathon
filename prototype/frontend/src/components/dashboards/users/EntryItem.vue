@@ -3,47 +3,49 @@
         <div class="box">
                     <div class="entry-wrapper" v-if="!edit">
                         <div class="data-wrapper">                          
-                            <div class="entry"><p>{{ User.name }}</p></div>
-                            <div class="entry"><p>{{ User.firstname }}</p></div>
-                            <div class="entry"><p>{{ User.email }}</p></div>
-                            <div class="entry"><p>{{ User.organisations.name }}</p></div>
-                            <div class="entry"><p>{{ User.roles.description }}</p></div>
+                            <div class="entry"><p>{{Data.name }}</p></div>
+                            <div class="entry"><p>{{Data.firstname }}</p></div>
+                            <div class="entry"><p>{{Data.email }}</p></div>
+                            <div class="entry"><p>{{Data.organisations.name }}</p></div>
+                            <div class="entry"><p>{{Data.roles.description }}</p></div>
                         </div>
                         <div class="lineItem buttons">
                             <div  class="editbutton is-link is-rounded" @click="editing">Edit</div>
-                             <button class="button is-danger is-rounded is-outlined" @click="askDeleteUser">
+                             <button class="button is-danger is-rounded is-outlined" @click="askDeleteItem">
                                 <span>Delete</span>
                                 <span class="icon is-small">
                                     <i class="fas fa-times"></i>
                                 </span>
                             </button>
                         </div>
+
+
                     </div>
                     <div class="entry-wrapper" v-else>
                         <div class="data-wrapper fw">   
                             <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="User.name"  />
+                            <input type="text" class="input is-small" v-model="Data.name"  />
                             </p></div>
                             <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="User.firstname"/>
+                            <input type="text" class="input is-small" v-model="Data.firstname"/>
                             </p></div>
                             <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="User.email"/>
+                            <input type="text" class="input is-small" v-model="Data.email"/>
                             </p></div>
                             <div v-if="this.Organisations.length" class="entry">
-                                <select class="select" v-model="User.organisations.orgaid">
+                                <select class="select" v-model="Data.organisations.orgaid">
                                         <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
                                 </select>                                
                             </div>
                             <div class="entry">
-                                <select class="select" v-model="User.roles.roleid">
+                                <select class="select" v-model="Data.roles.roleid">
                                         <option v-for="role in Roles" :value="role.roleid" :key="role.roleid">{{role.description}}</option>
                                 </select>                                
                             </div>                             
                         </div>
                         <div v-if="!edit" class="lineItem buttons">
                             <div  class="editbutton is-link is-rounded" @click="edit">Edit</div>
-                             <button class="button is-danger is-rounded is-outlined" @click="askDeleteUser">
+                             <button class="button is-danger is-rounded is-outlined" @click="askDeleteItem">
                                 <span>Delete</span>
                                 <span class="icon is-small">
                                     <i class="fas fa-times"></i>
@@ -53,8 +55,8 @@
                     </div>
 
           <div class="newline">
-            <div v-if="edit" class="buttonUserAction">
-              <button class="button is-danger is-rounded is-outlined" @click="askDeleteUser">
+            <div v-if="edit" class="buttonItemAction">
+              <button class="button is-danger is-rounded is-outlined" @click="askDeleteItem">
                 <span>Delete</span>
                 <span class="icon is-small"><i class="fas fa-times"></i></span>
               </button>
@@ -69,11 +71,11 @@
 <script>
 import axios from 'axios';
 export default {
- props: ['organisations','roles', 'user', 'currentRole', 'deleteApproval'],
+ props: ['organisations','roles', 'data',  'deleteApproval'],
  data() {
     return{
         edit:false,
-        User: this.user,
+        Data: this.data,
         Roles: this.roles,
         Organisations: this.organisations,
         WantDelete: -1
@@ -87,13 +89,13 @@ export default {
        cancel() {
             this.edit = false;
         },
-         askDeleteUser() {       
-            this.WantDelete = this.User.userid; 
-            const id = this.User.userid;
-            this.$emit('user-delete-approve', id);
+         askDeleteItem() {       
+            this.WantDelete = this.Data.userid; 
+            const id = this.Data.userid;
+            this.$emit('item-delete-approve', id);
         },
-        deleteUser() {
-            const path = '/api/user/' + this.User.userid + '/';
+        deleteItem() {
+            const path = '/api/user/' + this.Data.userid + '/';
             axios.delete(path, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -101,7 +103,7 @@ export default {
                 withCredentials: true
             }).then((response) => {
                 this.edit=false;
-                this.$emit('user-delete', this.User.userid);
+                this.$emit('delete-item', this.Data.userid);
                 this.$emit('success', response.data.message);  
 
             }).catch((err) => {
@@ -110,12 +112,12 @@ export default {
         },
 
         update() {
-            const path = '/api/user/'  + this.User.userid +'/';
-            const payload = {name: this.User.name, 
-                            firstname: this.User.firstname, 
-                            organisation: this.User.organisations.orgaid,
-                            role: this.User.roles.roleid,
-                            email: this.User.email
+            const path = '/api/user/'  + this.Data.userid +'/';
+            const payload = {name: this.Data.name, 
+                            firstname: this.Data.firstname, 
+                            organisation: this.Data.organisations.orgaid,
+                            role: this.Data.roles.roleid,
+                            email: this.Data.email
                             }
             axios.patch(path, JSON.stringify(payload), {
                 headers: {
@@ -123,9 +125,9 @@ export default {
                 },
                 withCredentials: true
             }).then((response) => {
-                this.User = response.data.dataobj;
+                this.Data = response.data.dataobj;
                 this.edit=false;
-                this.$emit('user-updated', this.User);
+                this.$emit('update-item', this.Data);
                 this.$emit('success', response.data.message);  
 
             }).catch((err)=>{             
@@ -137,7 +139,7 @@ export default {
     watch: {
         deleteApproval(newVal, oldVal) {     
             if(this.WantDelete == oldVal && newVal === true){
-                this.deleteUser();
+                this.deleteItem();
             }
         }
     }
@@ -197,18 +199,18 @@ export default {
     }
 
 }
-.buttonUser {
+.buttonItem {
     background-color: rgba(130, 0, 205, 0.83);
     color: white;
     margin-right: 1rem;
 }
 
-.buttonUser:hover {
+.buttonItem:hover {
     background-color: rgba(130, 0, 205, 0.83);
     color: white;
 }
 
-.buttonUser:active {
+.buttonItem:active {
     color: white;
 }
 
@@ -227,7 +229,7 @@ export default {
   height: 100%;
 }
 
-.buttonUserAction{
+.buttonItemAction{
   display: flex;
   justify-content: space-around;
 }
