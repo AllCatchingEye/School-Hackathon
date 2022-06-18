@@ -29,7 +29,7 @@ register_schema = {
 @expects_json(register_schema) # Compares request schema with expected schema 
 def create():
     valid = False
-    result = (jsonify(category = "Error", message="You are not allowed to send this request"), 409)
+    result = (jsonify(category = "Error", message="Hmm there is something wrong"), 409)
     organisation = get_jwt()["organisation"]    
 
     data_request = request.get_json()
@@ -69,7 +69,7 @@ def create():
             db.session.rollback()
             result = (jsonify(
                     category="Error",
-                    message=f"error while adding user {er}"), 409)
+                    message=f"Error while adding user. E-mail already exists. "), 409)
         except Exception as e:
             print(e)
     return result
