@@ -168,7 +168,7 @@ methods:{
             this.accessAllowed = true;
             this.Data = response.data;
         }).catch((err)=>{
-            if(err.response.status == 403) {
+            if(err.response.status == 401) {
               this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
             }else{
               this.onError(err.response.data.message);
@@ -183,7 +183,7 @@ methods:{
             .then((response) => {
                 this.Roles = response.data;
             }).catch((err)=>{
-              if(err.response.status == 403) {
+              if(err.response.status == 401) {
                 this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
               }else{
                 this.onError(err.response.data.message);
@@ -198,7 +198,7 @@ methods:{
             .then((response) => {
                 this.Organisations = response.data;
             }).catch((err)=>{
-              if(err.response.status == 403) {
+              if(err.response.status == 401) {
                 this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
               }else{
                 this.onError(err.response.data.message);
