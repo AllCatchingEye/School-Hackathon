@@ -40,6 +40,8 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     props: ['organisations','roles','currentRole'],
   data() {
@@ -51,9 +53,27 @@ export default {
   },
   methods: {
     onSubmit() {
-        this.$emit("user-added", this.User);
+        const path = '/api/register/'
+        const userJson = JSON.stringify(this.User);
+        console.log(userJson);
+
+        axios.post(path, userJson, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        })
+        .then((response) => {
+            this.$emit("user-added", response.data.dataobj);            
+            this.$emit("success", response.data.message);    
+            this.$emit("close-pop-up");           
+       
+        }).catch((err)=>{    
+            this.onError(err.response.data.message);                          
+            this.$emit("close-pop-up");           
+        })
     },
-  cancel(){
+    cancel(){
         this.$emit("close-pop-up");
     }
   }   
@@ -79,7 +99,7 @@ export default {
         display:flex;
         justify-content:center;
         align-items:center;
-        background:#9fe3d7;
+        background: #48c78e;
         font-size:2em;
         font-weight:bold;
         width:100%;

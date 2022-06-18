@@ -1,4 +1,5 @@
 <template>
+
         <div class="box">
                     <div class="entry-wrapper" v-if="!edit">
                         <div class="data-wrapper">                          
@@ -10,7 +11,7 @@
                         </div>
                         <div class="lineItem buttons">
                             <div  class="editbutton is-link is-rounded" @click="editing">Edit</div>
-                             <button class="button is-danger is-rounded is-outlined" @click="deleteUser">
+                             <button class="button is-danger is-rounded is-outlined" @click="askDeleteUser">
                                 <span>Delete</span>
                                 <span class="icon is-small">
                                     <i class="fas fa-times"></i>
@@ -42,7 +43,7 @@
                         </div>
                         <div v-if="!edit" class="lineItem buttons">
                             <div  class="editbutton is-link is-rounded" @click="edit">Edit</div>
-                             <button class="button is-danger is-rounded is-outlined" @click="deleteUser">
+                             <button class="button is-danger is-rounded is-outlined" @click="askDeleteUser">
                                 <span>Delete</span>
                                 <span class="icon is-small">
                                     <i class="fas fa-times"></i>
@@ -53,7 +54,7 @@
 
           <div class="newline">
             <div v-if="edit" class="buttonUserAction">
-              <button class="button is-danger is-rounded is-outlined" @click="deleteUser">
+              <button class="button is-danger is-rounded is-outlined" @click="askDeleteUser">
                 <span>Delete</span>
                 <span class="icon is-small"><i class="fas fa-times"></i></span>
               </button>
@@ -68,13 +69,14 @@
 <script>
 import axios from 'axios';
 export default {
- props: ['organisations','roles', 'user', 'currentRole'],
+ props: ['organisations','roles', 'user', 'currentRole', 'deleteApproval'],
  data() {
     return{
         edit:false,
         User: this.user,
         Roles: this.roles,
-        Organisations: this.organisations
+        Organisations: this.organisations,
+        WantDelete: -1
     }
   },
   methods: {
@@ -84,20 +86,28 @@ export default {
        cancel() {
             this.edit = false;
         },
-         deleteUser() {
+         askDeleteUser() {       
+            this.WantDelete = this.User.userid; 
+            const id = this.User.userid;
+            this.$emit('user-delete-approve', id);
+        },
+        deleteUser() {
             const path = '/api/user/' + this.User.userid + '/';
             axios.delete(path, {
                 headers: {
                     'Content-Type': 'application/json'
-                },
+                    },
                 withCredentials: true
-            }).then(() => {
+            }).then((response) => {
                 this.edit=false;
                 this.$emit('user-delete', this.User.userid);
+                this.$emit('success', response.data.message);  
+
             }).catch((err) => {
                 this.$emit('error', err.response.data.message);
             });
         },
+
         update() {
             const path = '/api/user/'  + this.User.userid +'/';
             const payload = {name: this.User.name, 
@@ -115,14 +125,21 @@ export default {
                 this.User = response.data.dataobj;
                 this.edit=false;
                 this.$emit('user-updated', this.User);
+                this.$emit('success', response.data.message);  
+
             }).catch((err)=>{             
                 this.$emit('error', err.response.data.message);  
             }
-        )
-        
+        )     
     }
-
-  }
+  },
+    watch: {
+        deleteApproval(newVal, oldVal) {     
+            if(this.WantDelete == oldVal && newVal === true){
+                this.deleteUser();
+            }
+        }
+    }
 }
 
 

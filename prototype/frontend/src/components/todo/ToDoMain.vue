@@ -1,22 +1,41 @@
 <template>
-
 <Transition name="slide-fade">
 <div  v-if="PopUp" >
-        <to-do-form @user-added="addUser" @close-pop-up="closePopUp"
+        <to-do-form @user-added="addUser"
+                  @close-pop-up="closePopUp" 
+                  @error="onError"
+                  @success="onSuccess"
                   :organisations="Organisations"
                   :currentRole= "CurrentRole"
                   :roles="Roles"
 ></to-do-form>
 </div>
 </Transition>
+<Transition name="slide-fade">
+<div v-if="DeleteModal" class="modal delete-model">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+        <p class="modal-card-title">Really delete?</p>
+        <button class="delete" aria-label="close" @click="cancelApproval()"></button>
+        </header>
+       
+        <footer class="modal-card-foot">
+        <button class="button is-danger" @click="deleteApproval()">Delete</button>
+        <button class="button"  @click="cancelApproval()">Cancel</button>
+        </footer>
+    </div>
+</div>
+</Transition>
 <div class="data">  
 <sidebarDash :currentpage="this.currentpage"></sidebarDash>
+
 
 <div class="outerBoxOverview">  
       <div class="headlineUsers">
         <p>Benutzer</p>
       </div>
-
+    <Transition name="slide-fade">
        <article class="message is-danger" v-if="Errormessage.length">
           <div class="message-header">
             <p>Error</p>
@@ -25,7 +44,8 @@
             {{Errormessage}}
           </div>
       </article>
-
+    </Transition>
+    <Transition name="slide-fade">
       <article class="message is-success" v-if="Successmessage.length">
                 <div class="message-header">
                   <p>Success</p>
@@ -34,7 +54,7 @@
                   {{Successmessage}}
                 </div>
       </article>
-
+</Transition>
       <div class="button-wrapper">
             <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
       </div>
@@ -42,7 +62,12 @@
     <div class="scrollableUsers">
           <ul>
           <li v-for="user in orderedUsersById" :key="user.userid">  
-              <to-do-item @user-updated="updateUser" @user-delete="deleteUser" @error="onError"
+              <to-do-item @user-updated="updateUser" 
+                          @user-delete-approve="openDeleteApproval" 
+                          @user-delete="deleteUser"
+                          @error="onError"
+                          @success="onSuccess"
+                          :deleteApproval="DeleteApprove"
                           :user="user"                    
                           :roles="Roles"
                           :currentRole= "CurrentRole"
@@ -77,7 +102,9 @@ components:{
       PopUp: false,
       Errormessage: "",
       Successmessage: "",
-      CurrentRole: 1
+      CurrentRole: 1,
+      DeleteModal: false,
+      DeleteApprove: 0      
     };
   },
 computed: {
@@ -97,26 +124,43 @@ methods:{
     closePopUp(){
       this.PopUp=false;
     },
+    cancelApproval(){
+      this.DeleteModal = false;
+      this.DeleteApprove = 0;
+    },
     addUser(user){
-      this.postUserData(user);
+      this.User.push(user);
     },
     onSuccess(message){
       this.Errormessage = "";
       this.Successmessage = message;
+      setTimeout(() => this.Successmessage = "", 2000);
+
     },
     onError(message){
       this.Successmessage = "";
-      this.Errormessage = message;
+      this.Errormessa = message;
+      setTimeout(() => this.Errormessage = "", 2000);
+
     },
     updateUser(user){
       const itemIndex = this.User.findIndex(x => x.userid == user.userid);
       this.User[itemIndex] = user;
-      this.onSuccess("User updated");
     },
     deleteUser(id){
       let itemIndex = this.User.findIndex(x => x.userid == id);
       this.User.splice(itemIndex,1);
-      this.onSuccess("User deleted");
+      this.DeleteApprove = 0;
+      this.DeleteModal = false;
+    },
+    openDeleteApproval(id){
+        this.DeleteApprove = id;
+        this.DeleteModal = true;            
+    },
+    deleteApproval(){
+        this.DeleteApprove = true;
+        this.DeleteModal = true;            
+
     },
     getUserData(){
         const path = '/api/user/'
@@ -133,29 +177,8 @@ methods:{
               this.onError(err.response.data.message);                          
             }                                      
         })
-    },  
-    postUserData(user){
-        const path = '/api/register/'
-        const userJson = JSON.stringify(user);
-        console.log(userJson);
-
-        axios.post(path, userJson, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          withCredentials: true
-        })
-        .then((response) => {
-            this.User.push(response.data.dataobj);
-            this.closePopUp();
-            this.onSuccess(response.data.message);                          
-        }).catch((err)=>{    
-            this.onError(err.response.data.message);                          
-            this.closePopUp();
-
-        })
     },
-     getRoleData(){
+    getRoleData(){
             const path = '/api/role/'
             return axios.get(path, {
                 withCredentials:true
@@ -193,12 +216,16 @@ methods:{
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+.delete-model{
+    display:flex;
+  }
 .data {
   display: grid;
   grid-template-columns: 30% 70%;
   height: 100vh;
   width: 100%;
   overflow: hidden;
+  
 }
 
 .firstItem{
