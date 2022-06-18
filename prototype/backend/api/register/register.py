@@ -69,7 +69,7 @@ def create():
             db.session.rollback()
             result = (jsonify(
                     category="Error",
-                    message=f"Error while adding user. E-mail already exists. "), 409)
+                    message=f"Hmm there is something wrong. Maybe E-mail already exists. "), 409)
         except Exception as e:
             print(e)
     return result
