@@ -20,7 +20,7 @@
 
                 <label v-if="Organisations.length"  for="organisation">Organisation</label>
                 <select v-if="Organisations.length" class="select" required v-model="Data.organisation">
-                    <option selected disabled value="">Choose Organisation</option>
+                    <option selected disabled value="0">Choose Organisation</option>
                     <option v-for="organisation in Organisations" 
                             :value="organisation.orgaid" 
                             :key="organisation.orgaid">{{organisation.name}}</option>
