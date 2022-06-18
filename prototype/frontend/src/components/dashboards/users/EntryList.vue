@@ -135,7 +135,7 @@ methods:{
     },
     onError(message){
       this.Successmessage = "";
-      this.Errormessa = message;
+      this.Errormessage = message;
       setTimeout(() => this.Errormessage = "", 2000);
 
     },

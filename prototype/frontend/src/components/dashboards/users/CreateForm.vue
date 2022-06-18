@@ -1,6 +1,7 @@
 <template>
 
 <div class="modal delete-model">
+     
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
@@ -8,18 +9,27 @@
         <button class="delete" aria-label="close" @click="cancel"></button>
         </header>
         <section class="modal-card-body">
+            <article class="message is-danger" v-if="Errormessage.length">
+          <div class="message-header">
+            <p>Error</p>
+          </div>
+          <div class="message-body">
+            {{Errormessage}}
+          </div>
+      </article>
             <form class="add-item">
                 <label for="name">Name</label>
-                <input type="text" id="name" required v-model="Data.name" />
+
+                <input type="text" id="name" required="required" v-model="Data.name" />
                 
                 <label for="firstname">Vorname</label>
-                <input type="text" id="firstname" required v-model="Data.firstname" />
+                <input type="text" id="firstname" required="required" v-model="Data.firstname" />
                 
                 <label for="email">E-mail</label>
-                <input  type="email" id="email" required v-model="Data.email" />
+                <input  type="email" id="email" required="required" v-model="Data.email" />
 
                 <label v-if="Organisations.length"  for="organisation">Organisation</label>
-                <select v-if="Organisations.length" class="select" required v-model="Data.organisation">
+                <select v-if="Organisations.length" class="select" required="required" v-model="Data.organisation">
                     <option selected disabled value="0">Choose Organisation</option>
                     <option v-for="organisation in Organisations" 
                             :value="organisation.orgaid" 
@@ -27,7 +37,7 @@
                 </select>  
 
                 <label for="role">Rolle</label>
-                    <select class="select" required v-model="Data.role">
+                    <select class="select" required="required" v-model="Data.role">
                     <option selected disabled value="0">Choose Role</option>
                     <option v-for="role in Roles" 
                             :value="role.roleid" 
@@ -52,10 +62,16 @@ export default {
     return {
     Data: {"name": "", "firstname":"", "email":"", "role":0, "organisation": 0},
     Organisations: this.organisations,
-    Roles: this.roles
+    Roles: this.roles,
+    Errormessage: ""
     };
   },
   methods: {
+    onError(message){
+      this.Errormessage = message;
+      setTimeout(() => this.Errormessage = "", 2000);
+
+    },
     onSubmit() {
         const path = '/api/register/'
         const dataJson = JSON.stringify(this.Data);
@@ -70,9 +86,9 @@ export default {
             this.$emit("success", response.data.message);    
             this.$emit("close-pop-up");           
        
-        }).catch((err)=>{    
-            this.$emit('error',err.response.data.message);                          
-            this.$emit("close-pop-up");           
+        }).catch((err)=>{  
+            this.onError(err.response.data.message);                          
+            // this.$emit("close-pop-up");           
         })
     },
     cancel(){
