@@ -29,7 +29,8 @@ register_schema = {
 @expects_json(register_schema) # Compares request schema with expected schema 
 def create():
     valid = False
-    result = (jsonify(category = "Error", message="You are not allowed to send this request"), 409)
+    result = (jsonify(category = "Error", message="Hmm there is something wrong"), 409)
+    organisation = get_jwt()["organisation"]    
 
     data_request = request.get_json()
     requested_role = data_request["role"]
@@ -44,8 +45,11 @@ def create():
         # Create User with new password
         user_data = request.get_json()
         user_password = secrets.token_urlsafe(5)
+        if get_jwt()["role"] == Config.ADMIN_ID:
+                user_data['organisation'] = organisation
+
         user = User(**user_data, password=user_password)    
-        
+
         # Create E-Mail
         msg = Message('Hello', sender = 'no-reply.wirfuerschule@gmx.de', recipients = [user.email])
         msg.body = f"Hi {user.firstname}, Your Password: {user_password} arrived."
@@ -57,15 +61,16 @@ def create():
                 
             result = (jsonify(
                     category="Success",
-                    message=f"User: {user.name} with E-Mail: {user.email} created"), 201)
+                    message=f"User: {user.name} created",
+                    dataobj=user.to_dict()), 201)
             # Send E-Mail
             mail.send(msg)          
-        except IntegrityError as e:
+        except IntegrityError as er:
             db.session.rollback()
             result = (jsonify(
                     category="Error",
-                    message=f"error while adding user{e}"), 409)
-        except e:
+                    message=f"Hmm there is something wrong. Maybe E-mail already exists. "), 409)
+        except Exception as e:
             print(e)
     return result
 

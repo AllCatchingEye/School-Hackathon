@@ -63,7 +63,7 @@ def delete_user(user_id):
     
     db.session.commit()
     return jsonify( category="Success", 
-                    message=f"User deleted {user_id}") if user else jsonify(category="Error", 
+                    message=f"User deleted.") if user else jsonify(category="Error", 
                           message=f"No User with id: {user_id}")
 
 
@@ -82,9 +82,17 @@ def edit_user(user_id):
         else:
             user = Usermodel.query.filter_by(userid=user_id).update(data_request)
         
+        user_entry = Usermodel.query.filter_by(userid=user_id).first();
         db.session.commit()
         result = jsonify( category="Success", 
-                    message=f"User edited") if user else jsonify(category="Error", 
+                    message=f"User edited", 
+                    dataobj=user_entry.to_dict(only=(
+                                'userid', 
+                                'email', 
+                                'organisations', 
+                                'roles', 
+                                'firstname', 
+                                'name'))) if user else jsonify(category="Error", 
                           message=f"No User with id: {user_id}")
     except (InvalidRequestError, IntegrityError) as e:
         db.session.rollback()
