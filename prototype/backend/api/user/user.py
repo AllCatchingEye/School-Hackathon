@@ -63,7 +63,7 @@ def delete_user(user_id):
     
     db.session.commit()
     return jsonify( category="Success", 
-                    message=f"User deleted {user_id}") if user else jsonify(category="Error", 
+                    message=f"User deleted.") if user else jsonify(category="Error", 
                           message=f"No User with id: {user_id}")
 
 

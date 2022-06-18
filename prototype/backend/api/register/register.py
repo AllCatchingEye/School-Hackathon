@@ -61,7 +61,7 @@ def create():
                 
             result = (jsonify(
                     category="Success",
-                    message=f"User: created",
+                    message=f"User: {user.name} created",
                     dataobj=user.to_dict()), 201)
             # Send E-Mail
             mail.send(msg)          
