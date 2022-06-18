@@ -104,11 +104,11 @@ components:{
       DeleteApprove: 0
     };
   },
-computed: {
-  orderedItemsById: function () {
-    return [...this.Data].sort((a,b) => b.userid - a.userid);
-  }
-},
+      computed: {
+        orderedItemsById: function () {
+            return [...this.Data].sort((a, b) => b.userid - a.userid);
+        }
+    },
 mounted() {
         this.getRoleData();
         this.getOrganisationData();
@@ -157,7 +157,6 @@ methods:{
     deleteApproval(){
         this.DeleteApprove = true;
         this.DeleteModal = true;
-
     },
     getData(){
         const path = '/api/user/'
@@ -175,36 +174,6 @@ methods:{
             }
         })
     },
-    getRoleData(){
-            const path = '/api/role/'
-            return axios.get(path, {
-                withCredentials:true
-            })
-            .then((response) => {
-                this.Roles = response.data;
-            }).catch((err)=>{
-              if(err.response.status == 401) {
-                this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
-              }else{
-                this.onError(err.response.data.message);
-              }
-          })
-        },
-    getOrganisationData(){
-            const path = '/api/organisation/'
-            return axios.get(path, {
-                withCredentials:true
-            })
-            .then((response) => {
-                this.Organisations = response.data;
-            }).catch((err)=>{
-              if(err.response.status == 401) {
-                this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
-              }else{
-                this.onError(err.response.data.message);
-              }
-            })
-        }
 }
 
 }
