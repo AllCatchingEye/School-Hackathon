@@ -27,16 +27,25 @@
                     </span>
                 </div>
                 <div class="lineItem">
-                    <span class="HackathonNameList button-wrapper" v-if="edit === true">
-                        <button class="button is-success is-rounded" @click="update">Update</button>
-                        <button class="button is-danger is-rounded" @click="cancel" buttonText="Cancel">Cancel</button>
-                    </span>
-                    <span v-else>
-                        <button class="button is-link is-rounded" @click="editing">Edit</button>
+                    <span v-if="!edit">
+                        <button class="button editbutton is-link is-rounded" @click="editing">Edit</button>
                     </span>
                 </div>
             </div>
         </div>
+      <div class="newline">
+        <div v-if="edit" class="buttonUserAction">
+          <button class="button is-danger is-rounded is-outlined" @click="deleteHackathon">
+            <span>Delete</span>
+            <span class="icon is-small">
+                                    <i class="fas fa-times"></i>
+                                </span>
+          </button>
+          <button class="button is-danger is-rounded" @click="cancel">Cancel</button>
+          <button  class="button is-success is-rounded" @click="update">Update</button>
+
+        </div>
+      </div>
     </div>
 </template>
 
@@ -66,12 +75,27 @@ export default {
         }
     },
     methods: {
+      deleteHackathon() {
+        console.log(this.HackathonDetails)
+        const path = "/api/hackathon/" + this.HackathonDetails[2] + "/";
+        axios.delete(path, {
+          withCredentials: true
+        })
+          .then((response) => {
+            console.log(response);
+            setTimeout(() => {location.reload();}, 100);
+          })
+          .catch((err) => {
+            console.log(err);
+            console.log(this.cookies)
+          })
+      },
         editing() {
             this.edit = !this.edit
         },
         update() {
             const path = "/api/hackathon/" + this.HackathonID + "/";
-            const data = JSON.stringify({hackathonid: this.HackathonID, title: this.newName, 
+            const data = JSON.stringify({hackathonid: this.HackathonID, title: this.newName,
                                         slug: this.newSlug, description: this.newDesc});
             axios.patch(path, data, {
                 ithCredentials: true,
@@ -97,26 +121,23 @@ export default {
 
 
 <style scoped>
-.buttonUser {
-    background-color: rgba(130, 0, 205, 0.83);
-    color: white;
-    margin-right: 1rem;
+
+.editbutton{
+  background-color: #1ABC9C;
 }
 
-.buttonUser:hover {
-    background-color: rgba(130, 0, 205, 0.83);
-    color: white;
+.editbutton:hover{
+  background-color: #1ABC9C;
 }
 
-.buttonUser:active {
-    color: white;
+.newline{
+  width:100%;
+  height: 100%;
 }
-
-.HackathonNameListTag{
-  margin-right: 2rem;
-  margin-left: 2rem;
+.buttonUserAction{
+  display: flex;
+  justify-content: space-around;
 }
-
 .HackathonData {
   vertical-align: top;
   flex-direction: row;
@@ -155,11 +176,6 @@ export default {
   background: white;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #0D2385;
-  border-radius: 10px;
-}
-
 
 
 .button{
@@ -185,6 +201,7 @@ export default {
     vertical-align: middle;
     padding-top:0px;
     padding-bottom:0px;
+    flex-direction: column;
 
 }
 

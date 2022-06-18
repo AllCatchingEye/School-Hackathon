@@ -15,9 +15,8 @@ export default {
 .ButtonApprove{
   width: 100%;
   height: 100%;
-  border-radius: 30px;
-  background: rgb(0,83,23);
-  background: linear-gradient(90deg, rgba(0,83,23,1) 0%, rgba(67,133,7,1) 100%);
+  border-radius: 50px;
+  background-color: #48C78E;
   display: flex;
   justify-content: center;
   align-items: center;

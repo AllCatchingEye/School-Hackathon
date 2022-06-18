@@ -26,7 +26,7 @@ submission_schema={
 @expects_json(submission_schema)
 def submission(hackathon_slug, uuid):
 
-    result = jsonify(category="Error", message=f"Token not valid.")
+    result = (jsonify(category="Error", message=f"Token not valid."), 403)
     data = request.get_json()
     valid = Tokenmodel.query.filter_by(tokenid=uuid).join(Hackathonmodel).filter_by(slug=hackathon_slug).first()
 
@@ -40,8 +40,7 @@ def submission(hackathon_slug, uuid):
             result = jsonify(category="Success.", message=f"Submission added.") if token else jsonify(category="Error.", message=f"Error while deleting token.")
         except:
             db.session.rollback()
-            result = jsonify(category="Error", message=f"Error while submitting.")
-
+            result = (jsonify(category="Error", message=f"Error while submitting."), 403)
     return result
 
 @Submission.route('/<hackathon_id>/', methods=["GET"])

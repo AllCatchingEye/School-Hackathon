@@ -3,41 +3,13 @@
     <PopupAdminHackathonBuild></PopupAdminHackathonBuild>
   </div>
 <div class="data">
-    <div class="sidebar">
-      <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Hackathonübersicht</p>
-      </div>
-      <div @click="goHome()">
-        <HomeButton></HomeButton>
-      </div>
-      <div @click="changePopup()">
-          <OpenPopupButton :type="'Hackathons'"></OpenPopupButton>
-      </div>
-      <div  v-if="!openPopup" class="sidebarBottom">
-        <div>
-          <LogoutButton></LogoutButton>
-        </div>
-        <p class="label">© 2022 wirfuerschule.de</p><br>
-        </div>
-      </div>
+  <sidebarDash :currentpage="this.currentpage"></sidebarDash>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
         <p>Hackathons</p>
       </div>
-      <div class="userDataHeader">
-        <div class="lineItem">
-          <p>Name</p>
-        </div>
-        <div class="lineItem">
-          <p>slug</p>
-        </div>
-        <div class="lineItem">
-          <p>Beschreibung</p>
-        </div>
-        <div class="lineItem">
-          <p>Edit</p>
-        </div>
+      <div class="button-wrapper">
+        <button class="add-hackathon button is-success is-rounded" @click="changePopup()">Hackathon hinzufügen</button>
       </div>
       <div class="scrollableUsers">
         <UserList></UserList>
@@ -49,16 +21,17 @@
 <script>
 /* eslint-disable */
 import UserList from './HackathonList';
-import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "../OpenPopupButton";
 import PopupAdminHackathonBuild from "../../popups/hackathons/PopupAdminHackathonBuild";
 import HomeButton from "../HomeButton";
+import sidebarDash from "../sidebar/sidebarDash";
 
     export default {
-        components: {HomeButton, PopupAdminHackathonBuild, OpenPopupButton, UserList, LogoutButton },
+        components: {HomeButton, PopupAdminHackathonBuild, OpenPopupButton, UserList, sidebarDash },
       data() {
         return {
           openPopup: false,
+          currentpage: "hackathon"
         }},
       methods: {
         changePopup(){
@@ -111,11 +84,6 @@ import HomeButton from "../HomeButton";
   margin-bottom: 5%;
 }
 
-.sidebar {
-  height: 100%;
-  width: 100%;
-  background-color: #000a38;
-}
 
 .wirfuerschuleimg {
   align-items: center;
@@ -155,14 +123,6 @@ import HomeButton from "../HomeButton";
   align-items: center;
 }
 
-.sidebarBottom{
-  position: absolute;
-  bottom: 2rem;
-  width: 30%;
-  text-align: center;
-  color: #d9d9d9;
-}
-
 .userDataHeader{
   display: grid;
   justify-content: space-evenly;
@@ -190,5 +150,10 @@ import HomeButton from "../HomeButton";
 .label{
   color: white;
   margin-top: 2vh;
+}
+
+.button-wrapper{
+  width:84%;
+  text-align:right;
 }
 </style>

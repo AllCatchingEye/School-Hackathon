@@ -1,48 +1,16 @@
 <template>
   <div v-if="openPopup">
-    <PopupAddUser></PopupAddUser>
+    <PopupAddUser ></PopupAddUser>
   </div>
 <div class="data">
-    <div class="sidebar">
-      <div class="fontHeadline">
-        <img class="wirfuerschuleimg" alt="wir für schule logo" src="../../../assets/wirfuerschuleLogoweiß.png" />
-        <p class="headline">Benutzerübersicht</p>
-      </div>
-      <div @click="goHome()">
-        <HomeButton></HomeButton>
-      </div>
-        <div @click="changePopup()">
-          <OpenPopupButton :type="'Nutzer'"></OpenPopupButton>
-        </div>
-      <div class="sidebarBottom">
-        <div>
-          <LogoutButton></LogoutButton>
-        </div>
-        <p>© 2022 <a href="https://wirfuerschule.de/">wirfuerschule.de</a></p><br>
-      </div>
-    </div>
+  <sidebarDash :currentpage="this.currentpage"></sidebarDash>
     <div class="outerBoxOverview">
       <div class="headlineUsers">
         <p>Benutzer</p>
       </div>
-      <div class="userDataHeader">
-        <div class="lineItem firstItem">
-          <p>Vorname </p>
-          <p>Nachname</p>
-        </div>
-        <div class="lineItem">
-          <p>Email</p>
-        </div>
-        <div class="lineItem">
-          <p>Organisation</p>
-        </div>
-        <div class="lineItem">
-          <p>Rolle</p>
-        </div>
-        <div class="lineItem">
-          <p>Edit</p>
-        </div>
-      </div>
+<div class="button-wrapper">
+      <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
+</div>
       <div class="scrollableUsers">
         <UserList></UserList>
       </div>
@@ -53,19 +21,20 @@
 <script>
 /* eslint-disable */
 import UserList from './UserList.vue';
-import LogoutButton from './../../LogoutButton.vue';
 import OpenPopupButton from "../OpenPopupButton";
 import PopupAddUser from "../../popups/users/PopupAddUser";
 import HomeButton from "../HomeButton";
+import sidebarDash from "../sidebar/sidebarDash";
 
 
 export default {
-  components: {PopupAddUser, UserList, LogoutButton, OpenPopupButton, HomeButton},
+  components: {PopupAddUser, UserList, OpenPopupButton, HomeButton, sidebarDash},
   data() {
     return {
       adding: false,
       rendered: false,
-      openPopup: false
+      openPopup: false,
+      currentpage: "user"
     }
   },
   methods: {
@@ -84,7 +53,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .data {
@@ -122,16 +91,10 @@ export default {
 
 .scrollableUsers {
   overflow-x: hidden;
-  height: 75%;
-  width: 63vw;
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-
-.sidebar {
-  height: 100%;
-  width: 100%;
-  background-color: #000a38;
+  height: 80%;
+  width: 64vw;
+  margin-top: 1%;
+  margin-bottom: 2%;
 }
 
 .wirfuerschuleimg {
@@ -173,21 +136,7 @@ export default {
   align-items: center;
 }
 
-.sidebarBottom{
-  position: absolute;
-  bottom: 2rem;
-  width: 30%;
-  text-align: center;
-  color: #d9d9d9;
-}
 
-.userDataHeader{
-  display: flex;
-  justify-content: space-evenly;
-  width: 60vw;
-  grid-template-columns: 25% 10% 10% 10% 10%;
-
-}
 
 .label{
   color: white;
@@ -213,5 +162,8 @@ a{
   color: #d9d9d9;
 }
 
-
+.button-wrapper{
+  width:84%;
+text-align:right;
+}
 </style>
