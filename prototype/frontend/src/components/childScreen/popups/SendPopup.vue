@@ -2,20 +2,22 @@
   <div class="FullScreen">
     <div class="OuterSymbol">
       <div class="InnerSymbol">
-        <div class="headline">
+        <div v-if="!displayApproved && !displayDisapproved" class="headline">
           <h2>Möchtest du deine Ergebinsse abschicken?</h2>
         </div>
         <div class="textBox">
-          <p>Nach dem Abschicken kannst du deine Vorschläge nicht mehr ändern.</p>
+          <i v-if="displayApproved" class="fa-solid fa-check"></i>
+          <i v-if="displayDisapproved" class="fa-solid fa-xmark"></i>
+          <p v-if="!displayApproved && !displayDisapproved">Nach dem Abschicken kannst du deine Vorschläge nicht mehr ändern.</p>
           <p class="statusMessage">{{this.status}}</p>
         </div>
       </div>
     </div>
     <div class="buttons">
-      <div class="returnButton childButton" @click="() => TogglePopup('buttonTrigger')">
+      <div class="returnButton childButton" @click="() => TogglePopup()">
         <i class="fa-solid fa-minus"></i>
       </div>
-      <div class="sendButton childButton" @click="send_submissions()">
+      <div v-if="!displayDisapproved" class="sendButton childButton" @click="send_submissions()">
         <i class="fa-solid fa-paper-plane"></i>
       </div>
     </div>
@@ -29,37 +31,44 @@ export default {
   props: ['TogglePopup', 'amount', 'entrys', 'hackathonSlug', 'uuid'],
   data(){
     return{
-      status: ""
+      status: "",
+      displayApproved: false,
+      displayDisapproved: false
     }
   },
   methods: {
     send_submissions(){
-      const path = '/api/submission/'.concat(this.hackathonSlug, "/", this.uuid);
+      const path = '/api/submission/'.concat(this.hackathonSlug, "/", this.uuid, "/");
       console.log(path);
       let entries = [];
+      let result = [];
+      let request = {};
 
       this.entrys.forEach(element => {
         if (element !== '') {
-          entries.push(element);
-        }
-      })
+          entries.push(element);}})
+
+      entries.forEach(element => {
+          result.push({ "description": element})
+        })
+
+      request =JSON.stringify({ "result" : result});
 
       if (entries.length > 0 && entries[0].length > 5) {
-        axios.post(path, entries, {
+        axios.post(path, request, {
           headers: {
             'Content-Type': 'application/json'
           }
         })
           .then(() => {
             this.displayApproved = true;
-            setTimeout(() => {
-              this.status = "worked";
-            }, 1000);
+            setTimeout(() => {this.status = "Vielen Dank fürs Mitmachen!";}, 10);
           }).catch(() => {
           this.displayDisapproved = true;
           setTimeout(() => {this.status ="Deine Anfrage konnte vom Server nicht verabeitet werden, wurde dein Code schon verwendet?"}, 10);
         });
       }else{
+        this.displayDisapproved = true;
         this.status = "Bitte überprüfe ob du etwas eingetragen hast und probiere es erneut"
       }
     },
@@ -69,6 +78,7 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&family=Roboto&display=swap');
+
 
 
 .FullScreen{
@@ -98,7 +108,7 @@ export default {
 .InnerSymbol{
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   width: 90%;
   height: 95%;
   justify-content: center;
@@ -109,21 +119,6 @@ export default {
   font-size: 5vw;
   font-weight: 600;
   margin-bottom: 5%;
-}
-
-
-.smallerButton{
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  font-size: 7vw;
-  color: #ffffffb8;
-  height: 12vw;
-  width: 12vw;
-  background-color: #0000003b;
-  border-radius: 30px;
-
 }
 
 .headline{
@@ -148,6 +143,14 @@ export default {
   font-weight: 500;
   letter-spacing: 1.25px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.textBox i{
+  font-size: 40vw;
 }
 
 .textBox p{
@@ -183,11 +186,11 @@ export default {
 }
 
 .statusMessage{
+  text-align: center;
   font-weight: 700;
   margin-top: 5%;
-  color: #CD3B59;
+  color: white;
 }
-
 
 </style>
 
