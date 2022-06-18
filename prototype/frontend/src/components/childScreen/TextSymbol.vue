@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&family=Roboto&display=swap');
 
 .FullSize{
@@ -40,6 +40,8 @@ export default {
   height: 40%;
   margin-bottom: 5%;
   border-radius: 30px;
+
+
 }
 
 .InnerSymbol{
@@ -49,16 +51,18 @@ export default {
 }
 
 .headline h2{
-  font-size: 5vw;
   font-weight: 600;
   margin-bottom: 5%;
+
 }
 
 .textBox{
   font-size: 5vw;
+
   font-weight: 500;
   letter-spacing: 1.25px;
   overflow: hidden;
+
 }
 
 .textBox p{
@@ -75,5 +79,32 @@ export default {
 
   font-size: 5vw;
   font-weight: 500;
+  
+
 }
+
+ @media only screen and (min-width: 600px) {
+ .readMore{
+    padding: 10px;
+
+  font-size: 20px;
+  }
+
+.textBox{
+  font-size: 20px;
+}
+ 
+.headline h2{
+    font-size: 20px;
+}
+
+.OuterSymbol{
+  min-height:200px;
+  max-width:600px;
+  margin:auto;
+}
+.InnerSymbol{
+  max-width:600px;
+}
+ }
 </style>
