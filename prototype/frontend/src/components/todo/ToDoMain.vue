@@ -9,23 +9,24 @@
 ></to-do-form>
 </div>
 </Transition>
-<div class="data">
-  
-      <sidebarDash :currentpage="this.currentpage"></sidebarDash>
-<div class="outerBoxOverview">
-  
+<div class="data">  
+<sidebarDash :currentpage="this.currentpage"></sidebarDash>
+
+<div class="outerBoxOverview">  
       <div class="headlineUsers">
         <p>Benutzer</p>
       </div>
-       <article class="message is-danger" v-if="Errormessage.length > 0">
-                <div class="message-header">
-                  <p>Error</p>
-                </div>
-                <div class="message-body">
-                  {{Errormessage}}
-                </div>
+
+       <article class="message is-danger" v-if="Errormessage.length">
+          <div class="message-header">
+            <p>Error</p>
+          </div>
+          <div class="message-body">
+            {{Errormessage}}
+          </div>
       </article>
-      <article class="message is-success" v-if="Successmessage.length > 0">
+
+      <article class="message is-success" v-if="Successmessage.length">
                 <div class="message-header">
                   <p>Success</p>
                 </div>
@@ -33,30 +34,29 @@
                   {{Successmessage}}
                 </div>
       </article>
-<div class="button-wrapper">
-      <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
-</div>
 
-  <div class="scrollableUsers">
-        <ul>
-        <li v-for="user in orderedUsersById" :key="user.userid">  
-            <to-do-item @user-updated="updateUser" @user-delete="deleteUser"
-                        :user="user"                    
-                        :roles="Roles"
-                        :currentRole= "CurrentRole"
-                        :organisations="Organisations"></to-do-item>
-        </li>
-        </ul>
-    </div>
+      <div class="button-wrapper">
+            <button class="add-user button is-success is-rounded" @click="changePopup()">Add User</button>
+      </div>
+
+    <div class="scrollableUsers">
+          <ul>
+          <li v-for="user in orderedUsersById" :key="user.userid">  
+              <to-do-item @user-updated="updateUser" @user-delete="deleteUser" @error="onError"
+                          :user="user"                    
+                          :roles="Roles"
+                          :currentRole= "CurrentRole"
+                          :organisations="Organisations"></to-do-item>
+          </li>
+          </ul>
     </div>
   </div>
+</div>
 </template>
 
 
 <script>
 import axios from 'axios';
-// import { useCookies } from 'vue3-cookies';
-
 import ToDoForm from './ToDoForm.vue';
 import ToDoItem from './ToDoItem.vue';
 import sidebarDash from "../dashboards/sidebar/sidebarDash";
@@ -89,28 +89,34 @@ mounted() {
         this.getRoleData();        
         this.getOrganisationData();
         this.getUserData();
-
     },
 methods:{
     changePopup(){
-        this.PopUp=true;
+      this.PopUp=true;
     },
     closePopUp(){
       this.PopUp=false;
     },
     addUser(user){
-        this.postUserData(user);
+      this.postUserData(user);
+    },
+    onSuccess(message){
+      this.Errormessage = "";
+      this.Successmessage = message;
+    },
+    onError(message){
+      this.Successmessage = "";
+      this.Errormessage = message;
     },
     updateUser(user){
-    const itemIndex = this.User.findIndex(x => x.userid == user.userid);
-    this.User[itemIndex] = user;
-    this.Successmessage = "User edited";
+      const itemIndex = this.User.findIndex(x => x.userid == user.userid);
+      this.User[itemIndex] = user;
+      this.onSuccess("User updated");
     },
     deleteUser(id){
-        let itemIndex = this.User.findIndex(x => x.userid == id);
-        this.User.splice(itemIndex,1);
-        this.Successmessage = "User deleted";
-
+      let itemIndex = this.User.findIndex(x => x.userid == id);
+      this.User.splice(itemIndex,1);
+      this.onSuccess("User deleted");
     },
     getUserData(){
         const path = '/api/user/'
@@ -120,25 +126,14 @@ methods:{
         .then((response) => {
             this.accessAllowed = true;
             this.User = response.data;
-            console.log(this.User);
-
         }).catch((err)=>{
-             switch(err.response.status) {
-                // case 409:
-                //     console.log("Error 409")
-                //     break;
-                // case 500:
-                //     console.log("Error 500")
-                //     break;
-                case 401:
-                    this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
-                    break;
-                default:
-                    this.Errormessage = "An unexpected Error occurred.";
-
-                }   
+            if(err.response.status) {
+              this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
+            }else{
+              this.onError(err.response.data.message);                          
+            }                                      
         })
-    },
+    },  
     postUserData(user){
         const path = '/api/register/'
         const userJson = JSON.stringify(user);
@@ -151,22 +146,11 @@ methods:{
           withCredentials: true
         })
         .then((response) => {
-            console.log(response.data.dataobj)
             this.User.push(response.data.dataobj);
             this.closePopUp();
-            this.Successmessage = "User created";
-
-        }).catch((err)=>{             
-            switch(err.response.status) {
-                case 409:
-                    this.Errormessage = "This Emails exists";
-                    break;
-                case 500:
-                    this.Errormessage  = "Please enter valid mail";
-                    break;
-                default:
-                    this.Errormessage = "An unexpected Error occurred.";
-                }        
+            this.onSuccess(response.data.message);                          
+        }).catch((err)=>{    
+            this.onError(err.response.data.message);                          
             this.closePopUp();
 
         })
@@ -178,19 +162,13 @@ methods:{
             })
             .then((response) => {
                 this.Roles = response.data;
-                console.log(this.Roles);
             }).catch((err)=>{
-                console.log(err);
-                switch(err.response.status) {
-
-                    case 401:
-                        this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
-                        break;
-                    default:
-                        console.log("An unexpected Error occurred.")
-
-                    }   
-            })
+              if(err.response.status) {
+                this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
+              }else{
+                this.onError(err.response.data.message);                          
+              } 
+          })
         },    
     getOrganisationData(){
             const path = '/api/organisation/'
@@ -199,31 +177,13 @@ methods:{
             })
             .then((response) => {
                 this.Organisations = response.data;
-                console.log(this.Organisations);
             }).catch((err)=>{
-                console.log(err);
-                switch(err.response.status) {
-                    case 401:
-                        this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
-                        break;
-                    default:
-                        console.log("An unexpected Error occurred.")
-
-                    }   
+              if(err.response.status) {
+                this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
+              }else{
+                this.onError(err.response.data.message);                          
+              }
             })
-        },
-        getCurrentRole() {
-            const path = '/api/role/own/'
-            axios.get(path, {
-                withCredentials: true
-            })
-                .then((response) => {
-                    this.CurrentRole = response.data.role;
-                })
-                .catch((err) => {
-                    console.log(err);
-                    console.log(this.cookies)
-                })
         }
 }
 

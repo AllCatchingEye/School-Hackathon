@@ -95,10 +95,8 @@ export default {
                 this.edit=false;
                 this.$emit('user-delete', this.User.userid);
             }).catch((err) => {
-                console.log(err);
-                    // error = true;
-                    // message = err.response.data.message;
-                });
+                this.$emit('error', err.response.data.message);
+            });
         },
         update() {
             const path = '/api/user/'  + this.User.userid +'/';
@@ -118,16 +116,7 @@ export default {
                 this.edit=false;
                 this.$emit('user-updated', this.User);
             }).catch((err)=>{             
-            switch(err.response.status) {
-                case 409:
-                    console.log("This Emails exists")
-                    break;
-                case 500:
-                    // Error message
-                    break;
-                default:
-                    console.log("An unexpected Error occurred.")
-                }        
+                this.$emit('error', err.response.data.message);  
             }
         )
         
