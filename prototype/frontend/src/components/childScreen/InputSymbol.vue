@@ -29,7 +29,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&family=Roboto&display=swap');
 
 .OuterSymbol{
@@ -43,6 +43,7 @@ export default {
   height: 40%;
   margin-bottom: 5%;
   border-radius: 30px;
+
 }
 
 .InnerSymbol{
@@ -112,4 +113,37 @@ export default {
   border-radius: 30px;
   background-color: #ffffff3d;
 }
+
+
+ @media only screen and (min-width: 600px) {
+ .readMore{
+    padding: 10px;
+  font-size: 20px;
+  }
+
+.textarea {
+
+  font-size: 20px;
+}
+ 
+.headline h2{
+    font-size: 35px;
+}
+
+.OuterSymbol{
+  min-height:400px;
+  max-width:600px;
+  margin: 30px auto;
+}
+.InnerSymbol{
+  max-width:80%;
+}
+
+.biggerButton{
+  max-height:60px;
+  max-width:60px;
+  font-size:35px;
+
+}
+ }
 </style>

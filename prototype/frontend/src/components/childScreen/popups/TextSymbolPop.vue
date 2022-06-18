@@ -111,6 +111,30 @@ export default {
   margin-bottom: 5%;
 }
 
+ @media only screen and (min-width: 600px) {
+  p {
+  font-size:20px;
+}
+ 
+.headline h2{
+    font-size: 50px;
+}
+.OuterSymbol{
+  min-height:400px;
+  max-width:900px;
+  margin: 30px auto;
+}
+.InnerSymbol{
+  max-width:100%;
+  
+}
+.smallerButton{
+  max-height:60px;
+  max-width:60px;
+  font-size:35px;
+
+}
+ }
 
 </style>
 

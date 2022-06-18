@@ -195,5 +195,20 @@ export default {
 .fade-leave-active{
   transition: all 0.5s ease;
 }
+ @media only screen and (min-width: 600px) {
+ .buttons{
+   padding:20px;
+   width:40%;
+ }
+ .Symbols{
+   margin-top:30px;
 
+ }
+ 
+ .childButton{
+   max-width:100px;
+   max-height:100px;
+   font-size:60px;
+ }
+ }
 </style>

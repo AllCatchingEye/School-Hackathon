@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&family=Roboto&display=swap');
 
 
@@ -191,6 +191,42 @@ export default {
   margin-top: 5%;
   color: white;
 }
+ @media only screen and (min-width: 600px) {
+  p,.textBox {
+  font-size:20px;
+  i{
+      font-size:100px;
+
+  }
+ 
+}
+ 
+.headline h2{
+    font-size: 30px;
+}
+.OuterSymbol{
+  min-height:400px;
+  max-width:900px;
+  margin: 30px auto;
+}
+.InnerSymbol{
+  max-width:100%;
+  
+}
+.smallerButton{
+  max-height:60px;
+  max-width:60px;
+  font-size:35px;
+
+}
+
+.childButton{
+    border-radius:30%;
+    max-height:130px;
+  max-width:130px;
+  font-size:55px;
+}
+ }
 
 </style>
 
