@@ -96,10 +96,15 @@ def edit_hackathon(hackathon_id):
                 category="Error",
                 message=f"Error while editing hackathon"), 409) 
     try:
-        hackathon = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).update(data_request)
+        hackathon_entry = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).first()
         db.session.commit()
         result = jsonify( category="Success", 
-                    message=f"Hackathon edited") if hackathon else jsonify(category="Error", 
+                    message=f"Hackathon edited",
+                    dataobj=hackathon_entry.to_dict(only=(
+                                'title', 
+                                'hackathonid', 
+                                'slug', 
+                                'description'))) if hackathon else jsonify(category="Error", 
                             message=f"No Hackathon with id: {hackathon_id}")
     except IntegrityError as e:
         result = (jsonify(

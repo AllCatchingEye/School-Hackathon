@@ -126,6 +126,7 @@ export default {
                 withCredentials: true
             }).then((response) => {
                 this.Data = response.data.dataobj;
+                console.log("Close here")
                 this.edit=false;
                 this.$emit('update-item', this.Data);
                 this.$emit('success', response.data.message);  

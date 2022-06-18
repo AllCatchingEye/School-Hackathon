@@ -99,6 +99,8 @@ components:{
   },
 computed: {
   orderedItemsById: function () {
+    console.log("Data");
+    console.log(this.data);
     return [...this.Data].sort((a,b) => b.hackathonid - a.hackathonid);
   }
 },
