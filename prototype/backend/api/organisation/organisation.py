@@ -20,10 +20,11 @@ def add_organisation():
     return jsonify(category="Success.", message=f"Organisation added.")
 
 @Organisation.route('/', methods=["GET"])
-@auth_required([Config.SUPERADMIN_ID])
+@auth_required([Config.SUPERADMIN_ID, Config.ADMIN_ID, Config.TEACHER_ID])
 def get_organisation():
+    role = get_jwt()["role"]    
     getAll = Organisationmodel.query.all()
-    return jsonify([org.to_dict(only=('orgaid', 'name')) for org in getAll])
+    return jsonify([org.to_dict(only=('orgaid', 'name')) for org in getAll] if role ==  Config.SUPERADMIN_ID else [])
 
 
 @Organisation.route('/<organisation_id>/', methods=["PATCH"])

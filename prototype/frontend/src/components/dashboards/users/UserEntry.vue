@@ -30,7 +30,7 @@
                             <div class="entry"><p>
                             <input type="text" class="input is-small" v-model="User.email"/>
                             </p></div>
-                            <div v-if="currentRole == 420" class="entry">
+                            <div v-if="this.Organisations.length" class="entry">
                                 <select class="select" v-model="User.organisations.orgaid">
                                         <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
                                 </select>                                
@@ -82,6 +82,7 @@ export default {
   methods: {
       editing() {
             this.edit = true;
+            
         },
        cancel() {
             this.edit = false;
