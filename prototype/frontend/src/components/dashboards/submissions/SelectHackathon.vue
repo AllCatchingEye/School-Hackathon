@@ -3,7 +3,7 @@
         <sidebarDash :currentpage="this.currentpage"></sidebarDash>
         <div class="outerBoxOverview">
             <div class="headlineItems">
-                <p>Schlüsselübersicht: Hackathonauswahl</p>
+                <p>Einreichungsübersicht: Hackathonauswahl</p>
             </div>
             <div class="scrollable-items-outer">
                 <div class="scrollable-items">
@@ -33,7 +33,7 @@ export default {
         return {
             Data: [],
             accessAllowed: false,
-            currentpage: "token",
+            currentpage: "submissions",
             error: "",
         };
     },
