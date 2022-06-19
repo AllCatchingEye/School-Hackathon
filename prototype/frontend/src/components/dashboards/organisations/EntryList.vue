@@ -31,7 +31,7 @@
 
 <div class="outerBoxOverview">  
       <div class="headlineItems">
-        <p>Benutzer</p>
+        <p>Organisation</p>
       </div>
     <Transition name="slide-fade">
        <article class="message is-danger" v-if="Errormessage.length">
@@ -54,21 +54,19 @@
       </article>
 </Transition>
       <div class="button-wrapper">
-            <button class="add-item button is-success is-rounded" @click="changePopup()">Add User</button>
+            <button class="add-item button is-success is-rounded" @click="changePopup()">Add Organisation</button>
       </div>
 
     <div class="scrollable-items">
           <ul>
-          <li v-for="item in orderedItemsById" :key="item.userid">  
+          <li v-for="item in orderedItemsById" :key="item.orgaid">  
               <entry-item @update-item="updateItem" 
                           @item-delete-approve="openDeleteApproval" 
                           @delete-item="deleteItem"
                           @error="onError"
                           @success="onSuccess"
                           :deleteApproval="DeleteApprove"
-                          :data="item"                    
-                          :roles="Roles"
-                          :organisations="Organisations"></entry-item>
+                          :data="item"></entry-item>
           </li>
           </ul>
     </div>
@@ -95,7 +93,7 @@ components:{
       Roles: [],
       Organisations: [],
       accessAllowed: false,
-      currentpage: "user",
+      currentpage: "school",
       PopUp: false,
       Errormessage: "",
       Successmessage: "",
@@ -105,12 +103,10 @@ components:{
   },
 computed: {
   orderedItemsById: function () {
-    return [...this.Data].sort((a,b) => b.userid - a.userid);
+    return [...this.Data].sort((a,b) => b.orgaid - a.orgaid);
   }
 },
 mounted() {
-        this.getRoleData();        
-        this.getOrganisationData();
         this.getData();
     },
 methods:{
@@ -140,11 +136,11 @@ methods:{
 
     },
     updateItem(item){
-      const itemIndex = this.Data.findIndex(x => x.userid == item.userid);
+      const itemIndex = this.Data.findIndex(x => x.orgaid == item.orgaid);
       this.Data[itemIndex] = item;
     },
     deleteItem(id){
-      let itemIndex = this.Data.findIndex(x => x.userid == id);
+      let itemIndex = this.Data.findIndex(x => x.orgaid == id);
       this.Data.splice(itemIndex,1);
       this.DeleteApprove = 0;
       this.DeleteModal = false;
@@ -159,7 +155,7 @@ methods:{
 
     },
     getData(){
-        const path = '/api/user/'
+        const path = '/api/organisation/'
         axios.get(path, {
             withCredentials:true
         })
@@ -173,37 +169,7 @@ methods:{
               this.onError(err.response.data.message);                          
             }                                      
         })
-    },
-    getRoleData(){
-            const path = '/api/role/'
-            return axios.get(path, {
-                withCredentials:true
-            })
-            .then((response) => {
-                this.Roles = response.data;
-            }).catch((err)=>{
-              if(err.response.status == 403) {
-                this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
-              }else{
-                this.onError(err.response.data.message);                          
-              } 
-          })
-        },    
-    getOrganisationData(){
-            const path = '/api/organisation/'
-            return axios.get(path, {
-                withCredentials:true
-            })
-            .then((response) => {
-                this.Organisations = response.data;
-            }).catch((err)=>{
-              if(err.response.status == 403) {
-                this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
-              }else{
-                this.onError(err.response.data.message);                          
-              }
-            })
-        }
+    }, 
 }
 
 }

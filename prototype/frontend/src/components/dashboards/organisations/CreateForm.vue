@@ -4,35 +4,13 @@
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-        <p class="modal-card-title">Add User</p>
+        <p class="modal-card-title">Add Organisation</p>
         <button class="delete" aria-label="close" @click="cancel"></button>
         </header>
         <section class="modal-card-body">
             <form class="add-item">
                 <label for="name">Name</label>
-                <input type="text" id="name" required v-model="Data.name" />
-                
-                <label for="firstname">Vorname</label>
-                <input type="text" id="firstname" required v-model="Data.firstname" />
-                
-                <label for="email">E-mail</label>
-                <input  type="email" id="email" required v-model="Data.email" />
-
-                <label v-if="Organisations.length"  for="organisation">Organisation</label>
-                <select v-if="Organisations.length" class="select" required v-model="Data.organisation">
-                    <option selected disabled value="0">Choose Organisation</option>
-                    <option v-for="organisation in Organisations" 
-                            :value="organisation.orgaid" 
-                            :key="organisation.orgaid">{{organisation.name}}</option>
-                </select>  
-
-                <label for="role">Rolle</label>
-                    <select class="select" required v-model="Data.role">
-                    <option selected disabled value="0">Choose Role</option>
-                    <option v-for="role in Roles" 
-                            :value="role.roleid" 
-                            :key="role.roleid">{{role.description}}</option>
-                </select>       
+                <input type="text" id="name" required v-model="Data.name" />   
             </form>
         </section>
         <footer class="modal-card-foot">
@@ -47,17 +25,14 @@
 import axios from 'axios';
 
 export default {
-    props: ['organisations','roles','currentRole'],
   data() {
     return {
-    Data: {"name": "", "firstname":"", "email":"", "role":0, "organisation": 0},
-    Organisations: this.organisations,
-    Roles: this.roles
+    Data: {"name": ""},
     };
   },
   methods: {
     onSubmit() {
-        const path = '/api/register/'
+        const path = '/api/organisation/'
         const dataJson = JSON.stringify(this.Data);
         axios.post(path, dataJson, {
           headers: {
