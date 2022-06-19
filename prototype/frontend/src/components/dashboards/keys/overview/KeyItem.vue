@@ -67,7 +67,7 @@ export default {
 .buttons {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: space-between;
     align-content: space-between;
     flex-wrap: nowrap;
 }
@@ -79,7 +79,7 @@ export default {
     .data-wrapper {
         width: 80%;
         display:grid;
-        grid-template-columns: 95% 5%;
+        grid-template-columns: 6fr 1fr;
         height:80px;
         align-items:center;
         grid-column-gap:10px;
