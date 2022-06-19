@@ -1,4 +1,3 @@
-from sys import orig_argv
 from flask import Blueprint, jsonify, request
 from models.token import Token as Tokenmodel
 from models.user import User as Usermodel
@@ -31,18 +30,25 @@ def generate_token():
     result= (jsonify(category="Error",message=f"Not allowed"), 401)
 
     if is_valid and number_of_token > 0: 
+        token_list = []
         user = Usermodel.query.filter_by(email=get_jwt_identity()).first()
         for x in range(0,number_of_token):
             token = Tokenmodel(user.userid, hackathon_id)
-            db.session.add(token)            
+            db.session.add(token)    
+            token_list.append(token.to_dict(only=(
+                                'userid', 
+                                'hackathonid',
+                                '-hackathon.token',
+                                'tokenid')))  
         try:
             db.session.commit() 
             result = (jsonify(
                     category="Success",
-                    message=f"Created {number_of_token} Token"), 201)
+                    message=f"Created {number_of_token} Token", 
+                    dataobj=token_list), 201)
         except:
             db.session.rollback()
-            result= (jsonify(category="Error",message=f"An Error occured"), 401)
+            result= (jsonify(category="Error",message=f"An Error occured."), 401)
     return result
         
 
