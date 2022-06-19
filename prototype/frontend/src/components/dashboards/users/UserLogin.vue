@@ -94,31 +94,28 @@ export default {
       });
       },
     deleteCookie(){
-      const cookieSet = this.cookies.isKey("access_token_cookie");
       const path = '/api/logout/';
-      if(cookieSet){
         axios.post(path, {}, {
           headers: {
             'Content-Type': 'application/json'
           }
-        }).catch(() => {            
+        }).catch((e) => {    
+          console.log("as");        
         })
-        }
+        
     },
     checkUser() {
       const path = '/api/user/own/'
       axios.get(path, {
         withCredentials: true
       }).then((response) => {
-        if(response.status == 200){          
+        if(response.status == 200){  
           this.$router.push('/dashboard');
         }else{
           this.deleteCookie();                    
         }
         })
-        .catch((e) => {            
-          this.deleteCookie();
-        })
+        .catch(() => {})
     },
     
   }
