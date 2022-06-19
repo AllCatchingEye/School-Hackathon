@@ -78,7 +78,8 @@ import sidebarDash from "../sidebar/sidebarDash";
 
 .scrollableUsers {
   overflow-x: hidden;
-  height: 75%;
+  max-height: 75vh;
+  height: 100%;
   width: 63vw;
   margin-top: 5%;
   margin-bottom: 5%;

@@ -79,7 +79,7 @@ export default {
     .data-wrapper {
         width: 80%;
         display:grid;
-        grid-template-columns: 1fr 1fr 1.5fr 1fr 1fr;
+        grid-template-columns: 6fr 1fr;
         height:80px;
         align-items:center;
         grid-column-gap:10px;

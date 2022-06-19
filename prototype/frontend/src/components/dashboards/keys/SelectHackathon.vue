@@ -112,7 +112,8 @@ export default {
 .scrollable-items {
     overflow: scroll;
     width: 64vw;
-    height: 80%;
+    height: 100%;
+    max-height: 80vh;
     margin-top: 1%;
     margin-bottom: 2%;
 }
