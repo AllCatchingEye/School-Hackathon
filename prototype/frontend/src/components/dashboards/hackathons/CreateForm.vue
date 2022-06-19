@@ -41,6 +41,13 @@ export default {
     onSubmit() {
         const path = '/api/hackathon/'
         const dataJson = JSON.stringify(this.Data);
+        for (var key in this.Data) {
+          if (this.Data[key].length < 1) {
+            error = true;}
+        }
+        if (error){
+          this.Errormessage = "Bitte fülle alle Felder aus";
+        }else{
         axios.post(path, dataJson, {
           headers: {
             'Content-Type': 'application/json'
@@ -55,7 +62,7 @@ export default {
         }).catch((err)=>{    
             this.$emit('error',err.response.data.message);                          
             this.$emit("close-pop-up");           
-        })
+        })}
     },
     cancel(){
         this.$emit("close-pop-up");
