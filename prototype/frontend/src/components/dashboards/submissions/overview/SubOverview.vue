@@ -53,6 +53,7 @@
                 <div class="search-wrapper">
                     <input type="text" v-model="search" placeholder="Search Submission.."/>
                 </div>
+                <button class="add-item button is-success is-rounded" @click="csvExport">Export to CSV </button>
                 <button class="add-item button is-success is-rounded" @click="changePopup()">Einreichung
                     erstellen</button>
 
@@ -109,11 +110,33 @@ export default {
             })
             return data.sort((a, b) => b.subid - a.subid);
 
-    }},
+    },
+    csvData() {
+      return this.filteredList.map(item => ({
+        ...item        
+      }));
+    }
+    },
     mounted() {
         this.getData();
     },
     methods: {
+        csvExport() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            let values = this.filteredList;
+            csvContent += [
+                Object.keys(values[0]).join(";"),
+                ...values.map(item => Object.values(item).join(";"))
+            ]
+            .join("\n")
+            .replace(/(^\[)|(\]$)/gm, "");
+
+            const data = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", data);
+            link.setAttribute("download", "submsission-export.csv");
+            link.click();
+        },
         changePopup() {
             this.PopUp = true;
         },
