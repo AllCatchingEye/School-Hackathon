@@ -6,12 +6,12 @@
     <div class="navigationlist">
       <div class="navigationitem" :class="dashboardactive ? 'navigationitemcurrent' : 'navigationitem'">
         <router-link to="/">
-        <p>Dashboard</p>
+        <p>Übersicht</p>
         </router-link>
       </div>
       <div class="navigationitem" :class="useractive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Superadmin'">
         <router-link to="/user-overview">
-        <p>Usermanagement</p>
+        <p>Benutzermanagement</p>
         </router-link>
       </div>
       <div class="navigationitem" :class="hackathonactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'">

@@ -8,7 +8,7 @@
     <div class="tiles-wrapper">
       <div class="ctile" v-if="this.role === 'Admin' || this.role === 'Superadmin'">
         <router-link to="/user-overview">
-          <h2>Usermanagement</h2>
+          <h2>Benutzermanagement</h2>
           <i class="fa-solid fa-angle-right"></i>
         </router-link>
 

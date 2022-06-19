@@ -4,8 +4,9 @@ import UserOverview from "../components/dashboards/users/EntryList.vue";
 import DashboardComponent from "../components/dashboards/main/DashboardMain.vue";
 import HackathonOverview from "../components/dashboards/hackathons/EntryList";
 import baseScreen from "../components/childScreen/BaseScreen";
+import SelectHackathon from "../components/dashboards/keys/SelectHackathon";
+import KeyOverview from "../components/dashboards/keys/overview/KeyOverview";
 import OrganisationOverview from "../components/dashboards/organisations/EntryList";
-
 
 const routes = [
   
@@ -28,6 +29,16 @@ const routes = [
     path: "/hackathons",
     name: "Hackathons",
     component: HackathonOverview,
+  },
+  {
+    path: "/keys",
+    name: "SelectHackathon",
+    component: SelectHackathon,
+  },
+  {
+    path: "/keys/overview",
+    name: "KeyOverview",
+    component: KeyOverview,
   },
   {
     path: "/schools",
