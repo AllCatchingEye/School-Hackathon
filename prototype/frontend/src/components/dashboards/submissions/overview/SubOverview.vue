@@ -50,13 +50,19 @@
                 </article>
             </Transition>
             <div class="button-wrapper">
+                <div class="search-wrapper">
+                    <input type="text" v-model="search" placeholder="Search Submission.."/>
+                </div>
+                <button class="add-item button is-success is-rounded" @click="csvExport">Export to CSV </button>
                 <button class="add-item button is-success is-rounded" @click="changePopup()">Einreichung
                     erstellen</button>
+
             </div>
+
             <div class="scrollable-items-outer">
                 <div class="scrollable-items">
                     <ul>
-                        <li v-for="item in Data" :key="item.subid">
+                        <li v-for="item in filteredList" :key="item.subid">
                                 <sub-item :token="item.subid" :subname="item.description"
                                     :deleteApproval="DeleteApprove" @item-delete-approve="openDeleteApproval"
                                     @delete-item="deleteItem" @error="onError" @success="onSuccess">
@@ -94,12 +100,43 @@ export default {
             Successmessage: "",
             DeleteModal: false,
             DeleteApprove: 0,
+            search: ""
         };
+    },
+    computed: {
+    filteredList() {
+            let data =  this.Data.filter(submission => {
+                    return submission.description.toLowerCase().includes(this.search.toLowerCase())
+            })
+            return data.sort((a, b) => b.subid - a.subid);
+
+    },
+    csvData() {
+      return this.filteredList.map(item => ({
+        ...item        
+      }));
+    }
     },
     mounted() {
         this.getData();
     },
     methods: {
+        csvExport() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            let values = this.filteredList;
+            csvContent += [
+                Object.keys(values[0]).join(";"),
+                ...values.map(item => Object.values(item).join(";"))
+            ]
+            .join("\n")
+            .replace(/(^\[)|(\]$)/gm, "");
+
+            const data = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", data);
+            link.setAttribute("download", "submsission-export.csv");
+            link.click();
+        },
         changePopup() {
             this.PopUp = true;
         },
@@ -287,6 +324,37 @@ a {
 .button-wrapper {
     width: 84%;
     text-align: right;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    .search-wrapper{
+                    width:30%;
+
+        input{
+        border: none; /* <-- This thing here */
+        border:3px solid #48c78e;
+        border-radius: 3em;          
+        height:3em;
+        width:100%;
+        font-size:1em;
+        padding-left: 15px;
+        }
+        ::-webkit-input-placeholder {
+        text-align: center;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+        text-align: center;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+        text-align: center;  
+        }
+
+        :-ms-input-placeholder {  
+        text-align: center; 
+        }
+    }
 }
 
 /*
