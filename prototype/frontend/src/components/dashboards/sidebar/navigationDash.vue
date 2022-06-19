@@ -19,7 +19,7 @@
         <p>Hackathonübersicht</p>
         </router-link>
       </div>
-      <div class="navigationitem" :class="tokenactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Teacher'">
+      <div class="navigationitem" :class="tokenactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'">
         <router-link to="/keys">
         <p>Tokens</p>
         </router-link>

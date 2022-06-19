@@ -31,7 +31,7 @@
         </router-link>
 
       </div>
-      <div  class="ctile" v-if="this.role === 'Teacher'">
+      <div  class="ctile" v-if="this.role === 'Teacher' || this.role === 'Admin'">
         <router-link to="/keys">
 
           <h2>Schlüsselmanagement</h2>
