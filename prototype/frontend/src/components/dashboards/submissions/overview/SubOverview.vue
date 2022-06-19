@@ -104,9 +104,11 @@ export default {
     },
     computed: {
     filteredList() {
-      return this.Data.filter(submission => {
-            return submission.description.toLowerCase().includes(this.search.toLowerCase())
-      })
+            let data =  this.Data.filter(submission => {
+                    return submission.description.toLowerCase().includes(this.search.toLowerCase())
+            })
+            return data.sort((a, b) => b.subid - a.subid);
+
     }},
     mounted() {
         this.getData();
