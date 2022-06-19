@@ -35,9 +35,10 @@ def generate_token():
         for x in range(0,number_of_token):
             token = Tokenmodel(user.userid, hackathon_id)
             db.session.add(token)    
-            token_list.append(token.to_dict(only=(
+            token_item = Tokenmodel.query.filter_by(tokenid = token.tokenid).first()
+            token_list.append(token_item.to_dict(only=(
                                 'userid', 
-                                'hackathonid',
+                                'hackathon',
                                 '-hackathon.token',
                                 'tokenid')))  
         try:
