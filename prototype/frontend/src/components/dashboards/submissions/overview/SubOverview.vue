@@ -27,7 +27,7 @@
 
         <div class="outerBoxOverview">
             <div class="headlineItems">
-                <p>Schlüsselübersicht</p>
+                <p>Einreichungen</p>
             </div>
             <Transition name="slide-fade">
                 <article class="message is-danger" v-if="Errormessage.length">
@@ -50,18 +50,17 @@
                 </article>
             </Transition>
             <div class="button-wrapper">
-                <button class="add-item button is-success is-rounded" @click="changePopup()">Schlüssel
+                <button class="add-item button is-success is-rounded" @click="changePopup()">Einreichung
                     erstellen</button>
             </div>
             <div class="scrollable-items-outer">
                 <div class="scrollable-items">
                     <ul>
-                        <li v-for="item in Data" :key="item.tokenid">
-                            <span v-if="item.hackathon.hackathonid == this.hackathonID">
-                                <key-item :token="item.tokenid" :hackathonid="this.hackathonID"
+                        <li v-for="item in Data" :key="item.subid">
+                                <sub-item :token="item.subid" :subname="item.description"
                                     :deleteApproval="DeleteApprove" @item-delete-approve="openDeleteApproval"
-                                    @delete-item="deleteItem" @error="onError" @success="onSuccess"></key-item>
-                            </span>
+                                    @delete-item="deleteItem" @error="onError" @success="onSuccess">
+                                </sub-item>
                         </li>
                     </ul>
                 </div>
@@ -74,13 +73,13 @@
 <script>
 import axios from 'axios';
 import GenerateForm from './GenerateForm.vue';
-import KeyItem from './KeyItem.vue';
+import SubItem from './SubItem.vue';
 import sidebarDash from '../../sidebar/sidebarDash.vue';
 
 export default {
     components: {
         GenerateForm,
-        KeyItem,
+        SubItem,
         sidebarDash
     },
     data() {
@@ -89,7 +88,7 @@ export default {
             hackathonID: this.$route.query.id,
             Data: [],
             accessAllowed: false,
-            currentpage: "token",
+            currentpage: "submissions",
             PopUp: false,
             Errormessage: "",
             Successmessage: "",
@@ -124,7 +123,7 @@ export default {
 
         },
         deleteItem(id) {
-            let itemIndex = this.Data.findIndex(x => x.tokenid == id);
+            let itemIndex = this.Data.findIndex(x => x.subid === id);
             this.Data.splice(itemIndex, 1);
             this.DeleteApprove = 0;
             this.DeleteModal = false;
@@ -138,10 +137,10 @@ export default {
             this.DeleteModal = true;
         },
         addItem(items) {
-            items.forEach(elem => this.Data.push(elem))
+            this.getData();
         },
         getData() {
-            const path = '/api/token/'
+            const path = '/api/submission/'.concat(this.hackathonID, "/");
             axios.get(path, {
                 withCredentials: true
             })

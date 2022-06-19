@@ -21,11 +21,11 @@
       </div>
       <div class="navigationitem" :class="tokenactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Teacher'">
         <router-link to="/keys">
-        <p>Tokens</p>
+        <p>Token</p>
         </router-link>
       </div>
       <div class="navigationitem" :class="analyseactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'">
-        <router-link to="/evaluation">
+        <router-link to="/submissions">
         <p>Analyse</p>
         </router-link>
       </div>
@@ -85,7 +85,7 @@ export default {
       this.useractive = this.currentpage === "user";
       this.hackathonactive = this.currentpage === "hackathon";
       this.tokenactive = this.currentpage === "token";
-      this.analyseactive = this.currentpage === "analyse";
+      this.analyseactive = this.currentpage === "submissions";
       this.schoolactive = this.currentpage === "schools";
     },
   }
