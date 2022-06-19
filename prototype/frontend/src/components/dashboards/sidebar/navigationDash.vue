@@ -5,12 +5,12 @@
     </div>
     <div class="navigationlist">
       <div class="navigationitem" :class="dashboardactive ? 'navigationitemcurrent' : 'navigationitem'">
-        <router-link to="/">
+        <router-link to="/dashboard">
         <p>Übersicht</p>
         </router-link>
       </div>
       <div class="navigationitem" :class="useractive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Superadmin'">
-        <router-link to="/user-overview">
+        <router-link to="/user">
         <p>Benutzermanagement</p>
         </router-link>
       </div>
