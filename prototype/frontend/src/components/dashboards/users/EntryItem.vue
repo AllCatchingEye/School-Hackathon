@@ -10,9 +10,9 @@
                             <div class="entry"><p>{{Data.roles.description }}</p></div>
                         </div>
                         <div class="lineItem buttons">
-                            <div  class="editbutton is-link is-rounded" @click="editing">Edit</div>
+                            <div  class="editbutton is-link is-rounded" @click="editing">Bearbeiten</div>
                              <button class="button is-danger is-rounded is-outlined" @click="askDeleteItem">
-                                <span>Delete</span>
+                                <span>Löschen</span>
                                 <span class="icon is-small">
                                     <i class="fas fa-times"></i>
                                 </span>
@@ -44,9 +44,9 @@
                             </div>                             
                         </div>
                         <div v-if="!edit" class="lineItem buttons">
-                            <div  class="editbutton is-link is-rounded" @click="edit">Edit</div>
+                            <div  class="editbutton is-link is-rounded" @click="edit">Bearbeiten</div>
                              <button class="button is-danger is-rounded is-outlined" @click="askDeleteItem">
-                                <span>Delete</span>
+                                <span>Löschen</span>
                                 <span class="icon is-small">
                                     <i class="fas fa-times"></i>
                                 </span>
@@ -57,11 +57,11 @@
           <div class="newline">
             <div v-if="edit" class="buttonItemAction">
               <button class="button is-danger is-rounded is-outlined" @click="askDeleteItem">
-                <span>Delete</span>
+                <span>Löschen</span>
                 <span class="icon is-small"><i class="fas fa-times"></i></span>
               </button>
-              <button class="button is-danger is-rounded" @click="cancel">Cancel</button>
-              <button  class="button is-success is-rounded" @click="update">Update</button>
+              <button class="button is-danger is-rounded" @click="cancel">Abbrechen</button>
+              <button  class="button is-success is-rounded" @click="update">Ändern</button>
 
             </div>
           </div>

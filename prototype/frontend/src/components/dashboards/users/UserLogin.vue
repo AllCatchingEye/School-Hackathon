@@ -16,7 +16,7 @@
               </article>
 
               <div class="field">
-                <label for="" class="label">Email</label>
+                <label for="" class="label">E-Mail</label>
                 <div class="control has-icons-left">
                   <input v-model="email" type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
                   <span class="icon is-small is-left">
@@ -25,7 +25,7 @@
                 </div>
               </div>
               <div class="field">
-                <label for="" class="label">Password</label>
+                <label for="" class="label">Passwort</label>
                 <div class="control has-icons-left">
                   <input v-model="password" type="password" placeholder="*******" class="input" required>
                   <span class="icon is-small is-left">

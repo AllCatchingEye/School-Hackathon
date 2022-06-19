@@ -62,7 +62,7 @@ export default {
                     withCredentials: true
                 })
                     .then((response) => {
-                        this.$emit("item-added", true);
+                        this.$emit("item-added", response.data.dataobj);
                         this.$emit("success", response.data.message);
                         this.$emit("close-pop-up");
 

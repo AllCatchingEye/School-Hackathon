@@ -94,7 +94,7 @@ export default {
             Errormessage: "",
             Successmessage: "",
             DeleteModal: false,
-            DeleteApprove: 0
+            DeleteApprove: 0,
         };
     },
     mounted() {
@@ -125,7 +125,6 @@ export default {
         },
         deleteItem(id) {
             let itemIndex = this.Data.findIndex(x => x.tokenid == id);
-            console.log("item index is " + itemIndex);
             this.Data.splice(itemIndex, 1);
             this.DeleteApprove = 0;
             this.DeleteModal = false;
@@ -138,14 +137,8 @@ export default {
             this.DeleteApprove = true;
             this.DeleteModal = true;
         },
-        addItem(added) {
-            if (added == true) {
-                this.getData();
-            }
-            added = false;
-            // items.forEach(function (elem) {
-            //     this.Data.push(elem);
-            // })
+        addItem(items) {
+            items.forEach(elem => this.Data.push(elem))
         },
         getData() {
             const path = '/api/token/'
@@ -162,7 +155,7 @@ export default {
                         this.onError(err.response.data.message);
                     }
                 })
-        },
+        }
     }
 
 }

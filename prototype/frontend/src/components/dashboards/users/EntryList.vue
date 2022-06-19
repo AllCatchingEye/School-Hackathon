@@ -9,13 +9,13 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Really delete?</p>
+        <p class="modal-card-title">Wirklich löschen?</p>
         <button class="delete" aria-label="close" @click="cancelApproval()"></button>
       </header>
 
       <footer class="modal-card-foot">
-        <button class="button is-danger" @click="deleteApproval()">Delete</button>
-        <button class="button" @click="cancelApproval()">Cancel</button>
+        <button class="button is-danger" @click="deleteApproval()">Löschen</button>
+        <button class="button" @click="cancelApproval()">Abbrechen</button>
       </footer>
     </div>
   </div>
@@ -49,7 +49,7 @@
         </article>
       </Transition>
       <div class="button-wrapper">
-        <button class="add-item button is-success is-rounded" @click="changePopup()">Add User</button>
+        <button class="add-item button is-success is-rounded" @click="changePopup()">Benutzer hinzufügen</button>
       </div>
       <div class="scrollable-items-outer">
         <div class="scrollable-items">
@@ -157,7 +157,7 @@ export default {
           this.Data = response.data;
         }).catch((err) => {
           if (err.response.status == 401) {
-            this.$router.push({ name: "Login", params: { message: "You have to be logged in" } });
+            this.$router.push({ name: "Login", params: { message: "Du musst eingeloggt sein!" } });
           } else {
             this.onError(err.response.data.message);
           }
@@ -172,7 +172,7 @@ export default {
           this.Roles = response.data;
         }).catch((err) => {
           if (err.response.status == 401) {
-            this.$router.push({ name: "Login", params: { message: "You have to be logged in" } });
+            this.$router.push({ name: "Login", params: { message: "Du musst eingeloggt sein!" } });
           } else {
             this.onError(err.response.data.message);
           }
@@ -187,7 +187,7 @@ export default {
           this.Organisations = response.data;
         }).catch((err) => {
           if (err.response.status == 401) {
-            this.$router.push({ name: "Login", params: { message: "You have to be logged in" } });
+            this.$router.push({ name: "Login", params: { message: "Du musst eingeloggt sein!" } });
           } else {
             this.onError(err.response.data.message);
           }
