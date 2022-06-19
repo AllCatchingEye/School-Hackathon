@@ -60,7 +60,6 @@ export default {
       schoolactive: false
     }},
   mounted() {
-    console.log(this.currentpage);
     this.getRoleInfo();
     this.selectActive();
     this.isloaded = true;
@@ -72,12 +71,10 @@ export default {
         withCredentials: true
       })
         .then((response) => {
-          console.log(response);
           this.role = response.data.roles.description;
-          console.log(this.role)
         })
-        .catch((e) => {
-          console.log(e);
+        .catch(() => {
+          this.$router.push('/login');
         })
     },
     selectActive(){

@@ -73,16 +73,13 @@ export default {
         withCredentials: true
       })
         .then((response) => {
-          console.log(response);
           this.email = response.data.email;
           this.role = response.data.roles.description;
           this.firstname = response.data.firstname;
           this.name = response.data.name;
           this.organisation = response.data.organisations.name;
-          console.log()
         })
-        .catch((e) => {
-          console.log(e);
+        .catch(() => {          
         })
     },
   }

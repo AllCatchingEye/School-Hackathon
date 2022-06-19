@@ -27,7 +27,6 @@ export default {
   },
   mounted() {
     this.getUserInfo();
-    this.setup();
   },
      
   methods:{
@@ -65,6 +64,8 @@ export default {
           this.firstname = response.data.firstname;
           this.name = response.data.name;
           this.organisation = response.data.organisations.name;
+          this.setup();
+
         })
         .catch((e) => {            
           this.$router.push('/login');
