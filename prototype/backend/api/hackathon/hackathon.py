@@ -44,7 +44,7 @@ def delete_hackathon(hackathon_id):
     db.session.delete(response)
     db.session.commit()
     return jsonify( category="Success", 
-                    message=f"Hackathon deleted {hackathon_id}") if response else jsonify(category="Error", 
+                    message=f"Hackathon deleted.") if response else jsonify(category="Error", 
                           message=f"No Hackathon with id: {hackathon_id}")
 
 
@@ -73,7 +73,12 @@ def create_hackathon():
         db.session.commit()
         result = (jsonify(
                     category="Success",
-                    message=f"Added Hackathon {hackathon.title} with url: {hackathon.slug}"), 201)
+                    message=f"Added Hackathon {hackathon.title} with url: {hackathon.slug}",
+                    dataobj=hackathon.to_dict(only=(
+                                'title', 
+                                'hackathonid', 
+                                'slug', 
+                                'description'))), 201)
     except IntegrityError as e:
         result = (jsonify(
                     category="Error",
@@ -97,9 +102,15 @@ def edit_hackathon(hackathon_id):
                 message=f"Error while editing hackathon"), 409) 
     try:
         hackathon = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).update(data_request)
+        hackathon_entry = Hackathonmodel.query.filter_by(organisationid=organisation, hackathonid=hackathon_id).first()
         db.session.commit()
         result = jsonify( category="Success", 
-                    message=f"Hackathon edited") if hackathon else jsonify(category="Error", 
+                    message=f"Hackathon edited",
+                    dataobj=hackathon_entry.to_dict(only=(
+                                'title', 
+                                'hackathonid', 
+                                'slug', 
+                                'description'))) if hackathon else jsonify(category="Error", 
                             message=f"No Hackathon with id: {hackathon_id}")
     except IntegrityError as e:
         result = (jsonify(
