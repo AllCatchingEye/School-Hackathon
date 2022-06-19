@@ -12,9 +12,9 @@ class Config(object):
     JWT_TOKEN_LOCATION = ["cookies"]
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
     JWT_COOKIE_CSRF_PROTECT=False
-    MAIL_SERVER='mail.gmx.com'
+    MAIL_SERVER='email-smtp.eu-central-1.amazonaws.com'
     MAIL_PORT = 465
-    MAIL_USERNAME = 'no-reply.wirfuerschule@gmx.de'
-    MAIL_PASSWORD = 'yet7uhj9DJY*cwt4whp'
-    MAIL_USE_TLS = False
+    MAIL_USERNAME = 'AKIAWKJEZSOKD57VRAPE'
+    MAIL_PASSWORD = 'BM/hxGfDHxke8L0DhERHnMSmNhOYe8VNvXsRLWiQBdqT'
+    MAIL_USE_TLS = True
     MAIL_USE_SSL = True
