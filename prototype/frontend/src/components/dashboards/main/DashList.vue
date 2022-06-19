@@ -37,7 +37,13 @@
           <h2>Schlüsselmanagement</h2>
           <i class="fa-solid fa-angle-right"></i>
         </router-link>
+      </div>
+       <div  class="ctile" v-if="this.role === 'Teacher' || this.role === 'Admin'">
+        <router-link to="/submissions">
 
+          <h2>Analyse</h2>
+          <i class="fa-solid fa-angle-right"></i>
+        </router-link>
       </div>
     </div>
   </div>
