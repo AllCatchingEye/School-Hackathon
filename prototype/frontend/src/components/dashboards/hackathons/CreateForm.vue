@@ -41,6 +41,7 @@ export default {
     onSubmit() {
         const path = '/api/hackathon/'
         const dataJson = JSON.stringify(this.Data);
+        let error = false;
         for (var key in this.Data) {
           if (this.Data[key].length < 1) {
             error = true;}

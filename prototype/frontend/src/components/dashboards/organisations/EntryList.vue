@@ -93,7 +93,7 @@ components:{
       Roles: [],
       Organisations: [],
       accessAllowed: false,
-      currentpage: "school",
+      currentpage: "schools",
       PopUp: false,
       Errormessage: "",
       Successmessage: "",

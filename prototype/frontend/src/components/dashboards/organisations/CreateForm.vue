@@ -34,9 +34,11 @@ export default {
     onSubmit() {
         const path = '/api/organisation/'
         const dataJson = JSON.stringify(this.Data);
+        let error = false;
         for (var key in this.Data) {
           if (this.Data[key].length < 1) {
-            error = true;}
+            error = true;
+            }
         }
         if (error){
           this.Errormessage = "Bitte fülle alle Felder aus";
@@ -56,7 +58,9 @@ export default {
             this.$emit('error',err.response.data.message);                          
             this.$emit("close-pop-up");           
         })
+        }
     },
+
     cancel(){
         this.$emit("close-pop-up");
     }
