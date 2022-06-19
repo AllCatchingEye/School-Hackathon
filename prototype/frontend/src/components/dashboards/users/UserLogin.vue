@@ -69,10 +69,11 @@ export default {
       }
   },
   mounted() {
-    this.deleteCookie();
+    this.checkUser();
   },
   methods: {
     async verifyLogin(){
+      console.log("data" + this.email )
       const path = '/api/login/';
       this.test = JSON.stringify({email: this.email, password: this.password});
       const cookies = useCookies();
@@ -83,7 +84,7 @@ export default {
       })
       .then((result) => {
         this.cookies.set("access_token_cookie", result.data.access_token);
-        this.$router.push('/');
+        this.$router.push('/dashboard');
       }).catch((err) => {
         this.email = '';
         this.password = '';
@@ -93,8 +94,26 @@ export default {
       });
       },
     deleteCookie(){
-      document.cookie = "access_token_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    }
+      const path = '/api/logout/';
+      axios.post(path, {}, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    },
+    checkUser() {
+      const path = '/api/user/own/'
+      axios.get(path, {
+        withCredentials: true
+      }).then((response) => {
+          this.$router.push('/dashboard');
+        })
+        .catch((e) => {            
+          this.deleteCookie();
+          console.log(e);
+        })
+    },
+    
   }
 }
 </script>

@@ -27,42 +27,41 @@ export default {
   },
   mounted() {
     this.getUserInfo();
+    this.setup();
   },
-  setup() {
-    const { cookies } = useCookies();
-    const cookieSet = cookies.isKey("access_token_cookie");
-    if (cookieSet) {
-      let cookieAllowed = false;
-      const path = '/api/role/own/'
-      axios.get(path, {
-        withCredentials: true
-      })
-        .then(() => {
-          cookieAllowed = true;
+     
+  methods:{
+    setup() {
+      const { cookies } = useCookies();
+      const cookieSet = cookies.isKey("access_token_cookie");
+      if (cookieSet) {
+        let cookieAllowed = false;
+        const path = '/api/role/own/'
+        axios.get(path, {
+          withCredentials: true
         })
-        .catch(() => {
-          cookies.remove("access_token_cookie");
-          deleteCookie();
-          document.cookie = "access_token_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          routeLogin();
-        })
+          .then(() => {
+            cookieAllowed = true;
+          })
+          .catch(() => {
+            cookies.remove("access_token_cookie");
+            deleteCookie();
+            document.cookie = "access_token_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            this.$router.push('/login');
+            console.log("test");
+          })
 
-    }else{
-      routeLogin();
-    }
-    function deleteCookie(){
+      }else{
+            this.$router.push('/login');
+      }
+    },deleteCookie(){
       const path = '/api/logout/';
       axios.post(path, {}, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-    }
-    function routeLogin() {
-      window.open("/login", "_self");
-    }
-  },
-  methods:{
+    },
     getUserInfo() {
       const path = '/api/user/own/'
       axios.get(path, {
@@ -77,7 +76,9 @@ export default {
           this.organisation = response.data.organisations.name;
           console.log(this.organisation, this.role, this.firstname, this.name, this.email)
         })
-        .catch((e) => {
+        .catch((e) => {            
+          this.$router.push('/login');
+
           console.log(e);
         })
     },}}

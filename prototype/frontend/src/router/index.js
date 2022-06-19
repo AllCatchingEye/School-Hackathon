@@ -19,11 +19,12 @@ const routes = [
   },
   {
     path: "/login",
+    alias: "/",
     name: "Login",
     component: UserLogin,
   },
   {
-    path: "/user-overview",
+    path: "/user",
     name: "UserOverview",
     component: UserOverview,
   },
@@ -48,7 +49,7 @@ const routes = [
     component: OrganisationOverview,
   },
   {
-    path: "/",
+    path: "/dashboard",
     name: "Dashboard",
     component: DashboardComponent,
   },
