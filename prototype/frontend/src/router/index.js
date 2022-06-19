@@ -3,8 +3,6 @@ import UserLogin from "../components/dashboards/users/UserLogin.vue";
 import UserOverview from "../components/dashboards/users/EntryList.vue";
 import DashboardComponent from "../components/dashboards/main/DashboardMain.vue";
 import HackathonOverview from "../components/dashboards/hackathons/EntryList";
-import SelectHackathon from "../components/dashboards/keys/SelectHackathon";
-import KeyOverview from "../components/dashboards/keys/overview/KeyOverview";
 import baseScreen from "../components/childScreen/BaseScreen";
 import OrganisationOverview from "../components/dashboards/organisations/EntryList";
 

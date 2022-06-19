@@ -34,6 +34,13 @@ export default {
     onSubmit() {
         const path = '/api/organisation/'
         const dataJson = JSON.stringify(this.Data);
+        for (var key in this.Data) {
+          if (this.Data[key].length < 1) {
+            error = true;}
+        }
+        if (error){
+          this.Errormessage = "Bitte fülle alle Felder aus";
+        }else{
         axios.post(path, dataJson, {
           headers: {
             'Content-Type': 'application/json'
