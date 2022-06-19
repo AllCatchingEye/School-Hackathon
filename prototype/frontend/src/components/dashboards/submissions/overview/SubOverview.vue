@@ -309,8 +309,8 @@ a {
 
         input{
         border: none; /* <-- This thing here */
-        border:2px solid #48c78e;
-        border-radius: 10px;          
+        border:3px solid #48c78e;
+        border-radius: 3em;          
         height:3em;
         width:100%;
         font-size:1em;
