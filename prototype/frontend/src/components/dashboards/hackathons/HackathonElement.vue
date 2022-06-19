@@ -28,7 +28,7 @@
                 </div>
                 <div class="lineItem">
                     <span v-if="!edit">
-                        <button class="button editbutton is-link is-rounded" @click="editing">Edit</button>
+                        <button class="button editbutton is-link is-rounded" @click="editing">Bearbeiten</button>
                     </span>
                 </div>
             </div>
@@ -41,8 +41,8 @@
                                     <i class="fas fa-times"></i>
                                 </span>
           </button>
-          <button class="button is-danger is-rounded" @click="cancel">Cancel</button>
-          <button  class="button is-success is-rounded" @click="update">Update</button>
+          <button class="button is-danger is-rounded" @click="cancel">Abbrechen</button>
+          <button  class="button is-success is-rounded" @click="update">Ändern</button>
 
         </div>
       </div>

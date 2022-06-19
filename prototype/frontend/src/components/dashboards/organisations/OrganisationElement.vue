@@ -17,12 +17,12 @@
                 </div>
                 <div class="lineItem">
                     <span class="HackathonNameList button-wrapper" v-if="edit === true">
-                        <button class="button is-success is-rounded" @click="update">Update</button>
-                        <button class="button is-danger is-rounded" @click="cancel">Cancel</button>
+                        <button class="button is-success is-rounded" @click="update">Ändern</button>
+                        <button class="button is-danger is-rounded" @click="cancel">Abbrechen</button>
                     </span>
                     <span v-else>
-                        <button class="button editbutton is-link is-rounded" @click="editing">Edit</button>
-                        <button class="button is-danger is-rounded is-outlined" @click="deleting">Delete</button>
+                        <button class="button editbutton is-link is-rounded" @click="editing">Bearbeiten</button>
+                        <button class="button is-danger is-rounded is-outlined" @click="deleting">Löschen</button>
                     </span>
                 </div>
             </div>
