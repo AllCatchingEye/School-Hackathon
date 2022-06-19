@@ -136,7 +136,7 @@ export default {
             this.DeleteApprove = true;
             this.DeleteModal = true;
         },
-        addItem(items) {
+        addItem() {
             this.getData();
         },
         getData() {

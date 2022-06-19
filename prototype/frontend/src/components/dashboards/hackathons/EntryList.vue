@@ -2,7 +2,7 @@
 
 <div v-if="PopUp" >
         <create-form @item-added="addItem"
-                  @close-pop-up="closePopUp" 
+                  @close-pop-up="closePopUp"
                   @error="onError"
                   @success="onSuccess"
 ></create-form>
@@ -15,7 +15,7 @@
         <p class="modal-card-title">Really delete?</p>
         <button class="delete" aria-label="close" @click="cancelApproval()"></button>
         </header>
-       
+
         <footer class="modal-card-foot">
         <button class="button is-danger" @click="deleteApproval()">Delete</button>
         <button class="button"  @click="cancelApproval()">Cancel</button>
@@ -23,11 +23,11 @@
     </div>
 </div>
 
-<div class="data">  
+<div class="data">
 <sidebarDash :currentpage="this.currentpage"></sidebarDash>
 
 
-<div class="outerBoxOverview">  
+<div class="outerBoxOverview">
       <div class="headlineItems">
         <p>Hackathon</p>
       </div>
@@ -57,9 +57,9 @@
 
     <div class="scrollable-items">
           <ul>
-          <li v-for="item in orderedItemsById" :key="item.hackathonid">  
-              <entry-item @update-item="updateItem" 
-                          @item-delete-approve="openDeleteApproval" 
+          <li v-for="item in orderedItemsById" :key="item.hackathonid">
+              <entry-item @update-item="updateItem"
+                          @item-delete-approve="openDeleteApproval"
                           @delete-item="deleteItem"
                           @error="onError"
                           @success="onSuccess"
@@ -94,7 +94,7 @@ components:{
       Errormessage: "",
       Successmessage: "",
       DeleteModal: false,
-      DeleteApprove: 0      
+      DeleteApprove: 0
     };
   },
 computed: {
@@ -144,11 +144,11 @@ methods:{
     },
     openDeleteApproval(id){
         this.DeleteApprove = id;
-        this.DeleteModal = true;            
+        this.DeleteModal = true;
     },
     deleteApproval(){
         this.DeleteApprove = true;
-        this.DeleteModal = true;            
+        this.DeleteModal = true;
 
     },
     getData(){
@@ -163,10 +163,10 @@ methods:{
             if(err.response.status == 403) {
               this.$router.push({name:"Login", params: {message: "You have to be logged in"}});
             }else{
-              this.onError(err.response.data.message);                          
-            }                                      
+              this.onError(err.response.data.message);
+            }
         })
-    },  
+    },
 }
 
 }
@@ -184,7 +184,7 @@ methods:{
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  
+
 }
 
 .firstItem{
@@ -213,8 +213,9 @@ methods:{
 }
 
 .scrollable-items {
-  overflow-x: hidden;
+  overflow: scroll;
   height: 80%;
+  max-height: 75vh;
   width: 64vw;
   margin-top: 1%;
   margin-bottom: 2%;
