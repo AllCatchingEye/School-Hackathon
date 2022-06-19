@@ -41,6 +41,7 @@ export default {
   background-color: #1ABC9C;
   width: 100%;
   height: 40%;
+  min-height: 40vh;
   margin-bottom: 5%;
   border-radius: 30px;
 
@@ -125,7 +126,7 @@ export default {
 
   font-size: 20px;
 }
- 
+
 .headline h2{
     font-size: 35px;
 }
