@@ -100,7 +100,7 @@ components:{
 computed: {
   orderedItemsById: function () {
     console.log("Data");
-    console.log(this.data);
+    console.log(this.Data);
     return [...this.Data].sort((a,b) => b.hackathonid - a.hackathonid);
   }
 },
@@ -119,6 +119,7 @@ methods:{
       this.DeleteApprove = 0;
     },
     addItem(item){
+      console.log("ite::" + item);
       this.Data.push(item);
     },
     onSuccess(message){
@@ -129,7 +130,7 @@ methods:{
     },
     onError(message){
       this.Successmessage = "";
-      this.Errormessa = message;
+      this.Errormessage = message;
       setTimeout(() => this.Errormessage = "", 2000);
 
     },
