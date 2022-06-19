@@ -12,12 +12,29 @@ Organisation = Blueprint('organisation', __name__)
 @auth_required([Config.SUPERADMIN_ID])
 def add_organisation():
 
-    org = request.get_json()
-    entry = Organisationmodel(**org)
-    db.session.add(entry)
-    db.session.commit()
+    data = request.get_json()
+    organisation = Organisationmodel(**data)
+    db.session.add(organisation)
+    result = (jsonify(
+        category="Error",
+        message=f"Error while addign hackathon"), 409)
+    try:
+        db.session.commit()
+        result = (jsonify(
+                    category="Success",
+                    message=f"Added Organisation {organisation.name}.",
+                    dataobj=organisation.to_dict(only=(
+                                'orgaid', 
+                                'name'))), 201)
+    except IntegrityError as e:
+        result = (jsonify(
+                    category="Error",
+                    message=f"Organisation with name {hackathon.name} already exists"), 409)
+        db.session.rollback()
+    except:
+        db.session.rollback()
 
-    return jsonify(category="Success.", message=f"Organisation added.")
+    return result
 
 @Organisation.route('/', methods=["GET"])
 @auth_required([Config.SUPERADMIN_ID, Config.ADMIN_ID, Config.TEACHER_ID])
@@ -35,9 +52,14 @@ def put_organisation(organisation_id):
 
     try:
         org = Organisationmodel.query.filter_by(orgaid=organisation_id).update(data)
+        organisation_entry = Organisationmodel.query.filter_by(orgaid=organisation_id).first()
         db.session.commit()
         result = jsonify( category="Success.", 
-                message=f"Organisation with ID {organisation_id} successfully modified.") if org else (jsonify (category="Error",
+                message=f"Organisation with ID {organisation_id} successfully modified.",
+                dataobj=organisation_entry.to_dict(only=(
+                    'orgaid',
+                    'name'
+                ))) if org else (jsonify (category="Error",
                 message=f"No organisation with ID: {organisation_id}"))
     except (InvalidRequestError, IntegrityError) as e:
         db.session.rollback()

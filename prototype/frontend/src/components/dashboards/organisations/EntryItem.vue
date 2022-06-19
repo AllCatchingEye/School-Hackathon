@@ -4,10 +4,6 @@
                     <div class="entry-wrapper" v-if="!edit">
                         <div class="data-wrapper">                          
                             <div class="entry"><p>{{Data.name }}</p></div>
-                            <div class="entry"><p>{{Data.firstname }}</p></div>
-                            <div class="entry"><p>{{Data.email }}</p></div>
-                            <div class="entry"><p>{{Data.organisations.name }}</p></div>
-                            <div class="entry"><p>{{Data.roles.description }}</p></div>
                         </div>
                         <div class="lineItem buttons">
                             <div  class="editbutton is-link is-rounded" @click="editing">Edit</div>
@@ -25,23 +21,7 @@
                         <div class="data-wrapper fw">   
                             <div class="entry"><p>
                             <input type="text" class="input is-small" v-model="Data.name"  />
-                            </p></div>
-                            <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="Data.firstname"/>
-                            </p></div>
-                            <div class="entry"><p>
-                            <input type="text" class="input is-small" v-model="Data.email"/>
-                            </p></div>
-                            <div v-if="this.Organisations.length" class="entry">
-                                <select class="select" v-model="Data.organisations.orgaid">
-                                        <option v-for="organisation in Organisations" :value="organisation.orgaid" :key="organisation.orgaid">{{organisation.name}}</option>
-                                </select>                                
-                            </div>
-                            <div class="entry">
-                                <select class="select" v-model="Data.roles.roleid">
-                                        <option v-for="role in Roles" :value="role.roleid" :key="role.roleid">{{role.description}}</option>
-                                </select>                                
-                            </div>                             
+                            </p></div>                        
                         </div>
                         <div v-if="!edit" class="lineItem buttons">
                             <div  class="editbutton is-link is-rounded" @click="edit">Edit</div>
@@ -71,13 +51,11 @@
 <script>
 import axios from 'axios';
 export default {
- props: ['organisations','roles', 'data',  'deleteApproval'],
+ props: ['data',  'deleteApproval'],
  data() {
     return{
         edit:false,
         Data: this.data,
-        Roles: this.roles,
-        Organisations: this.organisations,
         WantDelete: -1
     }
   },
@@ -90,12 +68,12 @@ export default {
             this.edit = false;
         },
          askDeleteItem() {       
-            this.WantDelete = this.Data.userid; 
-            const id = this.Data.userid;
+            this.WantDelete = this.Data.orgaid; 
+            const id = this.Data.orgaid;
             this.$emit('item-delete-approve', id);
         },
         deleteItem() {
-            const path = '/api/user/' + this.Data.userid + '/';
+            const path = '/api/organisation/' + this.Data.orgaid + '/';
             axios.delete(path, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,7 +81,7 @@ export default {
                 withCredentials: true
             }).then((response) => {
                 this.edit=false;
-                this.$emit('delete-item', this.Data.userid);
+                this.$emit('delete-item', this.Data.orgaid);
                 this.$emit('success', response.data.message);  
 
             }).catch((err) => {
@@ -112,13 +90,9 @@ export default {
         },
 
         update() {
-            const path = '/api/user/'  + this.Data.userid +'/';
-            const payload = {name: this.Data.name, 
-                            firstname: this.Data.firstname, 
-                            organisation: this.Data.organisations.orgaid,
-                            role: this.Data.roles.roleid,
-                            email: this.Data.email
-                            }
+            const path = '/api/organisation/'  + this.Data.orgaid +'/';
+            const payload = {name: this.Data.name};
+
             axios.patch(path, JSON.stringify(payload), {
                 headers: {
                     'Content-Type': 'application/json'
@@ -126,6 +100,7 @@ export default {
                 withCredentials: true
             }).then((response) => {
                 this.Data = response.data.dataobj;
+                console.log("Close here")
                 this.edit=false;
                 this.$emit('update-item', this.Data);
                 this.$emit('success', response.data.message);  

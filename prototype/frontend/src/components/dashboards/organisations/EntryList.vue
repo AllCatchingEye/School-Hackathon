@@ -5,6 +5,8 @@
                   @close-pop-up="closePopUp" 
                   @error="onError"
                   @success="onSuccess"
+                  :organisations="Organisations"
+                  :roles="Roles"
 ></create-form>
 </div>
 
@@ -29,7 +31,7 @@
 
 <div class="outerBoxOverview">  
       <div class="headlineItems">
-        <p>Hackathon</p>
+        <p>Organisation</p>
       </div>
     <Transition name="slide-fade">
        <article class="message is-danger" v-if="Errormessage.length">
@@ -52,12 +54,12 @@
       </article>
 </Transition>
       <div class="button-wrapper">
-            <button class="add-item button is-success is-rounded" @click="changePopup()">Add Hackathon</button>
+            <button class="add-item button is-success is-rounded" @click="changePopup()">Add Organisation</button>
       </div>
 
     <div class="scrollable-items">
           <ul>
-          <li v-for="item in orderedItemsById" :key="item.hackathonid">  
+          <li v-for="item in orderedItemsById" :key="item.orgaid">  
               <entry-item @update-item="updateItem" 
                           @item-delete-approve="openDeleteApproval" 
                           @delete-item="deleteItem"
@@ -88,8 +90,10 @@ components:{
  data() {
     return {
       Data: [],
+      Roles: [],
+      Organisations: [],
       accessAllowed: false,
-      currentpage: "hackathon",
+      currentpage: "school",
       PopUp: false,
       Errormessage: "",
       Successmessage: "",
@@ -99,7 +103,7 @@ components:{
   },
 computed: {
   orderedItemsById: function () {
-    return [...this.Data].sort((a,b) => b.hackathonid - a.hackathonid);
+    return [...this.Data].sort((a,b) => b.orgaid - a.orgaid);
   }
 },
 mounted() {
@@ -117,7 +121,6 @@ methods:{
       this.DeleteApprove = 0;
     },
     addItem(item){
-      console.log("ite::" + item);
       this.Data.push(item);
     },
     onSuccess(message){
@@ -128,16 +131,16 @@ methods:{
     },
     onError(message){
       this.Successmessage = "";
-      this.Errormessage = message;
+      this.Errormessa = message;
       setTimeout(() => this.Errormessage = "", 2000);
 
     },
     updateItem(item){
-      const itemIndex = this.Data.findIndex(x => x.hackathonid == item.hackathonid);
+      const itemIndex = this.Data.findIndex(x => x.orgaid == item.orgaid);
       this.Data[itemIndex] = item;
     },
     deleteItem(id){
-      let itemIndex = this.Data.findIndex(x => x.hackathonid == id);
+      let itemIndex = this.Data.findIndex(x => x.orgaid == id);
       this.Data.splice(itemIndex,1);
       this.DeleteApprove = 0;
       this.DeleteModal = false;
@@ -152,7 +155,7 @@ methods:{
 
     },
     getData(){
-        const path = '/api/hackathon/'
+        const path = '/api/organisation/'
         axios.get(path, {
             withCredentials:true
         })
@@ -166,7 +169,7 @@ methods:{
               this.onError(err.response.data.message);                          
             }                                      
         })
-    },  
+    }, 
 }
 
 }
