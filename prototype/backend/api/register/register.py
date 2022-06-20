@@ -9,6 +9,19 @@ from utils.user_roles import auth_required, Config
 from flask_jwt_extended import get_jwt
 import secrets
 from flask_mail import Message
+from email.utils import formataddr
+from smtplib import SMTP_SSL, SMTPException
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+SENDER = 'no-reply@wirfuerschule.lio.codes'
+SENDERNAME = 'WirfürSchule'
+USERNAME_SMTP = "AKIAWKJEZSOKD57VRAPE"
+PASSWORD_SMTP = "BM/hxGfDHxke8L0DhERHnMSmNhOYe8VNvXsRLWiQBdqT"
+HOST = "email-smtp.eu-central-1.amazonaws.com"
+PORT = 465
+SUBJECT = 'Registrierung'
+
 
 Register = Blueprint('register', __name__,template_folder='mails')
 register_schema = {
@@ -22,6 +35,38 @@ register_schema = {
     },
     'required': ['email', 'name', 'firstname', 'role', 'organisation']
 }
+
+def sendRegistration(name, password, mailAddress):
+
+    RECIPIENT = mailAddress
+    BODY_TEXT = ("Hallo {name}\r\n"
+                 "Dein Password ist: {password} ")
+
+    # The HTML body of the email.
+    BODY_HTML = render_template('set-password.html', username = name, password=password)
+
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = SUBJECT
+    msg['From'] = formataddr((SENDERNAME, SENDER))
+    msg['To'] = RECIPIENT
+
+    part1 = MIMEText(BODY_TEXT, 'plain')
+    part2 = MIMEText(BODY_HTML, 'html')
+
+    msg.attach(part1)
+    msg.attach(part2)
+
+    # Try to send the message.
+    try:
+        with SMTP_SSL(HOST, PORT) as server:
+            server.login(USERNAME_SMTP, PASSWORD_SMTP)
+            server.sendmail(SENDER, RECIPIENT, msg.as_string())
+            server.close()
+            print("Email sent!")
+
+    except SMTPException as e:
+        print("Error: ", e)
+
 
 
 @Register.route('/', methods=['POST'])
@@ -51,10 +96,7 @@ def create():
         user = User(**user_data, password=user_password)    
 
         # Create E-Mail
-        msg = Message('Hello', sender = 'no-reply.wirfuerschule@gmx.de', recipients = [user.email])
-        msg.body = f"Hi {user.firstname}, Your Password: {user_password} arrived."
-        msg.html = render_template('set-password.html', username=user.firstname, password=user_password)
-            
+
         db.session.add(user)            
         try:
             db.session.commit()
@@ -64,7 +106,7 @@ def create():
                     message=f"User: {user.name} created",
                     dataobj=user.to_dict()), 201)
             # Send E-Mail
-            mail.send(msg)          
+            sendRegistration(user.name, user_password, user.email)
         except IntegrityError as er:
             db.session.rollback()
             result = (jsonify(
