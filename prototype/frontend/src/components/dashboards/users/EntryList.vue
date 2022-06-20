@@ -248,6 +248,7 @@ export default {
   overflow: scroll;
   width: 64vw;
   height: 80%;
+  max-height: 90vh;
   margin-top: 1%;
   margin-bottom: 2%;
 }
