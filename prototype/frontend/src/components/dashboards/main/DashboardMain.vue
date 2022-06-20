@@ -27,33 +27,24 @@ export default {
   },
   mounted() {
     this.getUserInfo();
-    this.setup();
   },
      
   methods:{
     setup() {
       const { cookies } = useCookies();
-      const cookieSet = cookies.isKey("access_token_cookie");
-      if (cookieSet) {
-        let cookieAllowed = false;
-        const path = '/api/role/own/'
-        axios.get(path, {
-          withCredentials: true
+      let cookieAllowed = false;
+      const path = '/api/role/own/'
+      axios.get(path, {
+        withCredentials: true
+      })
+        .then(() => {
+          cookieAllowed = true;
         })
-          .then(() => {
-            cookieAllowed = true;
-          })
-          .catch(() => {
-            cookies.remove("access_token_cookie");
-            deleteCookie();
-            document.cookie = "access_token_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            this.$router.push('/login');
-            console.log("test");
-          })
-
-      }else{
-            this.$router.push('/login');
-      }
+        .catch(() => {
+          deleteCookie();
+          this.$router.push('/login');
+        })
+      
     },deleteCookie(){
       const path = '/api/logout/';
       axios.post(path, {}, {
@@ -68,18 +59,16 @@ export default {
         withCredentials: true
       })
         .then((response) => {
-          console.log(response);
           this.email = response.data.email;
           this.role = response.data.roles.description;
           this.firstname = response.data.firstname;
           this.name = response.data.name;
           this.organisation = response.data.organisations.name;
-          console.log(this.organisation, this.role, this.firstname, this.name, this.email)
+          this.setup();
+
         })
         .catch((e) => {            
           this.$router.push('/login');
-
-          console.log(e);
         })
     },}}
 </script>
