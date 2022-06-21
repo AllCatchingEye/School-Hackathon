@@ -3,9 +3,10 @@ from app import db
 from models.hackathon import Hackathon as Hackathonmodel
 from models.token import Token as Tokenmodel
 from utils.user_roles import auth_required, Config
+from utils.pdf import PDF
 import qrcode
 import base64
-import FPDF
+import io
 
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
@@ -16,27 +17,27 @@ QRCode = Blueprint('qrcode', __name__)
 @auth_required([Config.TEACHER_ID, Config.ADMIN_ID])
 def create_qrcode(hackathonid):
 
-    #query here to get tokenid and slug
     result = db.session.query(Tokenmodel.tokenid, Hackathonmodel.slug).join(Hackathonmodel).filter(Hackathonmodel.hackathonid==hackathonid).all()
     
-    #concat here
-    qr = qrcode.QRCode()
-    for i in result:    
+    j = 0
+    for i in result:
+        j = j+1
         tokenid = i[0]
         slug = i[1]
         url = slug + "/" + tokenid
         
+        qr = qrcode.QRCode()
         qr.add_data(url)
         qr.make(fit = True)
         img = qr.make_image(image_factory=StyledPilImage, color_mask=RadialGradiantColorMask())
-        #b64 = base64.b64encode(img).decode("utf-8")
-
-        #output = 'test.pdf'
-        #pdf = FPDF()
-        #pdf.add_page()
-        #pdf.image(img)
-        #pdf.output(output)
-
-    #img.save("wirfuerschule2.png")
+        buffered = io.BytesIO()
+        img.save(buffered, format="PNG")
+        #img_str = base64.b64encode(buffered.getvalue()).decode("utf-8").encode()
+        fname = "wirfuerschule{0}.png".format(j)
+        img.save(fname)
+        #p = PDF()
+        #p.add_page()
+        #pdf.add_image(img)
+        #p.sample_pdf(img_str, fname, p)
     return "Nix"
 
