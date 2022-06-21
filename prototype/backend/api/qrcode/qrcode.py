@@ -51,6 +51,7 @@ def create_qrcode(hackathonid):
         os.remove(fname)
 
     pdffile = "wirfuerschule{0}{1}".format(tstamp, suffix_pdf)
-    p.output(pdffile) 
-    return send_file(pdffile, mimetype = 'pdf', attachment_filename = pdffile, as_attachment = True)
-
+    p.output(pdffile)
+    data = send_file(pdffile, mimetype = 'pdf', attachment_filename = pdffile, as_attachment = True)
+    os.remove(pdffile)
+    return data

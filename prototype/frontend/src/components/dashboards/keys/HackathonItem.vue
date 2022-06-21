@@ -31,7 +31,7 @@ export default {
         },
       downloadQR() {
           let path = "/api/qrcode/".concat(this.hackathonID, "/");
-          let label = "test";
+        let label = "wirfuerschulehack".concat(this.hackathonID);
         axios.get(path, { responseType: 'blob' })
           .then(response => {
             const blob = new Blob([response.data], { type: 'application/pdf' })
