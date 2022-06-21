@@ -7,6 +7,7 @@
                 </div>
             </div>
             <div class="lineItem buttons">
+              <div class="qrbutton is-link is-rounded" @click="downloadQR()">QR-Codes anzeigen</div>
                 <div class="editbutton is-link is-rounded" @click="getOverview()">Schlüssel anzeigen</div>
             </div>
         </div>
@@ -15,6 +16,7 @@
 
 
 <script>
+import axios from 'axios';
 export default {
     props: ['hackathonid', 'hackathonname'],
     data() {
@@ -26,7 +28,20 @@ export default {
     methods: {
         getOverview() {
             this.$router.push({ path: '/keys/overview', query: { hackathon: this.hackathonName, id: this.hackathonID } });
-        }
+        },
+      downloadQR() {
+          let path = "/api/qrcode/".concat(this.hackathonID, "/");
+        let label = "wirfuerschulehack".concat(this.hackathonID);
+        axios.get(path, { responseType: 'blob' })
+          .then(response => {
+            const blob = new Blob([response.data], { type: 'application/pdf' })
+            const link = document.createElement('a')
+            link.href = URL.createObjectURL(blob)
+            link.download = label
+            link.click()
+            URL.revokeObjectURL(link.href)
+          }).catch(console.error)
+      }
     },
 }
 
@@ -59,6 +74,25 @@ export default {
     text-align: center;
     white-space: nowrap;
 }
+
+
+.qrbutton {
+  margin-right: 3%;
+  background-color: #5ac6ce;;
+  border-color: #dbdbdb;
+  border-width: 1px;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(0.5em - 1px);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: calc(0.5em - 1px);
+  text-align: center;
+  white-space: nowrap;
+}
+
 
 .entry-wrapper {
     width: 100%;

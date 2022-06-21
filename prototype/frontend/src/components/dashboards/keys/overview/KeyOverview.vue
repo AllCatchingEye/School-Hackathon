@@ -50,6 +50,7 @@
                 </article>
             </Transition>
             <div class="button-wrapper">
+              <div class="qrbutton is-link is-rounded" @click="downloadQR()">QR-Codes anzeigen</div>
                 <button class="add-item button is-success is-rounded" @click="changePopup()">Schlüssel
                     erstellen</button>
             </div>
@@ -155,6 +156,19 @@ export default {
                         this.onError(err.response.data.message);
                     }
                 })
+        },
+        downloadQR() {
+          let path = "/api/qrcode/".concat(this.hackathonID, "/");
+          let label = "wirfuerschulehack".concat(this.hackathonID);
+          axios.get(path, { responseType: 'blob' })
+            .then(response => {
+              const blob = new Blob([response.data], { type: 'application/pdf' })
+              const link = document.createElement('a')
+              link.href = URL.createObjectURL(blob)
+              link.download = label
+              link.click()
+              URL.revokeObjectURL(link.href)
+            }).catch(console.error)
         }
     }
 
@@ -191,6 +205,24 @@ export default {
 .lineItem p {
     margin-right: 2rem;
 }
+
+.qrbutton {
+  margin-right: 3%;
+  background-color: #5ac6ce;;
+  border-color: #dbdbdb;
+  border-width: 1px;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(0.5em - 1px);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: calc(0.5em - 1px);
+  text-align: center;
+  white-space: nowrap;
+}
+
 
 .headlineItems {
     width: 59vw;
@@ -286,8 +318,13 @@ a {
 }
 
 .button-wrapper {
-    width: 84%;
-    text-align: right;
+  display: flex;
+  width: 84%;
+  text-align: right;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  align-content: center;
 }
 
 /*
