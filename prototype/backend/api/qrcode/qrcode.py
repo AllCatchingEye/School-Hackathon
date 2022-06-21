@@ -31,12 +31,11 @@ def create_qrcode(hackathonid):
     date_time = datetime.fromtimestamp(current_time)
     tstamp = date_time.strftime("%Y%m%d%H%M%S")
 
-
     for i in result:
         j = j+1
         tokenid = i[0]
         slug = i[1]
-        url = slug + "/" + tokenid
+        url = "https://wirfuerschule.lio.codes/submission/" + slug + "/" + tokenid
         
         qr = qrcode.QRCode()
         qr.add_data(url)
