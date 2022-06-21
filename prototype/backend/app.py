@@ -31,6 +31,7 @@ from api.organisation.organisation import Organisation
 from api.role.role import Role
 from api.token.token import Token
 from api.submission.submission import Submission
+from api.qrcode.qrcode import QRCode
 
 
 # import database models
@@ -62,6 +63,7 @@ app.register_blueprint(Organisation, url_prefix='/api/organisation')
 app.register_blueprint(Role, url_prefix='/api/role')
 app.register_blueprint(Token, url_prefix='/api/token')
 app.register_blueprint(Submission, url_prefix='/api/submission')
+app.register_blueprint(QRCode, url_prefix='/api/qrcode')
 
 
 # Global error handle for schema violations 

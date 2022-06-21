@@ -8,3 +8,7 @@ flask-expects-json
 Flask-JWT-Extended
 SQLAlchemy-serializer
 Flask-Mail
+QRCode
+Pillow
+PyPDF2
+FPDF
