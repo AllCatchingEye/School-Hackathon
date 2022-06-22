@@ -40,7 +40,7 @@ def create_qrcode(hackathonid):
         qr = qrcode.QRCode()
         qr.add_data(url)
         qr.make(fit = True)
-        img = qr.make_image(image_factory=StyledPilImage, color_mask=RadialGradiantColorMask())
+        img = qr.make_image()
         fname = "wirfuerschule{0}{1}".format(j, suffix_png)
         img.save(fname)
 
