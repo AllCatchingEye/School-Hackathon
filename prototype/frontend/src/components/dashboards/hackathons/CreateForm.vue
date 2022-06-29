@@ -4,18 +4,18 @@
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-        <p class="modal-card-title">Add Theme</p>
+        <p class="modal-card-title">Add Thema</p>
         <button class="delete" aria-label="close" @click="cancel"></button>
         </header>
         <section class="modal-card-body">
             <form class="add-item">
-                <label for="title">Theme Title</label>
+                <label for="title">Thema Title</label>
                 <input type="text" id="title" required v-model="Data.title" />
 
                 <label for="description">Description</label>
                 <input type="text" id="description" required v-model="Data.description" />
 
-                <label for="slug">Theme Slug</label>
+                <label for="slug">Thema Slug</label>
                 <input  type="text" id="slug" required v-model="Data.slug" />
             </form>
         </section>
