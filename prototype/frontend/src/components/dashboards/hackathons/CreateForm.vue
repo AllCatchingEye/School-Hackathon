@@ -4,26 +4,26 @@
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-        <p class="modal-card-title">Add Hackathon</p>
+        <p class="modal-card-title">Add Thema</p>
         <button class="delete" aria-label="close" @click="cancel"></button>
         </header>
         <section class="modal-card-body">
             <form class="add-item">
-                <label for="title">Hackathon Title</label>
+                <label for="title">Thema Title</label>
                 <input type="text" id="title" required v-model="Data.title" />
-                
+
                 <label for="description">Description</label>
                 <input type="text" id="description" required v-model="Data.description" />
-                
-                <label for="slug">Hackathon Slug</label>
-                <input  type="text" id="slug" required v-model="Data.slug" />       
+
+                <label for="slug">Thema Slug</label>
+                <input  type="text" id="slug" required v-model="Data.slug" />
             </form>
         </section>
         <footer class="modal-card-foot">
             <button class="button is-danger is-rounded" @click="cancel">Cancel</button>
             <button  class="button is-success is-rounded" @click="onSubmit">Add</button>
         </footer>
-    </div>       
+    </div>
 </div>
 
 </template>
@@ -56,19 +56,19 @@ export default {
           withCredentials: true
         })
         .then((response) => {
-            this.$emit("item-added", response.data.dataobj);            
-            this.$emit("success", response.data.message);    
-            this.$emit("close-pop-up");           
-       
-        }).catch((err)=>{    
-            this.$emit('error',err.response.data.message);                          
-            this.$emit("close-pop-up");           
+            this.$emit("item-added", response.data.dataobj);
+            this.$emit("success", response.data.message);
+            this.$emit("close-pop-up");
+
+        }).catch((err)=>{
+            this.$emit('error',err.response.data.message);
+            this.$emit("close-pop-up");
         })}
     },
     cancel(){
         this.$emit("close-pop-up");
     }
-  }   
+  }
 };
 
 </script>
@@ -95,6 +95,6 @@ export default {
         }
     }
   }
-   
+
 
 </style>

@@ -17,7 +17,7 @@
       <div class="ctile" v-if="this.role === 'Admin'">
         <router-link to="/hackathons">
 
-          <h2>Hackathonmanagement</h2>
+          <h2>Themenmanagement</h2>
           <i class="fa-solid fa-angle-right"></i>
         </router-link>
 
@@ -79,7 +79,7 @@ export default {
           this.name = response.data.name;
           this.organisation = response.data.organisations.name;
         })
-        .catch(() => {          
+        .catch(() => {
         })
     },
   }
