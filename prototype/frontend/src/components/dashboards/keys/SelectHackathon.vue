@@ -3,7 +3,7 @@
         <sidebarDash :currentpage="this.currentpage"></sidebarDash>
         <div class="outerBoxOverview">
             <div class="headlineItems">
-                <p>Schlüsselübersicht: Hackathonauswahl</p>
+                <p>Schlüsselübersicht: Themenauswahl</p>
             </div>
             <div class="scrollable-items-outer">
                 <div class="scrollable-items">

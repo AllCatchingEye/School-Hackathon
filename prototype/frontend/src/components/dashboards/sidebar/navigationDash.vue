@@ -16,7 +16,7 @@
       </div>
       <div class="navigationitem" :class="hackathonactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'">
         <router-link to="/hackathons">
-        <p>Hackathonübersicht</p>
+        <p>Themenübersicht</p>
         </router-link>
       </div>
       <div class="navigationitem" :class="tokenactive ? 'navigationitemcurrent' : 'navigationitem'" v-if="this.role === 'Admin' || this.role === 'Teacher'">
