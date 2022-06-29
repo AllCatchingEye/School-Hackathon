@@ -29,7 +29,7 @@
 
 <div class="outerBoxOverview">
       <div class="headlineItems">
-        <p>Hackathon</p>
+        <p>Themen</p>
       </div>
     <Transition name="slide-fade">
        <article class="message is-danger" v-if="Errormessage.length">
@@ -52,7 +52,7 @@
       </article>
 </Transition>
       <div class="button-wrapper">
-            <button class="add-item button is-success is-rounded" @click="changePopup()">Add Hackathon</button>
+            <button class="add-item button is-success is-rounded" @click="changePopup()">Thema hinzufügen</button>
       </div>
 
     <div class="scrollable-items">

@@ -4,7 +4,7 @@
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-        <p class="modal-card-title">Add Thema</p>
+        <p class="modal-card-title">Thema hinzufügen</p>
         <button class="delete" aria-label="close" @click="cancel"></button>
         </header>
         <section class="modal-card-body">
